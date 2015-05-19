@@ -78,50 +78,49 @@
     <!--</bean>-->
 
 
-    <!-- Load properties -->
-    <!--<bean	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
-        <!--<property name="locations">-->
-            <!--<list>-->
-                <!--<value>classpath:important.properties</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:important.properties</value>
+            </list>
+        </property>
+    </bean>
 
 
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <!--<property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />-->
-        <!--&lt;!&ndash;<property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />&ndash;&gt;-->
-        <!--&lt;!&ndash;<property name="url" value="jdbc:mysql://sqld.duapp.com:4050/eBdYFaVHDRBXyIkrimel?autoReconnect=true"/>&ndash;&gt;-->
-        <!--<property name="username" value="root" />-->
-        <!--&lt;!&ndash;<property name="username" value="KHRdaNSHIU1AvMVoIc7EEU1C" />&ndash;&gt;-->
-        <!--<property name="password" value="root" />-->
-        <!--&lt;!&ndash;<property name="password" value="RdgWkOmLn1lsDWr50Evu8sV2sidhNB45" />&ndash;&gt;-->
+        <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
+        <!--<property name="url" value="jdbc:mysql://sqld.duapp.com:4050/eBdYFaVHDRBXyIkrimel?autoReconnect=true"/>-->
+        <property name="username" value="root" />
+        <!--<property name="username" value="KHRdaNSHIU1AvMVoIc7EEU1C" />-->
+        <property name="password" value="root" />
+        <!--<property name="password" value="RdgWkOmLn1lsDWr50Evu8sV2sidhNB45" />-->
 
-    <!--</bean>-->
+    </bean>
 
-    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
-        <!--&lt;!&ndash;  配置Hibernate拦截器,用于同步索引&ndash;&gt;-->
-        <!--<property name="dataSource" ref="dataSource" />-->
-        <!--<property name="hibernateProperties">-->
-            <!--<props>-->
-                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
-                <!--&lt;!&ndash;<prop key="hibernate.show_sql">true</prop>&ndash;&gt;-->
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-        <!--<property name="packagesToScan" value="com.hr" />-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <!--  配置Hibernate拦截器,用于同步索引-->
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!--<prop key="hibernate.show_sql">true</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.taobao.entity" />
 
-    <!--</bean>-->
+    </bean>
 
-    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">-->
-        <!--<property name="sessionFactory" ref="sessionFactory" />-->
-    <!--</bean>-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
     <!--使用annotation定义事务，这句不加貌似也可以-->
 
-    <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!--<aop:aspectj-autoproxy />&lt;!&ndash;切面编程的声明&ndash;&gt;-->
+    <aop:aspectj-autoproxy />
 
 </beans>
