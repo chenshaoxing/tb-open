@@ -1,12 +1,21 @@
 package com.taobao.service;
 
+import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.request.TraderateAddRequest;
+import com.taobao.api.request.TraderatesGetRequest;
 import com.taobao.api.response.TraderateAddResponse;
+import com.taobao.api.response.TraderatesGetResponse;
 import com.taobao.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by star on 15/5/17.
@@ -81,6 +90,25 @@ public class RateService {
             response.isSuccess();
             return false;
         }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    /**
+     *
+     * @param req
+     * @throws Exception
+     */
+    public TraderatesGetResponse searchRate(TraderatesGetRequest req) throws Exception {
+        TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
+                Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
+        req.setFields("tid,oid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid");
+        try {
+            TraderatesGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            return response;
+        } catch (ApiException e) {
             LOG.error(e.getMessage());
             throw e;
         }
