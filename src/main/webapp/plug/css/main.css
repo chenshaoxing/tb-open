@@ -1,0 +1,726 @@
+*{
+	marin:0;
+	padding: 0;
+}
+ul{
+	padding: 0;
+	margin: 0;
+}
+li{
+	list-style: none;
+}
+
+.hide{
+    display: none;
+}
+
+body{
+	background-color: #f1f1f1;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px
+}
+
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px
+}
+
+.bs-callout p:last-child {
+    margin-bottom: 0
+}
+
+.bs-callout code {
+    border-radius: 3px
+}
+
+.bs-callout + .bs-callout {
+    margin-top: -5px
+}
+
+.bs-callout-danger {
+    border-left-color: #E74C3C;
+}
+
+.bs-callout-danger h4 {
+    color: #E74C3C;
+}
+
+.bs-callout-warning {
+    border-left-color: #f0ad4e
+}
+
+.bs-callout-warning h4 {
+    color: #f0ad4e
+}
+
+.bs-callout-info {
+    border-left-color: #1ABC9C
+}
+
+.bs-callout-info h4 {
+    color: #1ABC9C
+}
+
+.my-navbar{
+	border-radius: 0px;
+	margin-bottom: 0px;
+}
+
+/*.my-navbar{
+	background-color: white;
+}
+*/
+.sub-nav{
+	background-color: #f9f9f9;
+	height: 30px;
+	width: 100%;
+	background-image: none;
+	background-repeat: no-repeat;
+	line-height: 30px;
+	padding: 0px 20px;
+	box-shadow:0px 3px 2px #ccc;
+}
+.sub-nav li{
+	float: left;
+	min-width: 150px;
+	text-align: center;
+	font-size: 20px;
+}
+
+.sub-nav .sub-nav-ico{
+    margin-bottom: 5px;
+}
+
+.sub-nav a{
+	border-bottom: 2px solid #f9f9f9;
+}
+.sub-nav a.item{
+	border-bottom: 2px solid #2f4154;
+}
+.sub-nav a:hover{
+	border-bottom: 2px solid #2f4154;
+}
+
+.select > .dropdown-menu{
+	width: 100%;
+}
+
+.sub-left-col{
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding: 10px 0px;
+}
+.sub-left-col > .title{
+    margin: 0;
+    padding: 5px 10px;
+    color: #2f4154;
+}
+
+.sub-left-col-menu li{
+    border-top: 1px solid #f5f5f5;
+}
+.sub-left-col-menu li > a{
+    display: block;
+    padding: 5px 10px;
+    line-height: 30px;
+    border-left: 2px solid #fff;
+    color: #262626;;
+}
+.sub-left-col-menu li > a:hover{
+    border-left: 2px solid #1ABC9C;
+    background-color: #f5f5f5;
+}
+
+.access-denied{
+    margin-top: 10%;
+    font-size: 20px;
+    color: #34495e;
+    font-family: Microsoft Yahei;
+}
+
+.hive-editor .table-meta{
+	padding: 10px;
+	background-color: white;
+	border-radius: 3px;
+	border: 1px solid #d8d8d8;
+}
+.hive-editor .table-meta > .select{
+	width: 100%;
+}
+.hive-editor .table-meta .btn-block{
+	width: 100%;
+}
+
+.hive-editor .table-meta-list{
+	margin-top: 10px;
+    overflow: auto;
+    height: 600px;
+}
+
+.hive-editor .table-meta-list  .item{
+    padding-right: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.hive-editor .table-meta-list a:hover{
+	text-decoration: underline;
+}
+.hive-editor .table-meta-col{
+	padding-left: 15px;
+}
+
+.hive-editor .table-query{
+	background-color: white;
+	border-radius: 3px;
+	border: 1px solid #d8d8d8;
+	padding: 10px 10px 20px;
+}
+
+.hive-editor .table-query .query-tooltip{
+	height: 20px;
+	margin-bottom: 10px;
+}
+.hive-editor .query-container{
+	margin-bottom: 15px;
+	border-radius: 3px;
+	border: 1px solid #d8d8d8;
+}
+
+.hive-editor .query-result{
+	border-radius: 3px;
+	border: 1px solid #d8d8d8;
+	margin-top: 15px;
+	min-height: 331px;
+	background-color: #fff;
+	padding: 20px 10px;
+}
+
+.hive-editor .query-result .tab-content{
+    width: 100%;
+    overflow-x: auto;
+}
+.hive-editor .query-result-tab{
+	padding: 10px 0px;
+}
+.hive-editor .dashBordSelect{
+    width:200px;
+}
+
+.hive-editor .query-list{
+    padding: 10px 0px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+}
+
+.hive-editor .query-list > h4{
+    margin: 0;
+    padding: 0px 10px 5px;
+    border-bottom: 1px solid #d8d8d8;
+    color: #777;
+}
+
+.hive-editor .query-list-content{
+   margin-top: 20px;
+   padding: 0px 10px;
+}
+
+.hive-editor .my-tb-checkbox{
+    width: 25px;
+}
+
+.hive-editor .query-list .tb-option{
+   margin-bottom: 20px;
+}
+
+
+.navigator .nav-pills{
+	margin-left: 80px ;
+}
+
+.navigator .nav-pills > li{
+	margin: 0px 20px;
+}
+
+.navigator .nav-pills > li > a{
+	color: white;
+	font-weight: bold;
+	margin-bottom: 2px;
+	margin-top: 2px;
+	padding: 0px;
+	font-weight: normal;
+}
+.navigator .nav-pills > li > a:hover{
+	background-color: transparent;
+}
+
+.navigator .caret{
+	border-width: 2px 1px;
+}
+
+.my-container{
+	background-color: #f1f1f1;
+	margin-top:20px;
+	border: 1px;
+}
+
+.container-main{
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding: 15px;
+}
+
+.container-main > .content-tile{
+    margin: 0px -15px 10px ;
+    padding: 0px 10px 5px;
+    border-bottom: 1px solid #d8d8d8;
+    color: #777;
+}
+
+.main-content h6.sub-title{
+    color: #888;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+    padding: 5px;
+}
+
+.table-area{
+	
+}
+
+.main-chart{
+    height: 300px;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+}
+
+.option-chart{
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+.data_modal_dw .create-dw{
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding: 20px 15px 30px;
+    min-height: 700px;
+}
+
+.data_modal_dw .create-dw-left,.data-modal .create-dw-left{
+    width: 360px;
+    float: left;
+}
+.data_modal_dw .create-dw-left{
+    margin-left: 50px;
+}
+.data_modal_dw .create-dw-center{
+    padding-top: 200px;
+    float: left;
+    width: 200px;
+    text-align: center;
+}
+
+.data_modal_dw .create-dw .select button{
+    width: 350px;
+}
+
+.data_modal_dw .create-dw .table-block{
+    border: 1px solid #d8d8d8;
+    overflow: auto;
+    height: 500px;
+    width: 350px;
+    padding: 10px 0px;
+}
+.data_modal_dw .create-dw .table-block th{
+    padding: 5px 10px;
+    font-weight: bold;
+}
+.data_modal_dw .create-dw .table-block td{
+    padding: 5px 10px;
+}
+
+.data_modal_list{
+
+}
+
+.data_modal_list .tb-main{
+    margin-top: 30px;
+}
+
+.data_modal_list .tb-option{
+    padding: 0px 15px;
+    margin-bottom: 10px;
+}
+
+.data_modal_list .content > h4{
+    margin: 0px -15px 10px ;
+    padding: 0px 10px 5px;
+    border-bottom: 1px solid #d8d8d8;
+    color: #777;
+}
+
+.data_modal_add .main-content{margin-top: 30px;}
+.data_modal_add .main-content h6.sub-title{
+    color: #888;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+    padding: 5px;
+    margin: 10px 0px;
+}
+.data_modal_add .tb-main{
+    overflow: auto;
+    max-height: 350px;
+}
+
+.data_modal_add .sql-main{
+    margin-bottom: 10px;
+}
+
+/************************* file log申请 *************************/
+.file_log_apply .main-content{margin-top: 30px;}
+.file_log_apply .main-content h6.sub-title{
+    color: #888;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+    padding: 5px;
+}
+.file_log_apply .row-split{
+    margin: 0px 0px 5px;
+}
+
+.file_log_apply .column-schema{
+    padding: 10px 5px;
+    border: 1px solid #f5f5f5;
+}
+
+.file_log_apply .column-schema .form-group{
+    margin-bottom: 0px;
+}
+
+.file_log_apply .my-opt{
+    margin-top: 20px;
+}
+
+.file_log_apply .my-btn-del-row{
+    background-color: #c0392b;
+    margin-top: 5px;
+}
+
+.file_log_apply .my-btn-del-row:hover{
+    background-color: #e74c3c;
+}
+
+.file_item{
+    padding: 15px 0px 0px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    border-left-color: #1ABC9C;
+}
+
+.file_log_apply .file_item .my-btn-del-row{
+    background-color: #c0392b;
+    margin-top: 0px;
+    margin-right: 15px;
+    float: right;
+}
+
+/************************* hive table 申请 *************************/
+
+.hive_table_apply .main-content{margin-top: 30px;}
+.hive_table_apply .main-content h6.sub-title{
+    color: #888;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+    padding: 5px;
+}
+.hive_table_apply .tb-main{
+    overflow: auto;
+    max-height: 350px;
+}
+
+.hive_table_apply .sql-main{
+    margin-bottom: 10px;
+}
+
+.hive_table_apply .table-item{
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.hive_table_apply .table-item .title{
+    padding: 3px 10px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #1ABC9C;
+}
+
+.hive_table_apply .table-item .table-row{
+    padding: 5px 6px;
+}
+
+.hive_table_apply .table-item .table-row-item{
+    padding: 5px 4px;
+}
+
+.hive_table_apply .table-item .close{
+    display: none;
+}
+
+.hive_table_apply .table-item .hover{
+    background-color: #f5f5f5;
+}
+
+.hive_table_apply .table-item .hover .close{
+    display: inline-block;
+}
+
+/************************* 数据仓库列表 *************************/
+.hive_dw_list .main-content{margin-top: 30px;}
+.hive_dw_list .main-content h6.sub-title{
+    color: #888;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+    padding: 5px;
+}
+.hive_dw_list .table-list{
+    padding: 10px 20px;
+}
+.hive_dw_list .table-main-head{
+    border: 2px solid #1abc9c;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom:none;
+    margin-bottom: -2px;
+    background-color: #fff;
+    z-index: 2;
+}
+.hive_dw_list .table-add{
+    margin-top: 10px;
+    text-align: right;
+}
+
+.hive_dw_list .table-main{
+    border: 2px solid #1abc9c;
+    padding: 15px;
+}
+.hive_dw_list .sel_dw{
+    width: 100%;
+    margin: 8px 0px;
+}
+.hive_dw_list .table-main label{
+    color: #16A085;
+    width: 280px;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-right: 5px;
+    padding: 0px 3px;
+}
+
+.hive_dw_list .table-main .blue-table{
+    color: #3498DB;
+    width: 280px;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-right: 5px;
+    padding: 0px 3px;
+}
+
+.hive_dw_list .table-main-msg .alert{
+    margin-bottom: 0;
+}
+.hive_dw_list .table-main label .close{
+    display: none;
+}
+
+.hive_dw_list .table-main .hover{
+    background-color: #1abc9c;
+    border-color: #48c9b0;
+    color: white;
+}
+
+.hive_dw_list .table-main .hover .close{
+    display: inline-block;
+}
+
+/************************* hive 表申请审核 *************************/
+.hive_table_apply_review .review-type{
+    margin: 10px 0px;
+    text-align: right;
+}
+
+.hive_table_apply_review .table-main{
+    display: none;
+}
+
+.hive_table_apply_review .main-content{margin-top: 30px;}
+.hive_table_apply_review .main-content h6.sub-title{
+    color: #888;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+    padding: 5px;
+}
+
+.hive_table_apply_review .table-item{
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.hive_table_apply_review .table-item .title{
+    padding: 3px 10px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #1ABC9C;
+}
+
+.hive_table_apply_review .table-item .blue{
+    color: #2980B9;
+}
+
+.hive_table_apply_review .table-item .table-row{
+    padding: 5px 6px;
+}
+
+.hive_table_apply_review .table-item .table-row-item{
+    padding: 5px 0px;
+    word-break: break-all;
+    word-wrap: break-word;
+    border-bottom: 1px dashed #eee;
+}
+
+.hive_table_apply_review .table-item .close{
+    display: none;
+}
+
+.hive_table_apply_review .table-item .hover{
+    background-color: #f5f5f5;
+}
+
+.hive_table_apply_review .table-item .hover .close{
+    display: inline-block;
+}
+
+.hive_table_apply_review .review-btns{
+    margin-top: 50px;
+}
+
+.hive_table_apply_review .host-config li{
+    margin: 5px 0px;
+}
+
+.hive_table_apply_review .host-config .txt-host{
+    width: 50px;
+    color: #428bca;
+}
+
+/************************* binlog 申请 *************************/
+.binlog_apply .main-content{
+    margin-top: 30px;
+}
+
+.binlog_apply .monitor-selected-users{
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.binlog_apply .monitor-selected-users label{
+    margin-right: 20px;
+}
+
+/************************* es 查询 *************************/
+.es_index .table-query{
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding: 15px 10px 0px;
+}
+
+.es_index .query-result {
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    margin-top: 15px;
+    background-color: #fff;
+    padding: 20px 10px;
+}
+
+.es_index .query-result td{
+    word-break: break-all;
+    color: #333;
+    cursor: pointer;
+}
+
+.es_index .table-hover > tbody > tr:hover > td,.es_index .table-hover > tbody > tr:hover > th{
+    background-color: #d9edf7;
+}
+
+.es_index .result-cols .checkbox{
+    margin: 0;
+}
+
+.es_index .select-index-opt{
+    display: inline-block;
+    background-color: #16a085;
+    color: #fff;
+    margin-top: -15px;
+    margin-left: -10px;
+    font-size: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.es_index .select-index-area{
+    margin-top: 10px;
+    display: none;
+}
+
+.es_index .select-index-area-active{
+    display: block;
+}
+
+.es_index .chk-block{
+    display: inline-block;
+    width: 130px;
+}
+
+/************************* file_log_monitor 查询 *************************/
+.file_log_monitor .main-content{
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #d8d8d8;
+    padding: 15px 10px;
+}
+
+.file_log_monitor .item-list .item {
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    color: #fff;
+    background-color: #1abc9c;
+    line-height: 35px;
+    padding: 10px;
+    margin: 10px 5px;
+    border-color: #ecf0f5;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.file_log_monitor .item-list .stop{
+    background-color: #BDC3C7;
+}
+
+.file_log_monitor .item-list .error{
+    background-color: #C0392B;
+}
+
+
+
+
+

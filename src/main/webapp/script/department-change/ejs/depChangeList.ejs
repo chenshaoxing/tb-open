@@ -1,0 +1,16 @@
+<%for(var i=0 ; i<data.list.length ; i++){%>
+<tr>
+    <td><%=data.list[i].employee.id%></td>
+    <td><%=data.list[i].employee.name%></td>
+    <td><%=common.fn.formatDate(data.list[i].changeDate)%></td>
+    <td><%=data.list[i].beforeDepartment.name%></td>
+    <td><%=data.list[i].beforePosition%></td>
+    <td><%=data.list[i].afterDepartment.name%></td>
+    <td><%=data.list[i].employee.position%></td>
+    <td><%=data.list[i].cause%></td>
+    <td>
+        <input type="button" class="btn btn-primary" value="修改" onclick="depChange.fn.getById(<%=data.list[i].id%>)">
+        <input type="button" class="btn btn-primary" value="删除" onclick="depChange.fn.delete(<%=data.list[i].id%>)">
+    </td>
+</tr>
+<%}%>

@@ -1,0 +1,22 @@
+<div  id="<%=data.id%>" style="line-height:33px">
+
+<div class="btn-group pull-right">
+
+<a class="btn btn-primary" title="首页" href="javascript:common.fn.pagination(1,'<%=data.pagination%>','<%=data.targetContainer%>')" <%if(data.currentPage == 1){%>disabled<%}%>><i class="glyphicon glyphicon-fast-backward"></i></a>
+<a class="btn btn-primary" title="上一页" href="javascript:common.fn.pagination(<%=(data.currentPage-1)%>,'<%=data.pagination%>','<%=data.targetContainer%>')" <%if(data.currentPage<2){%>disabled<%}%>><i class="glyphicon glyphicon-backward"></i></a>
+<a class="btn btn-primary active" href="javascript:void(0);"><i class="fui-heart-16"><%=data.currentPage%></i></a>
+<a class="btn btn-primary" title="下一页" href="javascript:common.fn.pagination(<%if((data.currentPage+1)>data.pageCount){%><%=data.pageCount%><%}else{%><%=(data.currentPage+1)%><%}%>,'<%=data.pagination%>','<%=data.targetContainer%>')" <%if(data.currentPage>=data.pageCount){%>disabled<%}%>><i class="glyphicon glyphicon-forward"></i></a>
+<a class="btn btn-primary" title="最后一页" href="javascript:common.fn.pagination(<%=data.pageCount%>,'<%=data.pagination%>','<%=data.targetContainer%>')" <%if(data.currentPage >= data.pageCount){%>disabled<%}%>><i class="glyphicon glyphicon-fast-forward"></i></a>
+
+</div>
+
+<span>
+    正在显示第 <%=data.currentPage%> 页
+   <% if (data.recordCount>=1){%>
+       <%=data.recordIndexBegin%>-<%=data.recordIndexEnd%> (共 <%=data.pageCount%> 页 <%=data.recordCount%> 项)
+   <%}else{%>
+       0-<%=data.recordIndexEnd%> (共 <%=data.pageCount%> 页 <%=data.recordCount%> 项)
+   <%}%>
+   <input id="pageRecordCountHidden" type="hidden" value="<%=data.recordCount%>">
+</span>
+</div>

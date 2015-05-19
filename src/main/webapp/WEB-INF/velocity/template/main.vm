@@ -1,0 +1,33 @@
+<div class="container" >
+    <div class="content  container-main" style="margin-top: 30px">
+        <div class="main-content" style="text-align: center;">
+            <img src="/plug/images/main.png" style="height: 450px;">
+##            <h6 class="sub-title">基础信息</h6>
+##            <form id="userInfoForm">                           lu
+##                <div class="row form-horizontal" style="margin-top: 30px">
+##                    <div class="col-md-8 form-group form-group-lg">
+##                        <label class="col-md-offset-5 col-sm-2 control-label" for="txtName">名 称：</label>
+##                    </div>
+##                    <div class="col-md-8 form-group form-group-lg">
+##                        <label class="col-md-offset-5 col-sm-2 control-label" for="txtEmail">邮 箱：</label>
+##                        <div class="col-sm-5">
+##                            <input class="form-control required email" type="text" id="txtEmail" name="txtEmail" placeholder='邮箱' value="$!{user.email}">
+##                        </div>
+##                    </div>
+##                    <div class="col-md-8 form-group form-group-lg">
+##                        <label class=" col-md-offset-5 col-sm-2 control-label" for="txtMobile">手 机：</label>
+##                        <div class="col-sm-5">
+##                            <input class="form-control required isMobile" type="text" id="txtMobile" name="txtMobile" placeholder="手机号码" value="$!{user.mobile}">
+##                        </div>
+##                    </div>
+##                    <div class="col-md-8 form-group form-group-lg" style="margin-top: 30px">
+##                        <div class="col-sm-6 col-sm-offset-6">
+##                            <a id="btnSubmit" href="javascript:void(0);" class="btn btn-primary">修改</a>
+##                            <a id="btnCancel" href="javascript:window.location.reload();" class="btn btn-default">取消</a>
+##                        </div>
+##                    </div>
+##                </div>
+##            </form>
+        </div>
+    </div>
+</div>

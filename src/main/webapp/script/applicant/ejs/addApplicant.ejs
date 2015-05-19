@@ -1,0 +1,133 @@
+
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title" id="myModalLabel"><%=data.title%></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="applicantForm" method="post">
+                    <input type="hidden" id="id" name="id" value="<%=data.id?data.id:''%>">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label  class="col-sm-4 control-label">应聘者</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control required " maxlength="20" value="<%=data.applicantName%>" id="applicantName" name="applicantName"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">招聘需求</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="recruitNeedId" name="recruitNeedId" >
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label  class="col-sm-4 control-label">性别</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required "  id="sex" name="sex">
+                                        <option>请选择</option>
+                                        <option value="MAN">男</option>
+                                        <option value="WOMAN">女</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">年龄</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control required positiveInteger" value="<%=data.age%>" id="age" name="age"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label  class="col-sm-4 control-label">学历</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required " id="diploma"   name="diploma" >
+                                        <option value="">请选择</option>
+                                        <option value="小学">小学</option>
+                                        <option value="初中">初中</option>
+                                        <option value="高中">高中</option>
+                                        <option value="大专">大专</option>
+                                        <option value="本科">本科</option>
+                                        <option value="硕士">硕士</option>
+                                        <option value="博士">博士</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">联系电话</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control required positiveInteger" maxlength="11" value="<%=data.tel%>" id="tel" name="tel"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label  class="col-sm-4 control-label">应聘状态</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="applyStatus" name="applyStatus" >
+                                        <option value="">请选择</option>
+                                        <option value="CHU_SHI">初试</option>
+                                        <option value="FU_SHI">复试</option>
+                                        <option value="END">结束</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">状态结果</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="applyResult" name="applyResult" >
+                                        <option value="">请选择</option>
+                                        <option value="ING">进行中</option>
+                                        <option value="PASS">通过</option>
+                                        <option value="NOT_PASS">未通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"  onclick="applicant.fn.save('<%=data.randomDialogId%>','<%=data.id%>');">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #f4f6f6;
+        border-color: #d5dbdb;
+        color: #34495e;
+        cursor: default;
+        opacity: 1;
+        filter: alpha(opacity=70);
+    }
+</style>
+

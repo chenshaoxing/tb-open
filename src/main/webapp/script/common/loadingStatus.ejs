@@ -1,0 +1,20 @@
+<div class="loading-mask">
+    <style>
+        .loading-mask{
+            background: #dddddd;
+            position:absolute;
+            top:0px;
+            left:0px;
+            filter:alpha(opacity=80);       /* IE */
+            -moz-opacity:0.8;              /* Moz + FF */
+            opacity: 0.8;  /* 支持CSS3的浏览器（FF 1.5也支持）*/
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <div class="header">
+        <button type="button" class="close" style="float: right" onclick="common.fn.closeLoadingStatus('<%=targetMaskId%>')">×</button>
+        <img src="/assets/images/loading_icon.gif"/>正在加载数据,请稍后……
+    </div>
+</div>
+

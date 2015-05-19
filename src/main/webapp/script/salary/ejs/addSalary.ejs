@@ -1,0 +1,249 @@
+<script xmlns="http://www.w3.org/1999/html">
+    //    function frequencyShowTip()
+    //    {
+    //        $('#frequency').tooltip('show');
+    //    }
+</script>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title" id="myModalLabel"><%=data.title%></h4>
+            </div>
+            <div class="modal-body" style="height: 450px;overflow: auto" >
+                <form class="form-horizontal" id="salaryForm" method="post">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="empId" class="col-sm-3 control-label">员工</label>
+                                <div class="col-sm-6">
+                                    <select  class="form-control required "    id="empId" name="empId" ></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="salaryType" class="col-sm-3 control-label">薪资类别</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="salaryType" name="salaryType" >
+                                        <option value="">请选择</option>
+                                        <option value="OFFICIAL">正式</option>
+                                        <option value="TEMP">试用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="salaryDate" class="col-sm-3 control-label">薪资日期</label>
+                                <div class="col-sm-6">
+                                    <input  type="text" id="salaryDate" name="salaryDate" class="form-control  Wdate required "  onFocus="WdatePicker({dateFmt:'yyyy-MM'})"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="bankAccount" class="col-sm-3 control-label">银行账号</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control required positiveInteger" maxlength="25" id="bankAccount" name="bankAccount" >
+                                    </input>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="basicSalary" class="col-sm-3 control-label">基本工资</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control required number" maxlength="15" id="basicSalary" name="basicSalary" >
+                                    </input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="performanceRelatedPay" class="col-sm-3 control-label">绩效</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="performanceRelatedPay" name="performanceRelatedPay" >
+                                        <option value="">请选择</option>
+                                        <option value="0.1">10%</option>
+                                        <option value="0.2">20%</option>
+                                        <option value="0.3">30%</option>
+                                        <option value="0.4">40%</option>
+                                        <option value="0.5">50%</option>
+                                        <option value="0.6">60%</option>
+                                        <option value="0.7">70%</option>
+                                        <option value="0.8">80%</option>
+                                        <option value="0.9">90%</option>
+                                        <option value="1">100%</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="10" class="form-control required number"     id="performanceRelatedPay" name="performanceRelatedPay"  >-->
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="tax" class="col-sm-3 control-label">税</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="tax" name="tax" >
+                                        <option value="">请选择</option>
+                                        <option value="0.01">1%</option>
+                                        <option value="0.02">2%</option>
+                                        <option value="0.03">3%</option>
+                                        <option value="0.04">4%</option>
+                                        <option value="0.05">5%</option>
+                                        <option value="0.06">6%</option>
+                                        <option value="0.07">7%</option>
+                                        <option value="0.08">8%</option>
+                                        <option value="0.09">9%</option>
+                                        <option value="0.1">10%</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="pension" class="col-sm-3 control-label">养老保险</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="pension" name="pension" >
+                                        <option value="">请选择</option>
+                                        <option value="0.02">2%</option>
+                                        <option value="0.04">4%</option>
+                                        <option value="0.06">6%</option>
+                                        <option value="0.08">8%</option>
+                                        <option value="0.1">10%</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="10" class="form-control required number"     id="pension" name="pension" >-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="unemploymentInsurance" class="col-sm-3 control-label">失业保险</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="unemploymentInsurance" name="unemploymentInsurance" >
+                                        <option value="">请选择</option>
+                                        <option value="0.01">1%</option>
+                                        <option value="0.02">2%</option>
+                                        <option value="0.03">3%</option>
+                                        <option value="0.04">4%</option>
+                                        <option value="0.05">5%</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="10" class="form-control required number"     id="unemploymentInsurance" name="unemploymentInsurance"  >-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="medicalInsurance" class="col-sm-3 control-label">医疗保险</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="medicalInsurance" name="medicalInsurance" >
+                                        <option value="">请选择</option>
+                                        <option value="0.01">1%</option>
+                                        <option value="0.02">2%</option>
+                                        <option value="0.03">3%</option>
+                                        <option value="0.04">4%</option>
+                                        <option value="0.05">5%</option>
+                                    </select>
+                                    <!--<input type="text" maxlength="10" class="form-control required number"     id="medicalInsurance" name="medicalInsurance"  >-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+
+
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label  class="col-sm-3 control-label">公积金</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control required" id="publicReserveFund" name="publicReserveFund" >
+                                        <option value="">请选择</option>
+                                        <option value="0.02">2%</option>
+                                        <option value="0.04">4%</option>
+                                        <option value="0.06">6%</option>
+                                        <option value="0.08">8%</option>
+                                        <option value="0.1">10%</option>
+                                        <option value="0.12">12%</option>
+                                        <option value="0.15">15%</option>
+                                    </select>
+                                    <!--<input class="form-control required number" maxlength="10" id="publicReserveFund"   name="publicReserveFund" >-->
+                                    <!--</input>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="col-xs-6">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">考勤扣款</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input class="form-control required number" maxlength="10" id="attendanceDeduct" name="attendanceDeduct" >-->
+                                    <!--</input>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    </div>
+
+                    <div class="row">
+
+                        <!--<div class="col-xs-6">-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="foodSubsidies" class="col-sm-3 control-label">伙食补贴</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input class="form-control required number" maxlength="10" id="foodSubsidies"   name="foodSubsidies" >-->
+                                    <!--</input>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-6">-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="realSalary" class="col-sm-3 control-label">实际工资</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="text" maxlength="11" class="form-control required "     id="realSalary" name="realSalary"  >-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveOrUpdateEmp"  onclick="salary.fn.save('<%=data.randomDialogId%>');">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #f4f6f6;
+        border-color: #d5dbdb;
+        color: #34495e;
+        cursor: default;
+        opacity: 1;
+        filter: alpha(opacity=70);
+    }
+</style>
+

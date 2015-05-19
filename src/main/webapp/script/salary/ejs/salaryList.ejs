@@ -1,0 +1,24 @@
+<%for(var i=0 ; i<data.list.length ; i++){%>
+<tr>
+    <td><%=data.list[i].employee.id%></td>
+    <td><%=data.list[i].employee.name%></td>
+    <td><%=data.list[i].year%>-<%=data.list[i].month%></td>
+    <td><%=data.list[i].bankAccount%></td>
+    <td><%=data.list[i].employee.idCard%></td>
+    <td><%=data.list[i].basicSalary%></td>
+    <td><%=data.list[i].performanceRelatedPay%></td>
+    <td><%=data.list[i].tax%></td>
+    <td><%=data.list[i].pension%></td>
+    <td><%=data.list[i].unemploymentInsurance%></td>
+    <td><%=data.list[i].medicalInsurance%></td>
+    <td><%=data.list[i].publicReserveFund%></td>
+    <td><%=data.list[i].attendanceDeduct%></td>
+    <td><%=data.list[i].foodSubsidies%></td>
+    <td><%=data.list[i].realSalary%></td>
+    <!--<td>-->
+        <!--<input type="button" class="btn btn-primary" value="详情" onclick="employee.fn.showUpdateEmpDialog(<%=data.list[i].id%>,true)">-->
+        <!--<input type="button" class="btn btn-primary" value="修改" onclick="employee.fn.showUpdateEmpDialog(<%=data.list[i].id%>,false)">-->
+        <!--<input type="button" class="btn btn-primary" value="删除" onclick="employee.fn.deleteEmpById(<%=data.list[i].id%>)">-->
+    <!--</td>-->
+</tr>
+<%}%>

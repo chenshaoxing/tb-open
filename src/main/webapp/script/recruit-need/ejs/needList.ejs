@@ -1,0 +1,27 @@
+<%for(var i=0 ; i<data.list.length ; i++){%>
+<tr>
+    <td><%=data.list[i].recruitEmp.name%></td>
+    <td><%=data.list[i].department.name%></td>
+    <td><%=data.list[i].position%></td>
+    <td><%=data.list[i].recruitCondition%></td>
+    <td><%=data.list[i].minSalary%></td>
+    <td><%=data.list[i].maxSalary%></td>
+    <td><%=common.fn.formatDateTime(data.list[i].recruitDate)%></td>
+    <td>
+        <% if(data.list[i].recruitStatus == "RUNNING"){%>
+           进行中
+        <%}else{%>
+        结束
+        <%}%>
+    </td>
+    <td>
+        <% if(data.list[i].recruitStatus == 'END') {%>
+             <input type="button" class="btn btn-primary" value="删除" onclick="need.fn.deleteEmpById(<%=data.list[i].id%>)">
+        <%}else{%>
+            <input type="button" class="btn btn-primary" value="修改" onclick="need.fn.getById(<%=data.list[i].id%>)">
+            <input type="button" class="btn btn-primary" value="删除" onclick="need.fn.deleteById(<%=data.list[i].id%>)">
+        <%}%>
+
+    </td>
+</tr>
+<%}%>

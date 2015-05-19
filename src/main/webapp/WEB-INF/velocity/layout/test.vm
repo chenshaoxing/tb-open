@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <link rel="shortcut icon" href="/plug/images/hr.ico" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>HR </title>
+    <style type="text/css" >
+        body{
+            background-color: #FFFFFF;
+        }
+    </style>
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
+
+    <!-- Loading Bootstrap -->
+    <link href="/plug/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="/plug/css/flat-ui.css" rel="stylesheet">
+    <link href="/plug/css/demo.css" rel="stylesheet">
+    <link href="/plug/css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+    <script src="/plug/js/html5shiv.js"></script>
+    <script src="/plug/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/plug/js/jquery-1.8.3.min.js"></script>
+    <script src="/plug/js/jquery.cookie.js"></script>
+    <script src="/script/common/common.js"></script>
+</head>
+<body>
+<div class="container" style="margin-top: 5%">
+    <div class="login">
+        <div class="login-screen">
+            <div class="login-icon" style="margin-top: 35px">
+                <img src="/plug/images/login/icon.png" alt="Welcome to Mail App">
+            </div>
+            <div class="login-form">
+
+                <div class="text-center" style="color: #1abc9c">
+                    <h1>企业人事管理系统</h1>
+                </div>
+                <div class="control-group">
+                    <input type="text" class="form-control" value="" placeholder="Enter your name" id="login-name">
+                    <label class="login-field-icon fui-man-16" for="login-name"></label>
+                </div>
+
+                <div class="control-group">
+                    <input type="password" class="form-control" value="" placeholder="Password" id="login-pass">
+                    <label class="login-field-icon fui-lock-16" for="login-pass"></label>
+                </div>
+
+                <a class="btn btn-primary btn-large btn-block" href="#">Login</a>
+                <a class="login-link" href="#">Lost your password?</a>
+            </div>
+            <div class="row">
+                <div class="text-center ">
+                    <nav>
+                        <span class="fs14 copyright">Copyright ©2014-2015</span>
+                        <span class="fs14"> 人事管理系统 Version 1.0.0 </span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="/plug/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/plug/js/jquery.ui.touch-punch.min.js"></script>
+<script src="/plug/js/bootstrap.min.js"></script>
+<script src="/plug/js/bootstrap-select.js"></script>
+<script src="/plug/js/bootstrap-switch.js"></script>
+<script src="/plug/js/jquery.placeholder.js"></script>
+<script src="/plug/js/application.js"></script>
+<script src="/plug/ejs/ejs.js"></script>
+
+<script src="/plug/js/jquery-validation/jquery.validate.js"></script>
+<script src="/plug/js/jquery-validation/messages_zh.js"></script>
+<script src="/plug/js/jquery-validation/additional-methods.js"></script>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	   http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+
+    <context:component-scan base-package="com.taobao">
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    </context:component-scan>
+
+    <!--&lt;!&ndash;<bean id="staffService" class="com.hr.system.manage.service.impl.StaffServiceImpl" />&ndash;&gt;-->
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
+        <!--<property name="driverClassName" value="${squirrel_jdbc_driver}" />-->
+        <!--<property name="url" value="${squirrel_jdbc_url}" />-->
+        <!--<property name="username" value="${squirrel_jdbc_username}" />-->
+        <!--<property name="password" value="${squirrel_jdbc_password}" />-->
+        <!--<property name="validationQuery" value="select 1" />-->
+        <!--<property name="initialSize" value="5" />-->
+        <!--<property name="testWhileIdle" value="true"/>-->
+        <!--<property name="maxIdle" value="20" />-->
+        <!--<property name="minIdle" value="5" />-->
+        <!--<property name="maxActive" value="50" />-->
+        <!--<property name="removeAbandonedTimeout" value="180" />-->
+        <!--<property name="maxWait" value="30000" />-->
+    <!--</bean>-->
+
+    <!-- Timer schedule -->
+
+    <!--&lt;!&ndash;要调度的对象&ndash;&gt;-->
+    <!--<bean id="jobBean" class="com.hr.system.manage.common.DailyTaskJob" />-->
+    <!--<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="jobBean" />-->
+        <!--<property name="targetMethod" value="execute" />-->
+        <!--&lt;!&ndash;将并发设置为false&ndash;&gt;-->
+        <!--<property name="concurrent" value="false" />-->
+    <!--</bean>-->
+
+    <!--<bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerBean">-->
+        <!--<property name="jobDetail" ref="jobDetail" />-->
+        <!--&lt;!&ndash;表达式，我的是每天0点 执行一次&ndash;&gt;-->
+        <!--<property name="cronExpression" value="5 4 1 * * ?" />-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash;&lt;!&ndash;  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序   &ndash;&gt;&ndash;&gt;-->
+    <!--<bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" >-->
+        <!--<property name="triggers">-->
+            <!--<list>-->
+                <!--&lt;!&ndash;作业调度器,list下可加入其他的调度器&ndash;&gt;-->
+                <!--<ref bean="trigger" />-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">-->
+        <!--<property name="host" value="${email.host}"/>-->
+        <!--<property name="username" value="${email.username}"/>-->
+        <!--<property name="password" value="${email.password}"/>-->
+        <!--<property name="javaMailProperties">-->
+            <!--<props>-->
+                <!--<prop key="mail.smtp.auth">-->
+                    <!--${email.auth}-->
+                <!--</prop>-->
+                <!--<prop key="mail.smtp.timeout">-->
+                    <!--25000-->
+                <!--</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+    <!-- Load properties -->
+    <!--<bean	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>classpath:important.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+        <!--<property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />-->
+        <!--&lt;!&ndash;<property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="url" value="jdbc:mysql://sqld.duapp.com:4050/eBdYFaVHDRBXyIkrimel?autoReconnect=true"/>&ndash;&gt;-->
+        <!--<property name="username" value="root" />-->
+        <!--&lt;!&ndash;<property name="username" value="KHRdaNSHIU1AvMVoIc7EEU1C" />&ndash;&gt;-->
+        <!--<property name="password" value="root" />-->
+        <!--&lt;!&ndash;<property name="password" value="RdgWkOmLn1lsDWr50Evu8sV2sidhNB45" />&ndash;&gt;-->
+
+    <!--</bean>-->
+
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
+        <!--&lt;!&ndash;  配置Hibernate拦截器,用于同步索引&ndash;&gt;-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
+                <!--&lt;!&ndash;<prop key="hibernate.show_sql">true</prop>&ndash;&gt;-->
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+        <!--<property name="packagesToScan" value="com.hr" />-->
+
+    <!--</bean>-->
+
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">-->
+        <!--<property name="sessionFactory" ref="sessionFactory" />-->
+    <!--</bean>-->
+
+    <!--使用annotation定义事务，这句不加貌似也可以-->
+
+    <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
+
+    <!--<aop:aspectj-autoproxy />&lt;!&ndash;切面编程的声明&ndash;&gt;-->
+
+</beans>
