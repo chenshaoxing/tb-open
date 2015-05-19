@@ -15,4 +15,8 @@ public class Constants {
     public static final String TB_ONLINE_APP_KEY = "23175152";
     public static final String TB_ONLINE_APP_SECRET = "fe3900d9e3c1e8c65b37da4d0237a953";
     public static final String TB_ONLINE_MESSAGE_URL = "ws://mc.api.taobao.com/";
+    /*交易成功消息*/
+    public static final String TAOBAO_TRADE_TRADESUCCESS ="taobao_trade_TradeSuccess";
+    /*评价变更消息*/
+    public static final String TAOBAO_TRADE_TRADERATED = "taobao_trade_TradeRated";
 }
