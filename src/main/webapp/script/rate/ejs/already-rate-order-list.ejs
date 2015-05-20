@@ -1,0 +1,32 @@
+<%for(var i=0 ; i<data.list.length ; i++){%>
+    <tr>
+        <td>
+            <%=data.list[i].tid%>
+        </td>
+        <td>
+            <a href="#"><%=data.list[i].itemTitle%></a>
+        </td>
+        <td>￥<%=data.list[i].itemPrice%></td>
+        <td>
+            <% if(data.list[i].result == 'good'){%>
+            好评<img src="/plug/images/good.png">
+            <%}else if(data.list[i].result == 'bad'){%>
+            差评<img src="/plug/images/bad.png">
+            <%}else{%>
+                中评<img src="/plug/images/neutral.png">
+            <%}%>
+        </td>
+        <td><%=data.list[i].validScore?'计分':'不计分'%></td>
+        <td><%=common.fn.formatDateTime(data.list[i].created)%></td>
+        <td>
+            <% if (data.isBuyerGiveMe == 'true'){%>
+                <%=data.list[i].nick%>
+                <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].nick%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>
+            <%}else {%>
+                <%=data.list[i].ratedNick%>
+                <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].ratedNick%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>
+            <%}%>
+        </td>
+        <td><%=data.list[i].content%></td>
+    </tr>
+<%}%>

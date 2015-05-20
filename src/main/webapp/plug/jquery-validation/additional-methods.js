@@ -744,6 +744,9 @@ jQuery.validator.addMethod("lengthCheck", function(value, element, param) {
 
 jQuery.validator.addMethod("positiveInteger", function (value, element) {
     var re = /^[+]?\d+$/;
+    if(value.length < 1){
+        return true;
+    }
     return re.test(value) ? true : false;
 //    return re.test(value)?true:false;
 }, "只能输入正整数");

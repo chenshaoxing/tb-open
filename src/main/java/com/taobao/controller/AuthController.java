@@ -7,6 +7,7 @@ import com.taobao.api.internal.util.WebUtils;
 import com.taobao.api.request.TraderateAddRequest;
 import com.taobao.api.response.TraderateAddResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,11 @@ public class AuthController {
     public void save(@RequestParam String code,@RequestParam String state) throws Exception{
 
 
+    }
+
+    @RequestMapping(value = "/main")
+    public String index(Model model) {
+        return "main/main";
     }
 
     public static void main(String[] args) throws Exception {

@@ -1,0 +1,174 @@
+<script src="/script/rate/rate.js"></script>
+<div class="main-container" id="main-container">
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+//    function alertDialog(){
+//        common.fn.showConfirmMessage("测试","ceshi success",function(){
+//            alert(1);
+//        },function(){
+//            alert(2);
+//        });
+//    }
+//    function dialog(){
+//        function readyFun(){
+//            alert(1);
+//        }
+//        var data = {};
+//        data.title = "haha"
+//        common.fn.showDialog("/script/salary/ejs/addSalary.ejs",data,null,readyFun);
+//    }
+</script>
+
+
+<div class="main-container-inner">
+    <div class="main-content">
+        <div class="page-content">
+            <div class="page-header">
+                <h1>
+                    已评价订单
+                    <small>
+                        <i class="icon-double-angle-right"></i>
+                        可以查询买家给卖家的评价订单和卖家给买家的评价订单
+                    </small>
+                </h1>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="header smaller lighter blue">搜索</h3>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <form class="form-horizontal" id="getAlreadyRateOrderForm">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label for="name" class="col-sm-3 control-label">交易号: </label>
+
+                                            <div class="col-sm-6">
+                                                <input type="text" maxlength="16" class="form-control positiveInteger" id="tradeId"
+                                                       name="tradeId">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label style="margin-top: -5px;">
+                                                    <input name="isBuyerGiveMe" type="radio" class="ace" checked  value="true" onclick="Rate.fn.execList()" />
+                                                    <span class="lbl">买家给我的评价</span>
+                                                </label>
+                                                <label style="margin-top: -5px;">
+                                                    <input name="isBuyerGiveMe" type="radio" class="ace" value="false" onclick="Rate.fn.execList()" />
+                                                    <span class="lbl">我给买家的评价</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <button class="btn btn-info btn-sm" type="button" onclick="Rate.fn.execList();">
+                                                <i class="icon-search bigger-110"></i>
+                                                搜索
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-4"></div>
+                            </form>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <!-- /.page-header -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h3 class="header smaller lighter blue">已评价订单列表</h3>
+##                            <div class="table-header">
+##                                Results for "Latest Registered Domains"
+##                            </div>
+                            <div class="table-responsive">
+                                <table id="sample-table-2" style="word-break:break-all; word-wrap:break-word;" class="table table-striped table-bordered table-hover">
+                                    <thead >
+                                        <tr style="background-color: #6fb3e0!important">
+                                            <th style="width: 10%">交易ID</th>
+                                            <th style="width: 20%">商品名称</th>
+                                            <th style="width: 5%">商品价格</th>
+                                            <th style="width: 5%">评价结果</th>
+                                            <th style="width: 5%">是否计分</th>
+                                            <th style="width: 10%">评价时间</th>
+                                            <th style="width: 15%">对方昵称</th>
+                                            <th style="width: 30%">评价内容</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="alreadyRateOrderListBody">
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="9" id="alreadyRateOrderListPagination"></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div>
+<!-- 更改背景颜色等 -->
+##        <div class="ace-settings-container" id="ace-settings-container">
+##    <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+##        <i class="icon-cog bigger-150"></i>
+##    </div>
+##
+##    <div class="ace-settings-box" id="ace-settings-box">
+##        <div>
+##            <div class="pull-left">
+##                <select id="skin-colorpicker" class="hide">
+##                    <option data-skin="default" value="#438EB9">#438EB9</option>
+##                    <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+##                    <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+##                    <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+##                </select>
+##            </div>
+##            <span>&nbsp; Choose Skin</span>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+##            <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+##            <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+##            <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+##            <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+##            <label class="lbl" for="ace-settings-add-container">
+##                Inside
+##                <b>.container</b>
+##            </label>
+##        </div>
+##    </div>
+##</div><!-- /#ace-settings-container -->
+<!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->

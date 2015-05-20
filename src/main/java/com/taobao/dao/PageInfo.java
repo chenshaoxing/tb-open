@@ -1,4 +1,4 @@
-package com.hr.system.manage.repository.dao;
+package com.taobao.dao;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class PageInfo<T> {
     /**
      * 总页数
      */
-    private long pageTotalNum;
+    private int pageTotalNum;
 
     /**
      * 数据列表
@@ -25,7 +25,7 @@ public class PageInfo<T> {
     /**
      * 数据总记录数
      */
-    private long recordTotalCount;
+    private int recordTotalCount;
 
     /**
      * 用于hbase分页
@@ -33,7 +33,7 @@ public class PageInfo<T> {
     private String nextKey;
 
 
-    public PageInfo(long pageSize, long recordTotalCount){
+    public PageInfo(int pageSize, int recordTotalCount){
         this.pageTotalNum = (recordTotalCount + pageSize - 1) / pageSize;
         this.recordTotalCount = recordTotalCount;
     }
@@ -41,11 +41,11 @@ public class PageInfo<T> {
     public PageInfo() {
     }
 
-    public long getPageTotalNum() {
+    public int getPageTotalNum() {
         return pageTotalNum;
     }
 
-    public void setPageTotalNum(long pageTotalNum) {
+    public void setPageTotalNum(int pageTotalNum) {
         this.pageTotalNum = pageTotalNum;
     }
 
@@ -57,11 +57,11 @@ public class PageInfo<T> {
         this.list = list;
     }
 
-    public long getRecordTotalCount() {
+    public int getRecordTotalCount() {
         return recordTotalCount;
     }
 
-    public void setRecordTotalCount(long recordTotalCount) {
+    public void setRecordTotalCount(int recordTotalCount) {
         this.recordTotalCount = recordTotalCount;
     }
 

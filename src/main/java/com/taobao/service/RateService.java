@@ -10,6 +10,7 @@ import com.taobao.api.response.TraderatesGetResponse;
 import com.taobao.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import java.util.Objects;
  * Created by star on 15/5/17.
  * 评价服务接口
  */
+@Service
 public class RateService {
     public static final Logger LOG = LoggerFactory.getLogger(RateService.class);
 
@@ -104,7 +106,7 @@ public class RateService {
     public TraderatesGetResponse searchRate(TraderatesGetRequest req) throws Exception {
         TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
                 Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
-        req.setFields("tid,oid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid");
+        req.setFields("tid,oid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,valid_score");
         try {
             TraderatesGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
             return response;
