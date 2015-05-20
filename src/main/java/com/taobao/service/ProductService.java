@@ -9,10 +9,12 @@ import com.taobao.api.response.ItemGetResponse;
 import com.taobao.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by star on 15/5/19.
  */
+@Service
 public class ProductService {
     private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
 

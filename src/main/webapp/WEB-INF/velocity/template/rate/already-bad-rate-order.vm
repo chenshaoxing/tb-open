@@ -2,17 +2,9 @@
 <div class="main-container" id="main-container">
 <script type="text/javascript">
     try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-    $(document).ready(function(){
-        Rate.fn.execList();
-        $("#tradeId").keydown(function(e){
-            if(!e)e=window.event;
-            if((e.keyCode||e.which)==13){
-                e.preventDefault();
-                Rate.fn.execList()
-            }
-        });
+ $(document).ready(function(){
+        Rate.fn.execBadList();
     })
-
 </script>
 
 
@@ -21,68 +13,20 @@
         <div class="page-content">
             <div class="page-header">
                 <h1>
-                    已评价订单
+                    被差评的订单
                     <small>
                         <i class="icon-double-angle-right"></i>
-                        可以查询买家给卖家的评价订单和卖家给买家的评价订单
+                        可以查询到买家给卖家的差评订单
                     </small>
                 </h1>
             </div>
-
-
-##            <div class="row">
-            <div class="col-xs-12" style="margin-top: 15px;">
-##                    <h3 class="header smaller lighter blue">搜索</h3>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <form class="form-horizontal" id="getAlreadyRateOrderForm">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="form-group">
-                                            <label style="text-align: left" for="name" class="col-sm-3 control-label">交易号: </label>
-
-                                            <div class="col-sm-6">
-                                                <input type="text" maxlength="16" class="form-control positiveInteger" id="tradeId"
-                                                       name="tradeId">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="form-group">
-                                            <div class="col-sm-6">
-                                                <label style="margin-top: -5px;">
-                                                    <input name="isBuyerGiveMe" type="radio" class="ace" checked  value="true" onclick="Rate.fn.execList()" />
-                                                    <span class="lbl">买家给我的评价</span>
-                                                </label>
-                                                <label style="margin-top: -5px;">
-                                                    <input name="isBuyerGiveMe" type="radio" class="ace" value="false" onclick="Rate.fn.execList()" />
-                                                    <span class="lbl">我给买家的评价</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="form-group">
-                                            <button class="btn btn-info btn-sm" type="button" onclick="Rate.fn.execList();">
-                                                <i class="icon-search bigger-110"></i>
-                                                搜索
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="space-4"></div>
-                            </form>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.col -->
-##            </div><!-- /.row -->
 
             <!-- /.page-header -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="col-xs-12">
-                            <h3 class="header smaller lighter blue">已评价订单列表</h3>
+                            <h3 class="header smaller lighter blue">被差评的订单</h3>
 ##                            <div class="table-header">
 ##                                Results for "Latest Registered Domains"
 ##                            </div>
@@ -100,12 +44,12 @@
                                             <th style="width: 35%">评价内容</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="alreadyRateOrderListBody">
+                                    <tbody id="alreadyBadRateOrderListBody">
 
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="9" id="alreadyRateOrderListPagination"></td>
+                                        <td colspan="9" id="alreadyBadRateOrderListPagination"></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -169,4 +113,3 @@
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="icon-double-angle-up icon-only bigger-110"></i>
 </a>
-##</div><!-- /.main-container -->
