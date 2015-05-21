@@ -5,10 +5,13 @@ import com.hr.system.manage.repository.dao.PageInfo;
 import com.taobao.api.domain.Item;
 import com.taobao.api.domain.TradeRate;
 import com.taobao.api.request.TraderatesGetRequest;
+import com.taobao.api.request.TradesSoldGetRequest;
 import com.taobao.api.response.TraderatesGetResponse;
+import com.taobao.api.response.TradesSoldGetResponse;
 import com.taobao.common.Utils;
 import com.taobao.service.ProductService;
 import com.taobao.service.RateService;
+import com.taobao.service.TradeService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +41,19 @@ public class RateController {
     private ProductService productService;
     @Resource
     private RateService rateService;
+    @Resource
+    private TradeService tradeService;
 
 
 
     @RequestMapping(value = "/rate/already-rate-orders")
     public String alreadyRateOrderIndex(){
         return "rate/already-rate-order";
+    }
+
+    @RequestMapping(value = "/rate/batch-rate-orders")
+    public String batchRateOrderIndex(){
+        return "rate/batch-rate-order";
     }
 
     @RequestMapping(value = "/rate/already-bad-rate-orders")
@@ -97,6 +107,33 @@ public class RateController {
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
 //            pageInfo.setList(list);
             pageInfo.setList(response.getTradeRates());
+            return ResultJson.resultSuccess(pageInfo);
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    @RequestMapping(value = "/rate/batch-rate-orders/list")
+    @ResponseBody
+    public Map<String, Object> getBatchRateOrders(@RequestParam Long currentPage,
+                                                    @RequestParam Long pageSize,
+                                                    @RequestParam(required = false) String buyerNick,
+                                                    @RequestParam(required = false) String rateStatus
+    ) throws Exception{
+        try{
+            TradesSoldGetRequest request = new TradesSoldGetRequest();
+            request.setPageNo(currentPage);
+            request.setPageSize(pageSize);
+
+            if(StringUtils.isNotEmpty(buyerNick)){
+                request.setBuyerNick(buyerNick);
+            }
+            request.setRateStatus(rateStatus);
+            TradesSoldGetResponse response = tradeService.getTradeSold(request);
+            PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
+            pageInfo.setList(response.getTrades());
             return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){
             LOG.error(e.getMessage());

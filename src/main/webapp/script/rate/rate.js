@@ -5,10 +5,12 @@ var Rate = {
     url:{
         getAlreadyRateOrders:"/rate/already-rate-orders/list",
         getBuyerInfo:"/trade/buyer-info",
-        getProductInfo:"/product/info"
+        getProductInfo:"/product/info",
+        getBatchRateOrders:"/rate/batch-rate-orders/list"
     },
     ejs:{
         alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
+        batchRateOrderList:"/script/rate/ejs/batch-rate-order-list.ejs",
         buyerInfo:"/script/rate/ejs/showBuyerInfo.ejs"
     },
     fn:{
@@ -121,6 +123,31 @@ var Rate = {
             var params  = new Object();
             params.numId = numId;
             common.fn.ajaxNotLoadingDialog(Rate.url.getProductInfo,params,callback);
+        },
+        getBatchRateOrders:function(currentPage,callback){
+            var params = new Object();
+            var getBatchRateOrderForm = $("#getBatchRateOrderForm").validate({});
+            if(getBatchRateOrderForm.form()){
+                params = common.fn.getFromJsonData("getBatchRateOrderForm");
+                params.currentPage = currentPage;
+                params.pageSize = common.globalVariable.pageSize;
+                common.fn.ajax(Rate.url.getBatchRateOrders,params,callBack);
+            }
+            function callBack(data){
+                if(data.success){
+                    var dataHtml = new EJS({url:Rate.ejs.batchRateOrderList}).render({data:data.data});
+                    $("#batchRateOrderListBody").html('');
+                    $("#batchRateOrderListBody").html(dataHtml);
+                    if(data.data.recordTotalCount){
+                        callback(data.data.recordTotalCount);
+                    }else{
+                        callback(0);
+                    }
+                }
+            }
+        },
+        execBatchList:function(){
+            common.fn.pagination(1,'Rate.fn.getBatchRateOrders','batchRateOrderListPagination');
         }
     }
 }

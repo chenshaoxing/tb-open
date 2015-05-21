@@ -3,12 +3,12 @@
 <script type="text/javascript">
     try{ace.settings.check('main-container' , 'fixed')}catch(e){}
     $(document).ready(function(){
-        Rate.fn.execList();
-        $("#tradeId").keydown(function(e){
+        Rate.fn.execBatchList();
+        $("#buyerNick").keydown(function(e){
             if(!e)e=window.event;
             if((e.keyCode||e.which)==13){
                 e.preventDefault();
-                Rate.fn.execList()
+                Rate.fn.execBatchList();
             }
         });
     })
@@ -21,10 +21,10 @@
         <div class="page-content">
             <div class="page-header">
                 <h1>
-                    已评价订单
+                    手动批量评价
                     <small>
                         <i class="icon-double-angle-right"></i>
-                        可以查询买家给卖家的评价订单和卖家给买家的评价订单
+                        可以查询30天以内的订单并且手动批量评价它们(注意:根据淘宝规定,距离订单结束日期超过15天后不能评价!)
                     </small>
                 </h1>
             </div>
@@ -35,50 +35,32 @@
 ##                    <h3 class="header smaller lighter blue">搜索</h3>
                     <div class="row">
                         <div class="col-xs-12">
-                            <form class="form-horizontal" id="getAlreadyRateOrderForm">
+                            <form class="form-horizontal" id="getBatchRateOrderForm">
                                 <div class="row">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-4">
                                         <div class="form-group">
-                                            <label style="text-align: left" for="name" class="col-sm-3 control-label">交易号: </label>
+                                            <label style="text-align: left" for="buyerNick" class="col-sm-3 control-label">买家昵称: </label>
 
                                             <div class="col-sm-6">
-                                                <input type="text" maxlength="16" class="form-control positiveInteger" id="tradeId"
-                                                       name="tradeId">
+                                                <input type="text" maxlength="20" class="form-control" id="buyerNick"
+                                                       name="buyerNick">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-4">
                                         <div class="form-group">
+                                            <label style="text-align: left" for="rateStatus" class="col-sm-3 control-label" for="form-field-select-1">评价状态:</label>
                                             <div class="col-sm-6">
-                                                <label style="margin-top: 0px;margin-left: -15px;">
-                                                    <input name="isBuyerGiveMe" type="radio" class="ace" checked  value="true" onclick="Rate.fn.execList()" />
-                                                    <span class="lbl">买家给我的评价</span>
-                                                </label>
-                                                <label style="margin-top: 0px;">
-                                                    <input name="isBuyerGiveMe" type="radio" class="ace" value="false" onclick="Rate.fn.execList()" />
-                                                    <span class="lbl">我给买家的评价</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="form-group">
-                                            <label style="text-align: left" for="name" class="col-sm-3 control-label" for="form-field-select-1">评价结果:</label>
-                                            <div class="col-sm-6">
-                                                <select class="form-control" id="result" name="result" onchange="Rate.fn.execList();">
-                                                    <option value="">全部</option>
-                                                    <option value="good">好评</option>
-                                                    <option value="neutral">中评</option>
-                                                    <option value="bad">差评</option>
+                                                <select class="form-control" id="rateStatus" name="rateStatus" onchange=" Rate.fn.execBatchList();">
+                                                    <option value="RATE_UNSELLER">卖家未评</option>
+                                                    <option value="RATE_BUYER_UNSELLER">买家已评，卖家未评</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-4">
                                         <div class="form-group">
-                                            <button class="btn btn-info btn-sm" type="button" onclick="Rate.fn.execList();">
+                                            <button class="btn btn-info btn-sm" type="button" onclick=" Rate.fn.execBatchList();">
                                                 <i class="icon-search bigger-110"></i>
                                                 搜索
                                             </button>
@@ -97,7 +79,7 @@
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="col-xs-12">
-                            <h3 class="header smaller lighter blue">已评价订单列表</h3>
+                            <h3 class="header smaller lighter blue">未评价订单列表</h3>
 ##                            <div class="table-header">
 ##                                Results for "Latest Registered Domains"
 ##                            </div>
@@ -106,21 +88,19 @@
                                     <thead >
                                         <tr style="background-color: #6fb3e0!important">
                                             <th style="width: 13%">交易ID</th>
-                                            <th style="width: 20%">商品名称</th>
-                                            <th style="width: 7%">商品价格</th>
-                                            <th style="width: 7%">评价结果</th>
-                                            <th style="width: 7%">是否计分</th>
-                                            <th style="width: 15%">评价时间</th>
-                                            <th style="width: 13%">对方昵称</th>
-                                            <th style="width: 35%">评价内容</th>
+                                            <th style="width: 30%">商品名称</th> <!-- 数量 实付金额 -->
+                                            <th style="width: 10%">实付金额</th>
+                                            <th style="width: 18%">交易时间</th>
+                                            <th style="width: 13%">买家</th>
+                                            <th style="width: 15%">剩余评价时间</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="alreadyRateOrderListBody">
+                                    <tbody id="batchRateOrderListBody">
 
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="9" id="alreadyRateOrderListPagination"></td>
+                                        <td colspan="6" id="batchRateOrderListPagination"></td>
                                     </tr>
                                     </tfoot>
                                 </table>

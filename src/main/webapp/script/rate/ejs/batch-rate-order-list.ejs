@@ -1,0 +1,31 @@
+<%for(var i=0 ; i<data.list.length ; i++){%>
+    <tr>
+        <td>
+            <%=data.list[i].tid%>
+        </td>
+        <td>
+            <% var orders = data.list[i].orders %>
+            <% for( var j = 0;j<orders.length;j++) {%>
+                <a  href="javascript:Rate.fn.getProductUrl(<%=orders[j].numIid%>)"><%=orders[j].title%></a> <br/>
+                数量:<%=orders[j].num%>&nbsp;&nbsp;&nbsp;&nbsp; 实付:<%=orders[j].payment%>
+            <br/>
+
+
+            <%}%>
+
+        </td>
+        <td>￥<%=data.list[i].payment%></td>
+        <td>
+            拍下:<%=common.fn.formatDateTime(data.list[i].created)%><br/>
+            付款:<%=common.fn.formatDateTime(data.list[i].payTime)%><br/>
+            成功:<%=common.fn.formatDateTime(data.list[i].endTime)%>
+        </td>
+        <td>
+            <%=data.list[i].buyerNick%>
+            <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].buyerNick%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>
+            <br/>
+            <button type="button" class="btn btn-minier btn-purple" onclick="Rate.fn.showBuyerInfo(<%=data.list[i].tid%>)">联系信息</button>
+        </td>
+        <td><%=common.fn.formatDateTime(data.list[i].created)%></td>
+    </tr>
+<%}%>

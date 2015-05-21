@@ -47,22 +47,22 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="/rate/already-neutral-rate-orders">
-                        <i class="icon-double-angle-right"></i>
-                        被中评的订单
-                    </a>
-                </li>
+##                <li>
+##                    <a href="/rate/already-neutral-rate-orders">
+##                        <i class="icon-double-angle-right"></i>
+##                        被中评的订单
+##                    </a>
+##                </li>
+##
+##                <li>
+##                    <a href="/rate/already-bad-rate-orders">
+##                        <i class="icon-double-angle-right"></i>
+##                        被差评的订单
+##                    </a>
+##                </li>
 
                 <li>
-                    <a href="/rate/already-bad-rate-orders">
-                        <i class="icon-double-angle-right"></i>
-                        被差评的订单
-                    </a>
-                </li>
-
-                <li>
-                    <a href="jquery-ui.html">
+                    <a href="/rate/batch-rate-orders">
                         <i class="icon-double-angle-right"></i>
                         手动批量评价
                     </a>
