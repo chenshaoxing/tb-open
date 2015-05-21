@@ -7,41 +7,37 @@
                 <h4 class="modal-title" id="myModalLabel">联系信息</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="applicantForm" method="post">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label  class="col-sm-4 control-label">应聘者</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control required " maxlength="20" value="" id="applicantName" name="applicantName"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">招聘需求</label>
-                                <div class="col-sm-6">
+                <div class="profile-user-info">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 收货人 </div>
 
-                                </div>
-                            </div>
+                        <div class="profile-info-value">
+                            <i class="fa fa-user light-orange  fa-1x"></i>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span><%=data.receiverName%></span>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">联系电话</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control required positiveInteger" maxlength="11" value="" id="tel" name="tel"/>
-                                </div>
-                            </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 手机 </div>
+                        <div class="profile-info-value">
+                            <i class="fa fa-mobile light-orange  fa-2x"></i>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> <%=data.receiverMobile%></span>
                         </div>
                     </div>
-                </form>
 
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 收货地址 </div>
+                        <div class="profile-info-value">
+                            <i class="fa fa-map-marker light-orange  fa-2x"></i>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span><%=data.receiverState%> <%S=data.receiverCity%> <%S=data.receiverDistrict%> <%=data.receiverTown%> <%=data.receiverAddress%></span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"  onclick="applicant.fn.save('<%=data.randomDialogId%>','<%=data.id%>');">保存</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>

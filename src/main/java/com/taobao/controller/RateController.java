@@ -32,7 +32,7 @@ import java.util.Map;
  */
 @Controller
 public class RateController {
-    public static final Logger LOG = LoggerFactory.getLogger(RateController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RateController.class);
 
     @Resource
     private ProductService productService;
@@ -85,17 +85,18 @@ public class RateController {
                 request.setResult(result);
             }
             TraderatesGetResponse response = rateService.searchRate(request);
-            List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
-            for(TradeRate tradeRate :response.getTradeRates()) {
-                Map<String,Object> map = Utils.toMap(tradeRate);
-                Item item = productService.getProductByNumId(tradeRate.getNumIid());
-                if(item != null){
-                    map.put("productUrl",item.getDetailUrl());
-                }
-                list.add(map);
-            }
+//            List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
+//            for(TradeRate tradeRate :response.getTradeRates()) {
+//                Map<String,Object> map = Utils.toMap(tradeRate);
+//                Item item = productService.getProductByNumId(tradeRate.getNumIid());
+//                if(item != null){
+//                    map.put("productUrl",item.getDetailUrl());
+//                }
+//                list.add(map);
+//            }
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
-            pageInfo.setList(list);
+//            pageInfo.setList(list);
+            pageInfo.setList(response.getTradeRates());
             return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){
             LOG.error(e.getMessage());

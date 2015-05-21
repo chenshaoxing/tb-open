@@ -4,7 +4,7 @@
             <%=data.list[i].tid%>
         </td>
         <td>
-            <a target="_blank" href="<%=data.list[i].productUrl%>"><%=data.list[i].itemTitle%></a>
+            <a  href="javascript:Rate.fn.getProductUrl(<%=data.list[i].numIid%>)"><%=data.list[i].itemTitle%></a>
         </td>
         <td>￥<%=data.list[i].itemPrice%></td>
         <td>
@@ -22,6 +22,8 @@
             <% if (data.isBuyerGiveMe == 'true'){%>
                 <%=data.list[i].nick%>
                 <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].nick%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>
+                <br/>
+                <button type="button" class="btn btn-minier btn-purple" onclick="Rate.fn.showBuyerInfo(<%=data.list[i].tid%>)">联系信息</button>
             <%}else {%>
                 <%=data.list[i].ratedNick%>
                 <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].ratedNick%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>

@@ -3,12 +3,13 @@ var Rate = {
         ajaxSuccess:"success"
     },
     url:{
-        getAlreadyRateOrders:"/rate/already-rate-orders/list"
-
+        getAlreadyRateOrders:"/rate/already-rate-orders/list",
+        getBuyerInfo:"/trade/buyer-info",
+        getProductInfo:"/product/info"
     },
     ejs:{
-        alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs"
-//        addEmp:"/script/employee/ejs/addEmp.ejs"
+        alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
+        buyerInfo:"/script/rate/ejs/showBuyerInfo.ejs"
     },
     fn:{
         execList:function(){
@@ -89,7 +90,37 @@ var Rate = {
                     }
                 }
             }
-
+        },    // ejsUrl,data,size,readyFun,dialogCloseFun
+        showBuyerInfo:function(tradeId){
+            function callback(data){
+                if(data.success){
+                    if(data.data){
+                        common.fn.showDialog(Rate.ejs.buyerInfo,data.data,null,null,null);
+                    }else{
+                        common.fn.showInfoMessages("提示","该订单的买家信息不存在!");
+                    }
+                }
+            }
+            var params = new Object();
+            params.tradeId = tradeId;
+            common.fn.ajax(Rate.url.getBuyerInfo,params,callback);
+        },
+        getProductUrl:function(numId){
+            function callback(data){
+                if(data.success){
+                    if(data.data){
+                        var a = $("<a href='"+data.data.detailUrl+"' target='_blank'>Apple</a>").get(0);
+                        var e = document.createEvent('MouseEvents');
+                        e.initEvent('click', true, true);
+                        a.dispatchEvent(e);
+                    }else{
+                        common.fn.showInfoMessages("提示","该商品不存在!");
+                    }
+                }
+            }
+            var params  = new Object();
+            params.numId = numId;
+            common.fn.ajaxNotLoadingDialog(Rate.url.getProductInfo,params,callback);
         }
     }
 }

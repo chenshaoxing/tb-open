@@ -17,10 +17,9 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-        <img class="nav-user-photo" src="/plug/ace/assets/avatars/user.jpg" alt="Jason's Photo" />
-								<span class="user-info">
-									<small>欢迎光临,</small>
-									Jason
+        <img class="nav-user-photo" id="nav-user-photo" src="/plug/ace/assets/avatars/user.jpg" alt="Jason's Photo" />
+								<span class="user-info" id="user-info">
+
 								</span>
 
         <i class="icon-caret-down"></i>
