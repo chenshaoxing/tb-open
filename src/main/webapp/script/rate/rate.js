@@ -6,12 +6,15 @@ var Rate = {
         getAlreadyRateOrders:"/rate/already-rate-orders/list",
         getBuyerInfo:"/trade/buyer-info",
         getProductInfo:"/product/info",
-        getBatchRateOrders:"/rate/batch-rate-orders/list"
+        getBatchRateOrders:"/rate/batch-rate-orders/list",
+        addBatchRateOrders:"/rate/batch-rate-orders/rate"
     },
     ejs:{
         alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
         batchRateOrderList:"/script/rate/ejs/batch-rate-order-list.ejs",
-        buyerInfo:"/script/rate/ejs/showBuyerInfo.ejs"
+        buyerInfo:"/script/rate/ejs/showBuyerInfo.ejs",
+        batchRateInfo:"/script/rate/ejs/showBatchRateInfo.ejs",
+        batchRateResult:"/script/rate/ejs/batchRateResultInfo.ejs"
     },
     fn:{
         execList:function(){
@@ -42,57 +45,7 @@ var Rate = {
                }
            }
 
-       },
-        execNeutralList:function(){
-            common.fn.pagination(1,'Rate.fn.getAlreadyNeutralRateOrders','alreadyNeutralRateOrderListPagination');
-        },
-        getAlreadyNeutralRateOrders:function(currentPage,callback){
-            var params = new Object();
-            var isBuyerGiveMe = "true";
-            params.currentPage = currentPage;
-            params.pageSize = common.globalVariable.pageSize;
-            params.isBuyerGiveMe = isBuyerGiveMe;
-            params.result ="neutral";
-            common.fn.ajax(Rate.url.getAlreadyRateOrders,params,callBack);
-            function callBack(data){
-                if(data.success){
-                    data.data.isBuyerGiveMe = isBuyerGiveMe;
-                    var dataHtml = new EJS({url:Rate.ejs.alreadyRateOrderList}).render({data:data.data});
-                    $("#alreadyNeutralRateOrderListBody").html('');
-                    $("#alreadyNeutralRateOrderListBody").html(dataHtml);
-                    if(data.data.recordTotalCount){
-                        callback(data.data.recordTotalCount);
-                    }else{
-                        callback(0);
-                    }
-                }
-            }
-        },
-        execBadList:function(){
-            common.fn.pagination(1,'Rate.fn.getAlreadyBadRateOrders','alreadyBadRateOrderListPagination');
-        },
-        getAlreadyBadRateOrders:function(currentPage,callback){
-            var params = new Object();
-            var isBuyerGiveMe = "true";
-            params.currentPage = currentPage;
-            params.pageSize = common.globalVariable.pageSize;
-            params.isBuyerGiveMe = isBuyerGiveMe;
-            params.result ="bad";
-            common.fn.ajax(Rate.url.getAlreadyRateOrders,params,callBack);
-            function callBack(data){
-                if(data.success){
-                    data.data.isBuyerGiveMe = isBuyerGiveMe;
-                    var dataHtml = new EJS({url:Rate.ejs.alreadyRateOrderList}).render({data:data.data});
-                    $("#alreadyBadRateOrderListBody").html('');
-                    $("#alreadyBadRateOrderListBody").html(dataHtml);
-                    if(data.data.recordTotalCount){
-                        callback(data.data.recordTotalCount);
-                    }else{
-                        callback(0);
-                    }
-                }
-            }
-        },    // ejsUrl,data,size,readyFun,dialogCloseFun
+       },    // ejsUrl,data,size,readyFun,dialogCloseFun
         showBuyerInfo:function(tradeId){
             function callback(data){
                 if(data.success){
@@ -148,6 +101,44 @@ var Rate = {
         },
         execBatchList:function(){
             common.fn.pagination(1,'Rate.fn.getBatchRateOrders','batchRateOrderListPagination');
+        },
+        checkAll:function(element){
+            var check = element.checked;
+            $("input[name='tradeIds']").each(function(){
+                $(this).attr("checked",check);
+            })
+        },
+        showBatchRateInfoDialog:function(selectOrAll){
+            var params  = new Object();
+            if(selectOrAll == 'select'){
+                var tradeIds = "";
+                $("input[name='tradeIds']:checked").each(function(){
+                    tradeIds+=$(this).val()+",";
+                })
+                if(tradeIds){
+                    tradeIds = tradeIds.substr(0,tradeIds.length-1);
+                    params.tradeIds = tradeIds;
+                }else{
+                    common.fn.showInfoMessages("提示","请至少选择一条记录!");
+                    return;
+                }
+            }
+
+            params.selectOrAll = selectOrAll;
+            common.fn.showDialog(Rate.ejs.batchRateInfo,params,null,null,null);
+        },
+        batchRateOrders:function(dialogId){
+            function callback(data){
+                if(data.success){
+                    $("#"+dialogId).modal("hide");
+                    common.fn.showDialog(Rate.ejs.batchRateResult,data.data,null);
+                    Rate.fn.execBatchList();
+                }
+            }
+            var batchRateForm = common.fn.getFromJsonData("batchRateForm");
+            batchRateForm.buyerNick = $("#buyerNick").val();
+            batchRateForm.rateStatus = $("#rateStatus").val();
+            common.fn.ajax(Rate.url.addBatchRateOrders,batchRateForm,callback);
         }
     }
 }

@@ -1,0 +1,74 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title" id="myModalLabel">手动批量评价</h4>
+            </div>
+            <div class="modal-body">
+                <form id="batchRateForm">
+                    <input type="hidden" name="tradeIds" value="<%=data.tradeIds%>">
+                    <div class="profile-user-info">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 操作 </div>
+                        <div class="profile-info-value">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <%=data.selectOrAll == 'select'?'<span class="label label-lg label-success arrowed-right">一键评价勾选订单</span>':'<span class="label label-lg label-pink arrowed-right">一键评价所有订单</span>'%></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 评价类型 </div>
+                        <div class="profile-info-value">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="margin-top: 0px;margin-left: -15px;">
+                                <input name="rateType" type="radio" class="ace" checked  value="GOOD" onclick="Rate.fn.execList()" />
+                                <span class="lbl"><img src="/plug/images/good.png"> 好评</span>
+                            </label>   &nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="margin-top: 0px;">
+                                <input name="rateType" type="radio" class="ace" value="NEUTRAL" onclick="Rate.fn.execList()" />
+                                <span class="lbl"><img src="/plug/images/neutral.png">中评</span>
+                            </label> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="margin-top: 0px;">
+                                <input name="rateType" type="radio" class="ace" value="BAD" onclick="Rate.fn.execList()" />
+                                <span class="lbl"><img src="/plug/images/bad.png">差评</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 评价内容 </div>
+                        <div class="profile-info-value">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <textarea class="form-control limited" name="content" id="content" rows="5" cols="40" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Rate.fn.batchRateOrders(<%=data.randomDialogId%>);" class="btn btn-primary">评价</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('textarea.limited').inputlimiter({
+        remText: '还能输入 %n  个字符',
+        limitText: '最多可输入%n 个字符'
+    });
+</script>
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #f4f6f6;
+        border-color: #d5dbdb;
+        color: #34495e;
+        cursor: default;
+        opacity: 1;
+        filter: alpha(opacity=70);
+    }
+</style>
+

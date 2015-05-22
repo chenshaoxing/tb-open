@@ -51,9 +51,9 @@
                                         <div class="form-group">
                                             <label style="text-align: left" for="rateStatus" class="col-sm-3 control-label" for="form-field-select-1">评价状态:</label>
                                             <div class="col-sm-6">
-                                                <select class="form-control" id="rateStatus" name="rateStatus" onchange=" Rate.fn.execBatchList();">
+                                                <select class="form-control" id="rateStatus"  name="rateStatus" onchange=" Rate.fn.execBatchList();">
                                                     <option value="RATE_UNSELLER">卖家未评</option>
-                                                    <option value="RATE_BUYER_UNSELLER">买家已评，卖家未评</option>
+##                                                    <option value="RATE_BUYER_UNSELLER">买家已评，卖家未评</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -79,16 +79,29 @@
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="col-xs-12">
-                            <h3 class="header smaller lighter blue">未评价订单列表</h3>
-##                            <div class="table-header">
+                            <h3 class="header smaller lighter blue">
+                                未评价订单列表
+                                <button class="btn btn-sm btn-pink" type="button" style="float: right;margin-left: 10px;"  onclick="Rate.fn.showBatchRateInfoDialog('all');">一键评价所有订单</button>
+                                <button class="btn btn-sm btn-success" type="button" onclick="Rate.fn.showBatchRateInfoDialog('select');" style="float: right">一键评价勾选订单</button>
+
+                            </h3>
+##                            <div class="table-header" style="float: left">
 ##                                Results for "Latest Registered Domains"
 ##                            </div>
+
                             <div class="table-responsive">
                                 <table id="sample-table-2" style="word-break:break-all; word-wrap:break-word;" class="table table-striped table-bordered table-hover">
                                     <thead >
                                         <tr style="background-color: #6fb3e0!important">
+                                            <th class="center">
+                                                <label>
+                                                    <input type="checkbox" class="ace" onclick="Rate.fn.checkAll(this)" id="tradeIds" />
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </th>
                                             <th style="width: 13%">交易ID</th>
                                             <th style="width: 30%">商品名称</th> <!-- 数量 实付金额 -->
+                                            <th style="width: 7%">买家状态</th>
                                             <th style="width: 10%">实付金额</th>
                                             <th style="width: 18%">交易时间</th>
                                             <th style="width: 13%">买家</th>
@@ -100,7 +113,7 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="6" id="batchRateOrderListPagination"></td>
+                                        <td colspan="8" id="batchRateOrderListPagination"></td>
                                     </tr>
                                     </tfoot>
                                 </table>

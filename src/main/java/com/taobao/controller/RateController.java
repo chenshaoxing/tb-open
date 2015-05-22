@@ -3,6 +3,7 @@ package com.taobao.controller;
 import com.hr.system.manage.common.ResultJson;
 import com.hr.system.manage.repository.dao.PageInfo;
 import com.taobao.api.domain.Item;
+import com.taobao.api.domain.Trade;
 import com.taobao.api.domain.TradeRate;
 import com.taobao.api.request.TraderatesGetRequest;
 import com.taobao.api.request.TradesSoldGetRequest;
@@ -21,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with Intellij IDEA
@@ -56,14 +55,9 @@ public class RateController {
         return "rate/batch-rate-order";
     }
 
-    @RequestMapping(value = "/rate/already-bad-rate-orders")
-    public String alreadyBadRateOrderIndex(){
-        return "rate/already-bad-rate-order";
-    }
-
-    @RequestMapping(value = "/rate/already-neutral-rate-orders")
-    public String alreadyNeutralRateOrderIndex(){
-        return "rate/already-neutral-rate-order";
+    @RequestMapping(value = "/rate/rate-global-setting")
+    public String rateGlobalSettingIndex(){
+        return "rate/rate-global-setting";
     }
 
     @RequestMapping(value = "/rate/already-rate-orders/list")
@@ -133,11 +127,85 @@ public class RateController {
             request.setRateStatus(rateStatus);
             TradesSoldGetResponse response = tradeService.getTradeSold(request);
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
-            pageInfo.setList(response.getTrades());
+            List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
+            if(response.getTrades() != null && response.getTrades().size() > 0){
+                for(Trade trade :response.getTrades()) {
+                    Map<String,Object> map = Utils.toMap(trade);
+                    Date endTime = trade.getEndTime();
+                    Calendar cal =  Calendar.getInstance();
+                    cal.setTime(endTime);
+                    cal.add(Calendar.DATE,15);
+                    Long currentTimeMillis = System.currentTimeMillis();
+                    if(cal.getTimeInMillis() < currentTimeMillis){
+                        map.put("overTime","false");
+                    }else{
+                        Long result = cal.getTimeInMillis()-System.currentTimeMillis();
+                        String overTime = Utils.formatTime(result);
+                        map.put("overTime",overTime);
+                    }
+                    list.add(map);
+                }
+            }
+            pageInfo.setList(list);
             return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;
         }
     }
+
+    @RequestMapping(value = "/rate/batch-rate-orders/rate")
+    @ResponseBody
+    public Map<String, Object> rateBatchOrders(@RequestParam(required = false) String tradeIds,
+                                               @RequestParam String content,
+                                               @RequestParam String rateType,
+                                               @RequestParam(required = false) String buyerNick,
+                                               @RequestParam(required = false) String rateStatus
+                                               ) throws Exception{
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Object> trades = new ArrayList<Object>();
+        try{
+            int success = 0;
+            int failed = 0;
+            if(StringUtils.isNotEmpty(tradeIds)){
+                String ids []= tradeIds.split(",");
+                for(String tradeId:ids){
+                    boolean flag = rateService.add(Long.valueOf(tradeId), RateService.RateEnum.valueOf(rateType),content);
+                    if(flag)
+                        success+=1;
+                    else {
+                        failed += 1;
+                        trades.add(tradeId);
+                    }
+                }
+            }else{
+                Map<String,Object> result = this.getBatchRateOrders(1l,10l,buyerNick,rateStatus);
+                PageInfo pageInfo  = (PageInfo)result.get("data");
+                Long totalPage =  pageInfo.getPageTotalNum();
+                for(long i = 1l;i<totalPage+1l;i++){
+                    result = this.getBatchRateOrders(i,5l,buyerNick,rateStatus);
+                    pageInfo  = (PageInfo)result.get("data");
+                    totalPage = pageInfo.getPageTotalNum();
+                    List<Map<String,Object>> list = pageInfo.getList();
+                    for(Map<String,Object> param:list){
+                        boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()), RateService.RateEnum.valueOf(rateType),content);
+                        if(flag)
+                            success+=1;
+                        else {
+                            failed += 1;
+                            trades.add(param.get("tid").toString());
+                        }
+                    }
+                }
+            }
+            map.put("tradeIds",trades);
+            map.put("success",success);
+            map.put("failed",failed);
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+        return ResultJson.resultSuccess(map);
+    }
+
 }

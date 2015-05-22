@@ -38,6 +38,7 @@
     <script src="/plug/ace/assets/js/flot/jquery.flot.min.js"></script>
     <script src="/plug/ace/assets/js/flot/jquery.flot.pie.min.js"></script>
     <script src="/plug/ace/assets/js/flot/jquery.flot.resize.min.js"></script>
+    <script src="/plug/jquery.inputlimiter.1.3.1.min.js"></script>
 
     <!-- ace scripts -->
 

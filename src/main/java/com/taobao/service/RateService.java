@@ -61,8 +61,7 @@ public class RateService {
             request.setAnony(true);
             request.setResult(rateEnum.getValue());
             TraderateAddResponse response = client.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
-            response.isSuccess();
-            return false;
+            return  response.isSuccess();
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;

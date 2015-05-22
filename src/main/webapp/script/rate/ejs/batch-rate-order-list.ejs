@@ -1,5 +1,11 @@
 <%for(var i=0 ; i<data.list.length ; i++){%>
     <tr>
+        <td class="center">
+            <label>
+                <input name="tradeIds" type="checkbox" class="ace" value="<%=data.list[i].tid%>" />
+                <span class="lbl"></span>
+            </label>
+        </td>
         <td>
             <%=data.list[i].tid%>
         </td>
@@ -7,18 +13,17 @@
             <% var orders = data.list[i].orders %>
             <% for( var j = 0;j<orders.length;j++) {%>
                 <a  href="javascript:Rate.fn.getProductUrl(<%=orders[j].numIid%>)"><%=orders[j].title%></a> <br/>
-                数量:<%=orders[j].num%>&nbsp;&nbsp;&nbsp;&nbsp; 实付:<%=orders[j].payment%>
-            <br/>
-
-
+                数量:<%=orders[j].num%>&nbsp;&nbsp;&nbsp;&nbsp; 实付:&nbsp;&nbsp;<i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp;<%=orders[j].payment%>
+                <br/>
             <%}%>
 
         </td>
-        <td>￥<%=data.list[i].payment%></td>
+        <td><%=data.list[i].buyerRate?'已评价':'未评价'%></td>
+        <td><i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp;<%=data.list[i].payment%></td>
         <td>
-            拍下:<%=common.fn.formatDateTime(data.list[i].created)%><br/>
-            付款:<%=common.fn.formatDateTime(data.list[i].payTime)%><br/>
-            成功:<%=common.fn.formatDateTime(data.list[i].endTime)%>
+            <span class="label label-lg label-info arrowed-right">拍下:<%=common.fn.formatDateTime(data.list[i].created)%></span><br/>
+            <span class="label label-lg label-warning  arrowed-right">付款:<%=common.fn.formatDateTime(data.list[i].payTime)%></span><br/>
+            <span class="label label-lg  label-success  arrowed-right">成功:<%=common.fn.formatDateTime(data.list[i].endTime)%></span>
         </td>
         <td>
             <%=data.list[i].buyerNick%>
@@ -26,6 +31,7 @@
             <br/>
             <button type="button" class="btn btn-minier btn-purple" onclick="Rate.fn.showBuyerInfo(<%=data.list[i].tid%>)">联系信息</button>
         </td>
-        <td><%=common.fn.formatDateTime(data.list[i].created)%></td>
+        <td><%=data.list[i].overTime == 'false'?'<span class="label label-danger ">已失效</span>':data.list[i].overTime%></td>
+
     </tr>
 <%}%>
