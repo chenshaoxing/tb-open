@@ -2,11 +2,13 @@ var common ={
     globalVariable:{
         pageSize:10,
         userType:"",
-        username:""
+        username:"",
+        userId:0
     },
     fn:{
         init:function(){
-//            common.globalVariable.username = $.cookie("username");
+            common.globalVariable.username = $.cookie("name");
+            common.globalVariable.userId = $.cookie("id");
 //            if(!$.cookie("id")){
 //                location.href="/index.html";
 //            }

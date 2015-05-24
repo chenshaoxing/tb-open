@@ -2,10 +2,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title"><%=data.title%></h6>
+        <h4 class="modal-title  smaller lighter blue"><%=data.title%></h4>
       </div>
       <div class="modal-body">
-        <div class="bordered"><%=data.message%></div>
+        <div class="bordered" style="max-height: 500px">
+          <div class="alert alert-info">
+            <%=data.message%>
+            <br>
+          </div>
+
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" id="subBtn<%=data.randomDialogId%>" class="btn btn-primary" data-dismiss="modal">确定</button>

@@ -7,14 +7,17 @@ var Rate = {
         getBuyerInfo:"/trade/buyer-info",
         getProductInfo:"/product/info",
         getBatchRateOrders:"/rate/batch-rate-orders/list",
-        addBatchRateOrders:"/rate/batch-rate-orders/rate"
+        addBatchRateOrders:"/rate/batch-rate-orders/rate",
+        autoRateSetting:"/rate/auto-rate-global-setting" ,
+        initAutoRateSetting:"/rate/auto-rate-global-setting/init"
     },
     ejs:{
         alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
         batchRateOrderList:"/script/rate/ejs/batch-rate-order-list.ejs",
         buyerInfo:"/script/rate/ejs/showBuyerInfo.ejs",
         batchRateInfo:"/script/rate/ejs/showBatchRateInfo.ejs",
-        batchRateResult:"/script/rate/ejs/batchRateResultInfo.ejs"
+        batchRateResult:"/script/rate/ejs/batchRateResultInfo.ejs",
+        autoRateSetting:"/script/rate/ejs/autoRateSetting.ejs"
     },
     fn:{
         execList:function(){
@@ -130,7 +133,7 @@ var Rate = {
         batchRateOrders:function(dialogId){
             function callback(data){
                 if(data.success){
-                    $("#"+dialogId).modal("hide");
+
                     common.fn.showDialog(Rate.ejs.batchRateResult,data.data,null);
                     Rate.fn.execBatchList();
                 }
@@ -138,7 +141,58 @@ var Rate = {
             var batchRateForm = common.fn.getFromJsonData("batchRateForm");
             batchRateForm.buyerNick = $("#buyerNick").val();
             batchRateForm.rateStatus = $("#rateStatus").val();
+            $("#"+dialogId).modal("hide");
             common.fn.ajax(Rate.url.addBatchRateOrders,batchRateForm,callback);
+        },
+        readyAutoRateSetting:function(){
+            var dataHtml = new EJS({url:Rate.ejs.autoRateSetting}).render({data:{}});
+            $("#page-content").html(dataHtml);
+        },
+        addAutoRateSetting:function(){
+            function callback(data){
+                if(data.success){
+                    common.fn.showInfoMessages("提示","自动评价配置设置成功!");
+                }
+            }
+            var autoRateSettingForm = $("#autoRateSettingForm").validate({});
+            if(autoRateSettingForm.form()){
+                var params = common.fn.getFromJsonData("autoRateSettingForm");
+                if($("#autoRateStatus").attr("checked")){
+                    params.autoRateStatus = true;
+                }else{
+                    params.autoRateStatus = false;
+                }
+                if($("#mediumOrPoorRateAlarm").attr("checked")){
+                    params.mediumOrPoorRateAlarm = true;
+                }else{
+                    params.mediumOrPoorRateAlarm = false;
+                }
+                params.userId = $.cookie("id");
+                common.fn.ajaxNotLoadingDialog(Rate.url.autoRateSetting,params,callback)
+            }
+        },
+        initAutoRateSetting:function(){
+            function callback(data){
+                if(data.success){
+                    var result = data.data.setting;
+                    var dataHtml = new EJS({url:Rate.ejs.autoRateSetting}).render({data:result});
+                    $("#page-content").html("");
+                    $("#page-content").html(dataHtml);
+                    $("input[name='autoRateType']").each(function(){
+                        if($(this).val() == result.autoRateType){
+                            $(this).attr("checked",true);
+                        }
+                    })
+                    var content = "content";
+                    for(var i = data.data.contents.length-1;i>=0;i--){
+                        $("#"+content+(i+1)).val(data.data.contents[i].content);
+                    }
+                    $("#triggerMode").val(result.triggerMode);
+                }
+            }
+            var params = new Object();
+            params.userId = $.cookie("id");
+            common.fn.ajax(Rate.url.initAutoRateSetting,params,callback)
         }
     }
 }

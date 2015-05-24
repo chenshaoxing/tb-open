@@ -15,7 +15,7 @@ public class PageInfo<T> {
     /**
      * 总页数
      */
-    private int pageTotalNum;
+    private long pageTotalNum;
 
     /**
      * 数据列表
@@ -25,7 +25,7 @@ public class PageInfo<T> {
     /**
      * 数据总记录数
      */
-    private int recordTotalCount;
+    private long recordTotalCount;
 
     /**
      * 用于hbase分页
@@ -33,7 +33,7 @@ public class PageInfo<T> {
     private String nextKey;
 
 
-    public PageInfo(int pageSize, int recordTotalCount){
+    public PageInfo(long pageSize, long recordTotalCount){
         this.pageTotalNum = (recordTotalCount + pageSize - 1) / pageSize;
         this.recordTotalCount = recordTotalCount;
     }
@@ -41,7 +41,7 @@ public class PageInfo<T> {
     public PageInfo() {
     }
 
-    public int getPageTotalNum() {
+    public long getPageTotalNum() {
         return pageTotalNum;
     }
 
@@ -57,11 +57,11 @@ public class PageInfo<T> {
         this.list = list;
     }
 
-    public int getRecordTotalCount() {
+    public long getRecordTotalCount() {
         return recordTotalCount;
     }
 
-    public void setRecordTotalCount(int recordTotalCount) {
+    public void setRecordTotalCount(long recordTotalCount) {
         this.recordTotalCount = recordTotalCount;
     }
 

@@ -1,7 +1,8 @@
 package com.taobao.dao;
 
 
-import com.hr.system.manage.repository.domain.BaseDomain;
+
+import com.taobao.entity.BaseDomain;
 
 import java.util.HashMap;
 import java.util.List;

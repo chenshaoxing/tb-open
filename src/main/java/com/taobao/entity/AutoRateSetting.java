@@ -21,12 +21,12 @@ public class AutoRateSetting extends BaseDomain {
     private User user;
 
 
-    public enum AutoRateType{
+    public enum RateType{
         GOOD("good"),NEUTRAL("neutral"),BAD("bad");
 
         private String value;
 
-        AutoRateType(String value) {
+        RateType(String value) {
             this.value = value;
         }
 
@@ -63,12 +63,12 @@ public class AutoRateSetting extends BaseDomain {
         this.autoRateStatus = autoRateStatus;
     }
 
-    public AutoRateType getAutoRateType() {
-        return autoRateType;
+    public RateType getRateType() {
+        return rateType;
     }
 
-    public void setAutoRateType(AutoRateType autoRateType) {
-        this.autoRateType = autoRateType;
+    public void setRateType(RateType rateType) {
+        this.rateType = rateType;
     }
 
     public TriggerMode getTriggerMode() {
@@ -97,7 +97,7 @@ public class AutoRateSetting extends BaseDomain {
 
     @Column
     @Enumerated(EnumType.STRING)       //自动评价类型
-    private AutoRateType autoRateType;
+    private RateType rateType;
     @Column
     @Enumerated(EnumType.STRING)      //自动触发方式
     private TriggerMode triggerMode;
@@ -105,5 +105,10 @@ public class AutoRateSetting extends BaseDomain {
     private boolean autoGrabRate = true;
     @Column     //中评差评警告提醒 是否开启
     private boolean mediumOrPoorRateAlarm;
+
+    public static void main(String[] args) {
+        TriggerMode triggerMode1 = TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE ;
+        System.out.println(triggerMode1.name());
+    }
 
 }

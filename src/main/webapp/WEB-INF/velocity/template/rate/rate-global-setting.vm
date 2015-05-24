@@ -1,154 +1,17 @@
+<script src="/script/rate/rate.js"></script>
+<div class="main-container" id="main-container">
 <div class="main-content">
-    <div class="page-content">
-    <div class="page-header">
-        <h1>
-            自动评价全局设置
-            <small>
-                <i class="icon-double-angle-right"></i>
-                设置自动评价的各种配置信息
-            </small>
-        </h1>
-    </div><!-- /.page-header -->
-        <div style="margin-top: 80px;" class="row">
-            <div class="col-xs-12">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 当前服务状态 </label>
-
-                        <div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">
-##                                <small class="muted">Border:</small>
-                                <input id="id-button-borders"  type="checkbox" class="ace ace-switch ace-switch-4">
-                                <span class="lbl"></span>
-##                            <label style="margin-top: 0px;margin-left: -15px;">
-##                                <input name="isOpen" type="radio" class="ace" checked  value="true"  />
-##                                <span class="lbl">开启</span>
-##                            </label>
-##                            <label style="margin-top: 0px;">
-##                                <input name="isOpen" type="radio" class="ace" value="false" />
-##                                <span class="lbl">关闭</span>
-##                            </label>
-                        </div>
-                    </div>
-
-                    <div class="space-4"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-2">自动评价类型</label>
-
-                        <div class="col-sm-9">
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="margin-top: 0px;margin-left: -15px;">
-                                <input name="rateType" type="radio" class="ace" checked  value="GOOD" onclick="Rate.fn.execList()" />
-                                <span class="lbl"><img src="/plug/images/good.png"> 好评</span>
-                            </label>   &nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="margin-top: 0px;">
-                                <input name="rateType" type="radio" class="ace" value="NEUTRAL" onclick="Rate.fn.execList()" />
-                                <span class="lbl"><img src="/plug/images/neutral.png">中评</span>
-                            </label> &nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="margin-top: 0px;">
-                                <input name="rateType" type="radio" class="ace" value="BAD" onclick="Rate.fn.execList()" />
-                                <span class="lbl"><img src="/plug/images/bad.png">差评</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="space-4"></div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-input-readonly">中差评告警邮箱</label>
-
-                        <div class="col-sm-4">
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="text" id="email" placeholder="email" data-toggle="tooltip" data-placement="right" title="如果发现买家给的是差评那么会通过该地址发送邮件给亲" class="col-xs-10 col-sm-5">
-
-                        </div>
-                    </div>
-
-                    <div class="space-4"></div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-input-readonly">自动触发方式</label>
-
-                        <div class="col-sm-3">
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <select class="form-control col-xs-10 col-sm-5" id="result" name="result" style="margin-top: -20px;">
-                                <option value="">买家确认收货后立即给评价</option>
-                                <option value="good">买家评价后立即给评价</option>
-                                <option value="neutral">对方评价后暂不给评价</option>
-                            </select>
-
-                        </div>
-                    </div>
-
-                    <div class="space-4"></div>
+    <div id="page-content" class="page-content">
 
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-4">自动评价内容</label>
-
-                        <div class="col-sm-4">
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <textarea class="form-control limited" name="content" id="content" rows="7" cols="40" maxlength="500"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="button">
-                                <i class="icon-ok bigger-110"></i>
-                                Submit
-                            </button>
-
-                            &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
-                                <i class="icon-undo bigger-110"></i>
-                                Reset
-                            </button>
-                        </div>
-                    </div>
-                    <div class="hr hr-24"></div>
-                </form>
-</div><!-- /.col -->
-</div><!-- /.row -->
-        <div class="row">
-            <div class="alert alert-block alert-success">
-
-                <p>
-                    <span class="label label-xlg label-purple  arrowed-in"><strong>“自动触发方式”设置说明：</strong> </span>
-                </p>
-                <p>
-                    1、用户确认收货后立即给评价：用户确认收货就立即给对方评价。设置变更后，对方已评价和第14天到期订单，都会自动评价。(注：天猫商城不能设置)
-                </p>
-                <p>
-                    2、对方评价后立即给评价：只有对方先给了评价后，才给对方评价（如果买家一直不评价，则在第14天自动抢评）。
-                </p>
-                <p>
-                    3、对方评价后暂不给评价：买家给评价了，卖家也不评价，但是在第14天自动抢评。
-                </p>
-                <div class="hr hr-24"></div>
-                <p>
-                    <span class="label label-xlg label-pink arrowed-right">Large<strong>是否支持抢评功能？ </strong></span>
-                </p>
-                <P>所有的订单，只要评价服务状态为“开启”，都将在第14天主动抢评，无需其它设置。 </P>
-                <div class="hr hr-24"></div>
-                <p>  <span class="label label-xlg label-info  arrowed-right">Large<strong>什么是抢评？ </strong></span></p>     danger
-                <p>
-                    1、订单如果是淘宝系统默认好评的话，是不计算信用分的（就是升钻的分），很多买家都是收货后一直不评价，卖家也不评价，最后就由淘宝系统默认好评了。 而由淘宝系统默认好评的订单，是不计算卖家信用分的。
-                </p>
-                <p>
-                    2、抢评功能就是在订单快要到期的最后一天，卖家主动给订单好评，不丢失信用分。
-                </p>
-                <p>
-                    3、以下情况的不计分：买家未评价、卖家也未评价，淘宝系统默认好评，不计分。
-                </p>
-            </div>
-
-        </div>
 </div>
 </div>
+    </div>
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
 <script>
-    $('textarea.limited').inputlimiter({
-        remText: '还能输入 %n  个字符',
-        limitText: '最多可输入%n 个字符'
-    });
-    $('#email').tooltip('show')
+    $(document).ready(function(){
+        Rate.fn.initAutoRateSetting();
+    })
 </script>

@@ -1,7 +1,7 @@
 package com.taobao.dao;
 
 
-import com.hr.system.manage.repository.domain.BaseDomain;
+import com.taobao.entity.BaseDomain;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

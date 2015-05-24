@@ -45,12 +45,12 @@ public class RateService {
     /**
      * 评价单个订单（不包含子订单）
      * @param tid
-     * @param rateEnum
+     * @param rateType
      * @param content
      * @return
      * @throws Exception
      */
-    public boolean add(Long tid,RateEnum rateEnum,String content) throws Exception {
+    public boolean add(Long tid,String rateType,String content) throws Exception {
         try {
             TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
                     Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
@@ -59,7 +59,7 @@ public class RateService {
             request.setContent(content);
             request.setRole("seller");
             request.setAnony(true);
-            request.setResult(rateEnum.getValue());
+            request.setResult(rateType);
             TraderateAddResponse response = client.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
             return  response.isSuccess();
         }catch (Exception e){
@@ -71,12 +71,12 @@ public class RateService {
     /**
      * 评价单个订单（含子订单）
      * @param tid
-     * @param rateEnum
+     * @param rateType
      * @param content
      * @return
      * @throws Exception
      */
-    public boolean add(Long tid,Long oid,RateEnum rateEnum,String content) throws Exception {
+    public boolean add(Long tid,Long oid,String rateType,String content) throws Exception {
         try {
             TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
                     Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
@@ -86,7 +86,7 @@ public class RateService {
             request.setContent(content);
             request.setRole("seller");
             request.setAnony(true);
-            request.setResult(rateEnum.getValue());
+            request.setResult(rateType);
             TraderateAddResponse response = client.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
             response.isSuccess();
             return false;

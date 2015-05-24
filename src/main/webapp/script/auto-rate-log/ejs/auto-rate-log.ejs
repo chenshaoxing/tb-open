@@ -1,0 +1,42 @@
+<% for(var i=0 ; i<data.list.length;i++){ %>
+<tr>
+    <td><%=data.list[i].tid%></td>
+    <td>
+        <a  href="javascript:Rate.fn.getProductUrl(<%=data.list[i].numIid%>)"><%=data.list[i].productTitle%></a>
+    </td>
+
+    <td><i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%=data.list[i].realPrice%></td>
+    <td>
+        <% if(data.list[i].rateStatus == "AUTO_BATCH_RATE"){ %>
+        自动批量评价
+        <%}else if(data.list[i].rateStatus == "AUTO_RATE") {%>
+        自动评价
+        <%}else if(data.list[i].rateStatus == "HAND_BATCH_RATE"){%>
+        手动批量评价
+        <%}else {%>
+        手动评价
+        <%}%>
+
+    </td>
+    <td>
+        <% if(data.list[i].rateEnum == 'GOOD'){%>
+        好评<img src="/plug/images/good.png">
+        <%}else if(data.list[i].rateEnum == 'BAD'){%>
+        差评<img src="/plug/images/bad.png">
+        <%}else{%>
+        中评<img src="/plug/images/neutral.png">
+        <%}%>
+    </td>
+
+    <td>
+        <span class="label label-lg  label-success  arrowed-right"><%=common.fn.formatDateTime(data.list[i].createdTime)%></span>
+    </td>
+
+    <td>
+        <%=data.list[i].buyerNickname%>
+
+        <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].buyerNickname%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>
+    </td>
+    <td><%=data.list[i].rateContent.content%></td>
+</tr>
+<%}%>

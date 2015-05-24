@@ -1,19 +1,27 @@
-<script src="/script/rate/rate.js"></script>
+<script src="/script/black/black.js"></script>
 <div class="main-container" id="main-container">
 <script type="text/javascript">
     try{ace.settings.check('main-container' , 'fixed')}catch(e){}
     $(document).ready(function(){
-        Rate.fn.execList();
-        $("#tradeId").keydown(function(e){
+        Black.fn.execList();
+        $("#buyerNick").keydown(function(e){
             if(!e)e=window.event;
             if((e.keyCode||e.which)==13){
                 e.preventDefault();
-                Rate.fn.execList()
+                Black.fn.execList()
             }
         });
     })
 
 </script>
+
+<style>
+    .Wdate {
+        border: #999 1px solid;
+         height: 34px;
+        background: #fff url(datePicker.gif) no-repeat right;
+    }
+</style>
 
 
 ##<div class="main-container-inner">
@@ -21,10 +29,10 @@
         <div class="page-content">
             <div class="page-header">
                 <h1>
-                    已评价订单
+                    评价黑名单设置
                     <small>
                         <i class="icon-double-angle-right"></i>
-                        可以查询买家给卖家的评价订单和卖家给买家的评价订单
+                        添加了黑名单的买家在自动的评价的时候将会自动过滤,不对其订单进行评价直至过期
                     </small>
                 </h1>
             </div>
@@ -35,55 +43,28 @@
 ##                    <h3 class="header smaller lighter blue">搜索</h3>
                     <div class="row">
                         <div class="col-xs-12">
-                            <form class="form-horizontal" id="getAlreadyRateOrderForm">
+                            <form class="form-horizontal" id="blackForm">
                                 <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="form-group">
-                                            <label style="text-align: left" for="name" class="col-sm-3 control-label">交易号: </label>
 
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label style="text-align: left" for="name" class="col-sm-3 control-label">买家昵称: </label>
                                             <div class="col-sm-6">
-                                                <input type="text" maxlength="16" class="form-control positiveInteger" id="tradeId"
-                                                       name="tradeId">
+                                                <input type="text" maxlength="20" placeholder="敲回车进行搜索" class="form-control required" id="buyerNick"
+                                                       name="buyerNick">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-2">
                                         <div class="form-group">
-                                            <div class="col-sm-6">
-                                                <label style="margin-top: 0px;margin-left: -15px;">
-                                                    <input name="isBuyerGiveMe" type="radio" class="ace" checked  value="true" onclick="Rate.fn.execList()" />
-                                                    <span class="lbl">买家给我的评价</span>
-                                                </label>
-                                                <label style="margin-top: 0px;">
-                                                    <input name="isBuyerGiveMe" type="radio" class="ace" value="false" onclick="Rate.fn.execList()" />
-                                                    <span class="lbl">我给买家的评价</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="form-group">
-                                            <label style="text-align: left" for="name" class="col-sm-3 control-label" for="form-field-select-1">评价结果:</label>
-                                            <div class="col-sm-6">
-                                                <select class="form-control" id="result" name="result" onchange="Rate.fn.execList();">
-                                                    <option value="">全部</option>
-                                                    <option value="good">好评</option>
-                                                    <option value="neutral">中评</option>
-                                                    <option value="bad">差评</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <div class="form-group">
-                                            <button class="btn btn-info btn-sm" type="button" onclick="Rate.fn.execList();">
-                                                <i class="icon-search bigger-110"></i>
-                                                搜索
+                                            <button class="btn btn-info btn-sm" type="button" onclick="Black.fn.add();">
+                                                <i class="fa fa-plus fa-1x"></i>
+##                                                <i class="icon-search bigger-110"></i>
+                                                添加
                                             </button>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="space-4"></div>
                             </form>
@@ -97,7 +78,7 @@
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="col-xs-12">
-                            <h3 class="header smaller lighter blue">已评价订单列表</h3>
+                            <h3 class="header smaller lighter blue">黑名单列表</h3>
 ##                            <div class="table-header">
 ##                                Results for "Latest Registered Domains"
 ##                            </div>
@@ -105,22 +86,17 @@
                                 <table id="sample-table-2" style="word-break:break-all; word-wrap:break-word;" class="table table-striped table-bordered table-hover">
                                     <thead >
                                         <tr style="background-color: #6fb3e0!important">
-                                            <th style="width: 13%">交易ID</th>
-                                            <th style="width: 20%">商品名称</th>
-                                            <th style="width: 9%">商品价格</th>
-                                            <th style="width: 7%">评价结果</th>
-                                            <th style="width: 7%">是否计分</th>
-                                            <th style="width: 15%">评价时间</th>
-                                            <th style="width: 13%">对方昵称</th>
-                                            <th style="width: 35%">评价内容</th>
+                                            <th style="width: 13%">买家昵称</th>
+                                            <th style="width: 20%">添加时间</th>
+                                            <th style="width: 7%">操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="alreadyRateOrderListBody">
+                                    <tbody id="blackListBody">
 
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="9" id="alreadyRateOrderListPagination"></td>
+                                        <td colspan="3" id="blackListPagination"></td>
                                     </tr>
                                     </tfoot>
                                 </table>

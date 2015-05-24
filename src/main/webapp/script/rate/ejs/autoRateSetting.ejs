@@ -1,0 +1,201 @@
+<div id="pageHeader" class="page-header">
+    <h1>
+        自动评价全局设置
+        <small>
+            <i class="icon-double-angle-right"></i>
+            设置自动评价的各种配置信息
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+<div style="margin-top: 80px;" class="row">
+    <div class="col-xs-12">
+
+
+
+
+<form class="form-horizontal" id="autoRateSettingForm" role="form">
+    <div class="form-group">
+        <input type="hidden" value="<%=data.id%>" name="settingId" >
+        <label class="col-sm-3 control-label no-padding-right" > 当前服务状态 </label>
+
+        <div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">
+            <input id="autoRateStatus" <%=data.autoRateStatus?'checked':''%>  type="checkbox" name="autoRateStatus" class="ace ace-switch ace-switch-4">
+            <span class="lbl"></span>
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" > 中评差评警告提醒 </label>
+
+        <div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">
+            <input id="mediumOrPoorRateAlarm" <%=data.mediumOrPoorRateAlarm?'checked':''%> type="checkbox" name="mediumOrPoorRateAlarm" class="ace ace-switch ace-switch-4">
+            <span class="lbl"></span>
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" >自动评价类型</label>
+
+        <div class="col-sm-9">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label style="margin-top: 0px;margin-left: -15px;">
+                <input name="autoRateType" type="radio" class="ace" checked  value="GOOD"  />
+                <span class="lbl"><img src="/plug/images/good.png"> 好评</span>
+            </label>   &nbsp;&nbsp;&nbsp;&nbsp;
+            <label style="margin-top: 0px;">
+                <input name="autoRateType" type="radio" class="ace" value="NEUTRAL"  />
+                <span class="lbl"><img src="/plug/images/neutral.png">中评</span>
+            </label> &nbsp;&nbsp;&nbsp;&nbsp;
+            <label style="margin-top: 0px;">
+                <input name="autoRateType" type="radio" class="ace" value="BAD"  />
+                <span class="lbl"><img src="/plug/images/bad.png">差评</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" >中差评告警邮箱</label>
+
+        <div class="col-sm-4">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" name="email" value="<%=data.user.email%>" id="email" onfocus="$('#email').tooltip('show')" placeholder="email" data-toggle="tooltip" data-placement="right" title="如果发现买家给的是差评那么会通过该地址发送邮件给亲" class="col-xs-10 col-sm-7 required email">
+
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" >自动触发方式</label>
+
+        <div class="col-sm-3">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <select class="form-control col-xs-10 col-sm-5 required" id="triggerMode" name="triggerMode" style="margin-top: -20px;">
+                <option value="">请选择</option>
+                <option value="BUYER_CONFIRM_RIGHT_AWAY_RATE">买家确认收货后立即给评价</option>
+                <option value="BUYER_RATE_RIGHT_AWAY_RATE">买家评价后立即给评价</option>
+                <option value="BUYER_RATE_NOT_RATE">对方评价后暂不给评价</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" >自动评价内容</label>
+
+        <div class="col-sm-5">
+            <div role="tabpanel">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">自定义内容1</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">自定义内容2</a></li>
+                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">自定义内容3</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <textarea   class="form-control limited required" name="content1" id="content1" rows="7" cols="40" maxlength="500"></textarea>
+                        <p class="alert alert-success">
+                            自动评价的时候会随即筛选一条进行评价.
+                        </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile">
+                        <textarea  class="form-control limited required" name="content2" id="content2" rows="7" cols="40" maxlength="500"></textarea>
+                        <p class="alert alert-success">
+                            自动评价的时候会随即筛选一条进行评价.
+                        </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="messages">
+                        <textarea   class="form-control limited required" name="content3" id="content3" rows="7" cols="40" maxlength="500"></textarea>
+                        <p class="alert alert-success">
+                            自动评价的时候会随即筛选一条进行评价.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+            <button class="btn btn-info" onclick="Rate.fn.addAutoRateSetting();" type="button">
+                <i class="icon-ok bigger-110"></i>
+                保存
+            </button>
+
+            &nbsp; &nbsp; &nbsp;
+            <button class="btn" type="reset">
+                <i class="icon-undo bigger-110"></i>
+                重置
+            </button>
+        </div>
+    </div>
+    <div class="hr hr-24"></div>
+</form>
+    </div><!-- /.col -->
+</div><!-- /.row -->
+<div class="row">
+    <div class="alert alert-block alert-success">
+
+        <p>
+            <span class="label label-xlg label-purple  arrowed-in"><strong>“自动触发方式”设置说明：</strong> </span>
+        </p>
+        <p>
+            1、用户确认收货后立即给评价：用户确认收货就立即给对方评价。设置变更后，对方已评价和第14天到期订单，都会自动评价。(注：天猫商城不能设置)
+        </p>
+        <p>
+            2、对方评价后立即给评价：只有对方先给了评价后，才给对方评价（如果买家一直不评价，则在第14天自动抢评）。
+        </p>
+        <p>
+            3、对方评价后暂不给评价：买家给评价了，卖家也不评价，但是在第14天自动抢评。
+        </p>
+        <div class="hr hr-24"></div>
+        <p>
+            <span class="label label-xlg label-pink arrowed-right">Large<strong>是否支持抢评功能？ </strong></span>
+        </p>
+        <P>所有的订单，只要评价服务状态为“开启”，都将在第14天主动抢评，无需其它设置。 </P>
+        <div class="hr hr-24"></div>
+        <p>  <span class="label label-xlg label-info  arrowed-right">Large<strong>什么是抢评？ </strong></span></p>     danger
+        <p>
+            1、订单如果是淘宝系统默认好评的话，是不计算信用分的（就是升钻的分），很多买家都是收货后一直不评价，卖家也不评价，最后就由淘宝系统默认好评了。 而由淘宝系统默认好评的订单，是不计算卖家信用分的。
+        </p>
+        <p>
+            2、抢评功能就是在订单快要到期的最后一天，卖家主动给订单好评，不丢失信用分。
+        </p>
+        <p>
+            3、以下情况的不计分：买家未评价、卖家也未评价，淘宝系统默认好评，不计分。
+        </p>
+    </div>
+
+</div>
+<script>
+    $('textarea.limited').inputlimiter({
+        remText: '还能输入 %n  个字符',
+        limitText: '最多可输入%n 个字符'
+    });
+</script>
+<style>
+    .alert {
+        padding: 15px;
+        margin-bottom: 0px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+    p {
+        margin: 0 0  0 0;
+    }
+</style>

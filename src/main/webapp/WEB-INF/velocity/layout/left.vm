@@ -75,6 +75,18 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/auto-rate-log">
+                        <i class="icon-double-angle-right"></i>
+                        自动评价日志
+                    </a>
+                </li>
+                <li>
+                    <a href="/black">
+                        <i class="icon-double-angle-right"></i>
+                        自动评价黑名单设置
+                    </a>
+                </li>
             </ul>
         </a>
     </li>

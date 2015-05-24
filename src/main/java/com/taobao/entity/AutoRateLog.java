@@ -1,5 +1,7 @@
 package com.taobao.entity;
 
+import com.taobao.service.RateService;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,10 +17,34 @@ import java.util.Date;
 @Table(name = "t_auto_rate_log")
 public class AutoRateLog extends BaseDomain {
     @Column
-    private Long oid;
+    private Long tid;
     @Column
     @Enumerated(EnumType.STRING)
     private RateStatus rateStatus;
+
+    //商品id
+    @Column
+    private Long numIid;
+
+    @Column
+    private String productTitle;
+
+    public Long getNumIid() {
+        return numIid;
+    }
+
+    public void setNumIid(Long numIid) {
+        this.numIid = numIid;
+    }
+
+    public String getProductTitle() {
+        return productTitle;
+    }
+
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
+    }
+
     @Column
     private String tradeType;
     @Column
@@ -28,6 +54,18 @@ public class AutoRateLog extends BaseDomain {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date rateTime;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AutoRateSetting.RateType  rateEnum;
+
+    public AutoRateSetting.RateType getRateEnum() {
+        return rateEnum;
+    }
+
+    public void setRateEnum(AutoRateSetting.RateType rateEnum) {
+        this.rateEnum = rateEnum;
+    }
 
     @ManyToOne(cascade = {CascadeType.REFRESH},optional = true,fetch = FetchType.EAGER)
     @JoinColumn(name="rate_content_id")
@@ -41,12 +79,12 @@ public class AutoRateLog extends BaseDomain {
         this.rateContent = rateContent;
     }
 
-    public Long getOid() {
-        return oid;
+    public Long getTid() {
+        return tid;
     }
 
-    public void setOid(Long oid) {
-        this.oid = oid;
+    public void setTid(Long tid) {
+        this.tid = tid;
     }
 
     public RateStatus getRateStatus() {

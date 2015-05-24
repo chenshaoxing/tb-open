@@ -3,6 +3,7 @@ package com.taobao.controller;
 import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.User;
 import com.taobao.service.SellerService;
+import com.taobao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -27,8 +31,23 @@ public class IndexController {
     @Resource
     private SellerService sellerService;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(HttpServletResponse response) throws Exception {
+
+        User user = sellerService.getSellerInfo();
+        com.taobao.entity.User uu = userService.findByName(user.getNick());
+        if(uu == null){
+            uu = new com.taobao.entity.User();
+            uu.setNickname(user.getNick());
+            uu = userService.add(uu);
+        }
+        Cookie idCookie = new Cookie("id",String.valueOf(uu.getId()));
+        Cookie nameCookie = new Cookie("name",uu.getNickname());
+        response.addCookie(idCookie);
+        response.addCookie(nameCookie);
         return "index";
     }
 
