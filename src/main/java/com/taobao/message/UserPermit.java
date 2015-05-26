@@ -25,7 +25,7 @@ public class UserPermit {
         TaobaoClient client=new DefaultTaobaoClient("http://gw.api.tbsandbox.com/router/rest", "1023175152", "sandbox9e3c1e8c65b37da4d0237a953");
 
         TmcUserPermitRequest req=new TmcUserPermitRequest();
-        req.setTopics("taobao_trade_TradeRated");
+        req.setTopics("taobao_trade_TradeRated,taobao_trade_TradeSuccess");
 //        req.setTopics("taobao_trade_TradeSuccess,taobao_trade_TradeCreate,taobao_trade_TradeBuyerPay,taobao_trade_TradeRated");
 
         TmcUserPermitResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
@@ -42,6 +42,6 @@ public class UserPermit {
         requser.setFields("user_nick,topics,user_id,is_valid,created,modified");
         requser.setNick("sandbox_c_2"); //店铺昵称
         TmcUserGetResponse response = client2.execute(requser);
-        System.out.println(response.getTmcUser());
+        System.out.println(response.getTmcUser().getTopics().size());
     }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by star on 15/5/24.
  */
-@Service
+@Service(value = "noRateOrdersServiceImpl")
 public class NoRateOrdersServiceImpl implements NoRateOrdersService {
     private static final Logger LOG = LoggerFactory.getLogger(NoRateOrdersServiceImpl.class);
 

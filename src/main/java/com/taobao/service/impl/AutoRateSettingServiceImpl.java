@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 /**
  * Created by star on 15/5/22.
  */
-@Service
+@Service(value = "autoRateSettingServiceImpl")
 public class AutoRateSettingServiceImpl implements AutoRateSettingService {
     @Resource
     private IBasePersistence iBasePersistence;

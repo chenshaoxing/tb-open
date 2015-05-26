@@ -15,6 +15,7 @@ import com.taobao.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -24,26 +25,30 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by star on 15/5/17.
  */
-@Component(value = "messageClientDemo")
+//@Component(value = "messageClientDemo")
 public class MessageClientDemo {
     private static final Logger LOG = LoggerFactory.getLogger(MessageClientDemo.class);
 
-    @Resource
-    private RateService rateService ;
-    @Resource
-    private AutoRateSettingService autoRateSettingService;
-    @Resource
-    private AutoRateLogService autoRateLogService;
-    @Resource
-    private BlackListService blackListService;
-    @Resource
-    private RateContentService rateContentService;
-    @Resource
-    private UserService userService;
-    @Resource
-    private NoRateOrdersService noRateOrdersService;
-    @Resource
-    private MailService mailService;
+    private RateService rateService  = null;
+    private AutoRateSettingService autoRateSettingService = null;
+    private AutoRateLogService autoRateLogService= null;
+    private BlackListService blackListService= null;
+    private RateContentService rateContentService= null;
+    private UserService userService= null;
+    private NoRateOrdersService noRateOrdersService= null;
+    private MailService mailService= null;
+    public MessageClientDemo(ApplicationContext act) {
+        rateService = (RateService)act.getBean("rateService");
+        autoRateSettingService = (AutoRateSettingService)act.getBean("autoRateSettingServiceImpl");
+        autoRateLogService = (AutoRateLogService)act.getBean("autoRateLogServiceImpl");
+        blackListService = (BlackListService) act.getBean("blackListServiceImpl");
+        rateContentService = (RateContentService)act.getBean("rateContentServiceImpl");
+        userService = (UserService)act.getBean("userServiceImpl");
+        noRateOrdersService = (NoRateOrdersService)act.getBean("noRateOrdersServiceImpl");
+        mailService = (MailService)act.getBean("mailService");
+    }
+
+
 
 
 //    public static void main(String[] args) throws Exception {
@@ -84,7 +89,7 @@ public class MessageClientDemo {
                             noRate.setOverTime(calendar.getTime());
                             noRate = noRateOrdersService.add(noRate);
                             if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
-                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().getValue(),rateContent.getContent());
+                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().value(),rateContent.getContent());
                                 if(isRate){
                                     noRate.setRate(true);
                                     noRateOrdersService.add(noRate);
@@ -96,7 +101,7 @@ public class MessageClientDemo {
                             String rater = object.get("rater").toString();
                             if(rater.equals("buyer")){
                                 if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
-                                    boolean isRate = rateService.add(tid,oid,autoRateSetting.getRateType().getValue() ,rateContent.getContent());
+                                    boolean isRate = rateService.add(tid,oid,autoRateSetting.getRateType().value() ,rateContent.getContent());
                                     if(isRate){
                                         getTradeId(tid,user);
                                         NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);

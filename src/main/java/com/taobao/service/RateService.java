@@ -22,7 +22,7 @@ import java.util.Objects;
  * Created by star on 15/5/17.
  * 评价服务接口
  */
-@Service
+@Service(value = "rateService")
 public class RateService {
     public static final Logger LOG = LoggerFactory.getLogger(RateService.class);
 
@@ -88,8 +88,7 @@ public class RateService {
             request.setAnony(true);
             request.setResult(rateType);
             TraderateAddResponse response = client.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
-            response.isSuccess();
-            return false;
+            return response.isSuccess();
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;
@@ -115,4 +114,9 @@ public class RateService {
         }
     }
 
+    public static void main(String[] args) throws Exception {
+        RateService s = new RateService();
+        boolean flag = s.add(193075235568627L,193075235568627L,"good","caocaocaocao");
+        System.out.println(flag);
+    }
 }

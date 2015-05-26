@@ -30,8 +30,8 @@ public class AutoRateSetting extends BaseDomain {
             this.value = value;
         }
 
-        public String getValue(){
-            return this.getValue();
+        public String value(){
+            return this.value();
         }
     }
 

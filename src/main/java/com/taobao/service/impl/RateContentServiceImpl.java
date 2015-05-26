@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by star on 15/5/22.
  */
-@Service
+@Service(value = "rateContentServiceImpl")
 public class RateContentServiceImpl implements RateContentService{
     @Resource
     private IBasePersistence iBasePersistence;

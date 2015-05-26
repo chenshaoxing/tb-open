@@ -16,11 +16,15 @@ public class InitService implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        MessageClientDemo messageClientDemo = (MessageClientDemo)contextRefreshedEvent.getApplicationContext().getBean("messageClientDemo");
-        try {
-            messageClientDemo.receive();
-        } catch (Exception e) {
-            LOG.error(e.getMessage());
+        if(contextRefreshedEvent.getApplicationContext().getParent() == null){
+            MessageClientDemo messageClientDemo = new MessageClientDemo(contextRefreshedEvent.getApplicationContext());
+            try {
+                messageClientDemo.receive();
+                LOG.info("message center init success");
+            } catch (Exception e) {
+                LOG.error(e.getMessage());
+            }
         }
+
     }
 }

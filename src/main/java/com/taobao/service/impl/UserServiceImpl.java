@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 /**
  * Created by star on 15/5/22.
  */
-@Service
+@Service(value = "userServiceImpl")
 public class UserServiceImpl implements UserService {
     @Resource
     private IBasePersistence iBasePersistence;

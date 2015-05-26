@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by star on 15/5/23.
  */
-@Service
+@Service(value = "blackListServiceImpl")
 public class BlackListServiceImpl implements BlackListService{
     @Resource
     private IBasePersistence iBasePersistence;

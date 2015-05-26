@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by star on 15/5/23.
  */
-@Service
+@Service(value = "autoRateLogServiceImpl")
 public class AutoRateLogServiceImpl implements AutoRateLogService{
     private static final Logger LOG = LoggerFactory.getLogger(AutoRateLogServiceImpl.class);
     @Resource
