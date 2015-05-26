@@ -89,7 +89,7 @@ public class MessageClientDemo {
                             noRate.setOverTime(calendar.getTime());
                             noRate = noRateOrdersService.add(noRate);
                             if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
-                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().value(),rateContent.getContent());
+                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent());
                                 if(isRate){
                                     noRate.setRate(true);
                                     noRateOrdersService.add(noRate);
@@ -101,13 +101,15 @@ public class MessageClientDemo {
                             String rater = object.get("rater").toString();
                             if(rater.equals("buyer")){
                                 if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
-                                    boolean isRate = rateService.add(tid,oid,autoRateSetting.getRateType().value() ,rateContent.getContent());
+                                    boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent());
                                     if(isRate){
                                         getTradeId(tid,user);
                                         NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);
-                                        noRate.setRate(true);
-                                        noRateOrdersService.add(noRate);
-                                        addAutoRateLog(object);
+                                        if(noRate != null){
+                                            noRate.setRate(true);
+                                            noRateOrdersService.add(noRate);
+                                            addAutoRateLog(object);
+                                        }
                                     }
                                 }
 //                            else  if(autoRateSetting.getTriggerMode() == AutoRateSetting.TriggerMode.BUYER_RATE_NOT_RATE){

@@ -179,7 +179,7 @@ public class RateController {
             if(StringUtils.isNotEmpty(tradeIds)){
                 String ids []= tradeIds.split(",");
                 for(String tradeId:ids){
-                    boolean flag = rateService.add(Long.valueOf(tradeId), rateType.toLowerCase(),content);
+                    boolean flag = rateService.add(Long.valueOf(tradeId), rateType,content);
                     if(flag)
                         success+=1;
                     else {
@@ -197,7 +197,7 @@ public class RateController {
                     totalPage = pageInfo.getPageTotalNum();
                     List<Map<String,Object>> list = pageInfo.getList();
                     for(Map<String,Object> param:list){
-                        boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()), rateType.toLowerCase(),content);
+                        boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()), rateType,content);
                         if(flag)
                             success+=1;
                         else {

@@ -22,17 +22,7 @@ public class AutoRateSetting extends BaseDomain {
 
 
     public enum RateType{
-        GOOD("good"),NEUTRAL("neutral"),BAD("bad");
-
-        private String value;
-
-        RateType(String value) {
-            this.value = value;
-        }
-
-        public String value(){
-            return this.value();
-        }
+        good,neutral,bad;
     }
 
     public enum TriggerMode{
