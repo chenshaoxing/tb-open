@@ -71,6 +71,8 @@ public class MessageClientDemo {
                 Long oid = Long.valueOf(object.get("oid").toString());
                 if(StringUtils.isNotEmpty(sellerNick)){
                     User user = userService.findByName(object.getString("seller_nick"));
+                    if(user == null)
+                        return;
                     AutoRateSetting autoRateSetting = autoRateSettingService.findByUser(user);
                     List<RateContent> content = rateContentService.findBySettingId(autoRateSetting.getId());
                     int index = random();

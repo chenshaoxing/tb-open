@@ -1,5 +1,6 @@
 package com.taobao.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.Item;
 import com.taobao.api.domain.Trade;
@@ -10,10 +11,7 @@ import com.taobao.api.response.TraderatesGetResponse;
 import com.taobao.api.response.TradesSoldGetResponse;
 import com.taobao.common.Utils;
 import com.taobao.dao.PageInfo;
-import com.taobao.entity.AutoRateSetting;
-import com.taobao.entity.RateContent;
-import com.taobao.entity.RateStatus;
-import com.taobao.entity.User;
+import com.taobao.entity.*;
 import com.taobao.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.formula.functions.Rate;
@@ -51,6 +49,9 @@ public class RateController {
     private AutoRateSettingService autoRateSettingService;
     @Resource
     private RateContentService rateContentService;
+    @Resource
+    private AutoRateLogService autoRateLogService;
+
 
 
 
@@ -215,6 +216,19 @@ public class RateController {
             throw e;
         }
         return ResultJson.resultSuccess(map);
+    }
+
+
+    public void addAutoRateLog(Long tid,String buyerNick,Float payment,RateContent content,String rateType){
+        AutoRateLog log = new AutoRateLog();
+        log.setTid(tid);
+        log.setBuyerNickname(buyerNick);
+        log.setRateTime(new Date());
+        log.setRealPrice(payment);
+        log.setRateContent(content);
+        log.setRateStatus(RateStatus.AUTO_RATE);
+        log.setRateEnum(AutoRateSetting.RateType.valueOf(rateType));
+        autoRateLogService.add(log);
     }
 
     @RequestMapping(value = "/rate/auto-rate-global-setting")
