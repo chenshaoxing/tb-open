@@ -311,4 +311,23 @@ public class RateController {
         }
     }
 
+
+    @RequestMapping(value = "/rate/rate-content/getRateContentsByUser")
+    @ResponseBody
+    public Map<String, Object> getRateContentsByUser(@RequestParam Long userId) throws Exception{
+        try{
+            User user = new User();
+            user.setId(userId);
+            AutoRateSetting setting = autoRateSettingService.findByUser(user);
+            List<RateContent> contents = new ArrayList<RateContent>();
+            if(setting != null){
+                contents  = rateContentService.findBySettingId(setting.getId());
+            }
+            return ResultJson.resultSuccess(contents);
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
 }

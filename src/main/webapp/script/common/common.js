@@ -77,6 +77,35 @@ var common ={
                 }
             });
         },
+        /**
+         * @param url   请求地址
+         * @param data  请求参数
+         * @param successFun  请求成功回调函数
+         */
+        ajaxSyncNotLoadingDialog: function(url,data,successFun,currentPage,errorFun){
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                cache:false,
+                dataType: "json",
+                async:false,
+                success: function (data) {
+                    if(currentPage){
+                        successFun(data,currentPage);
+                    }else{
+                        successFun(data);
+                    }
+                },
+                error: function () {
+                    if(errorFun){
+                        errorFun();
+                    }else{
+                        common.fn.showInfoMessages("错误", "通讯失败,请稍后刷新页面!");
+                    }
+                }
+            });
+        },
         //ajax post  json请求       url：请求地址 ；  data:请求参数  ；successFun:请求成功回调函数
         ajaxSync: function(url,data,successFun,errorFun,isShowDialog){
             if(isShowDialog){

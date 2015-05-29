@@ -1,6 +1,9 @@
 var Rate = {
     globalVariable:{
-        ajaxSuccess:"success"
+        ajaxSuccess:"success",
+        rateContent:["亲~~欢迎您下次光临小店~~~小店需要亲的大力支持~~·祝亲生活愉快！！",
+                     "非常感谢您的光临，希望您在本店选购的商品能给您带来快乐和满意！也许我们不是最好的，但我们一定会尽最大的努力做到更好，让每一位消费者都能真正的享受到网购的实惠和快乐！如果我们有什么地方做得不好，请您多多提提宝贵意见，因为在成长的路上我们需要您的支持和监督，这样我们就能做得更好！谢谢！",
+                     "每一个好评都是一份感动，每一个好评都是一种激励。最简单的好评，都给予我们的是动力和坚持，感谢亲的支持！欢迎下次光临！"]
     },
     url:{
         getAlreadyRateOrders:"/rate/already-rate-orders/list",
@@ -9,7 +12,8 @@ var Rate = {
         getBatchRateOrders:"/rate/batch-rate-orders/list",
         addBatchRateOrders:"/rate/batch-rate-orders/rate",
         autoRateSetting:"/rate/auto-rate-global-setting" ,
-        initAutoRateSetting:"/rate/auto-rate-global-setting/init"
+        initAutoRateSetting:"/rate/auto-rate-global-setting/init",
+        getRateContentsByUser:"/rate/rate-content/getRateContentsByUser"
     },
     ejs:{
         alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
@@ -112,6 +116,26 @@ var Rate = {
             })
         },
         showBatchRateInfoDialog:function(selectOrAll){
+            function readyFun(){
+                function cbFun(data){
+                    if(data.success){
+                        var content = "content";
+                        if(data.data){
+                            for(var i = data.data.contents.length-1;i>=0;i--){
+                                $("#"+content+(i+1)).val(data.data.contents[i].content);
+                            }
+                        }else{
+                            for(var i = Rate.globalVariable.rateContent.length-1;i>=0;i--){
+                                $("#"+content+(i+1)).val(Rate.globalVariable.rateContent[i]);
+                            }
+                        }
+
+                    }
+                }
+                var params = {};
+                params.userId =  $.cookie("id");
+                common.fn.ajaxSyncNotLoadingDialog(Rate.url.getRateContentsByUser,params,cbFun);
+            }
             var params  = new Object();
             if(selectOrAll == 'select'){
                 var tradeIds = "";
@@ -128,7 +152,7 @@ var Rate = {
             }
 
             params.selectOrAll = selectOrAll;
-            common.fn.showDialog(Rate.ejs.batchRateInfo,params,null,null,null);
+            common.fn.showDialog(Rate.ejs.batchRateInfo,params,null,readyFun,null);
         },
         batchRateOrders:function(dialogId){
             function callback(data){
@@ -138,9 +162,14 @@ var Rate = {
                     Rate.fn.execBatchList();
                 }
             }
+
             var batchRateForm = common.fn.getFromJsonData("batchRateForm");
             batchRateForm.buyerNick = $("#buyerNick").val();
             batchRateForm.rateStatus = $("#rateStatus").val();
+            var textArea = $.find(".tab-pane active textarea");
+            if(textArea){
+                batchRateForm.content = $(textArea).val();
+            }
             $("#"+dialogId).modal("hide");
             common.fn.ajax(Rate.url.addBatchRateOrders,batchRateForm,callback);
         },
@@ -184,8 +213,14 @@ var Rate = {
                         }
                     })
                     var content = "content";
-                    for(var i = data.data.contents.length-1;i>=0;i--){
-                        $("#"+content+(i+1)).val(data.data.contents[i].content);
+                    if(data.data.contents){
+                        for(var i = data.data.contents.length-1;i>=0;i--){
+                            $("#"+content+(i+1)).val(data.data.contents[i].content);
+                        }
+                    }else{
+                        for(var i = Rate.globalVariable.rateContent.length-1;i>=0;i--){
+                            $("#"+content+(i+1)).val(Rate.globalVariable.rateContent[i]);
+                        }
                     }
                     $("#triggerMode").val(result.triggerMode);
                 }

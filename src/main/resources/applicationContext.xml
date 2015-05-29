@@ -89,8 +89,8 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
         <!--<property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />-->
-        <property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
         <!--<property name="url" value="jdbc:mysql://sqld.duapp.com:4050/eBdYFaVHDRBXyIkrimel?autoReconnect=true"/>-->
         <property name="username" value="root" />
         <!--<property name="username" value="KHRdaNSHIU1AvMVoIc7EEU1C" />-->

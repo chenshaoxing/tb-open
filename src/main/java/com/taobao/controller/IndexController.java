@@ -2,6 +2,9 @@ package com.taobao.controller;
 
 import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.User;
+import com.taobao.entity.AutoRateSetting;
+import com.taobao.service.AutoRateSettingService;
+import com.taobao.service.RateContentService;
 import com.taobao.service.SellerService;
 import com.taobao.service.UserService;
 import org.slf4j.Logger;
@@ -33,6 +36,11 @@ public class IndexController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private RateContentService rateContentService;
+
+    @Resource
+    private AutoRateSettingService autoRateSettingService;
 
     @RequestMapping(value = "/index")
     public String index(HttpServletResponse response) throws Exception {
@@ -43,6 +51,14 @@ public class IndexController {
             uu = new com.taobao.entity.User();
             uu.setNickname(user.getNick());
             uu = userService.add(uu);
+            AutoRateSetting setting = new AutoRateSetting();
+            setting.setAutoGrabRate(false);
+            setting.setAutoRateStatus(false);
+            setting.setMediumOrPoorRateAlarm(false);
+            setting.setUser(uu);
+            setting.setTriggerMode(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE);
+            setting.setRateType(AutoRateSetting.RateType.good);
+            autoRateSettingService.add(setting);
         }
         Cookie idCookie = new Cookie("id",String.valueOf(uu.getId()));
         Cookie nameCookie = new Cookie("name",uu.getNickname());
