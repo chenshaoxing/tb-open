@@ -14,4 +14,6 @@ public interface NoRateOrdersService {
     public List<NoRateOrders> getList(Map<String,Object> dateParams);
 
     public NoRateOrders findByTradeId(Long tradeId);
+
+    public void delete(NoRateOrders noRateOrders);
 }

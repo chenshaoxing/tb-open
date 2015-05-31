@@ -12,11 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
+import javax.annotation.Resource;
 
 /**
  * Created by star on 15/5/17.
@@ -25,6 +21,9 @@ import java.util.Objects;
 @Service(value = "rateService")
 public class RateService {
     public static final Logger LOG = LoggerFactory.getLogger(RateService.class);
+
+    @Resource(name = "taoBaoClient")
+    private TaobaoClient taobaoClient;
 
     public enum RateEnum{
 
@@ -68,6 +67,31 @@ public class RateService {
         }
     }
 
+
+    /**
+     * 评价单个订单（不包含子订单）
+     * @param tid
+     * @param rateType
+     * @param content
+     * @return
+     * @throws Exception
+     */
+    public boolean add(Long tid,String rateType,String content,String sessionKey) throws Exception {
+        try {
+            TraderateAddRequest request = new TraderateAddRequest();
+            request.setTid(tid);
+            request.setContent(content);
+            request.setRole("seller");
+            request.setAnony(true);
+            request.setResult(rateType);
+            TraderateAddResponse response = taobaoClient.execute(request,sessionKey);
+            return  response.isSuccess();
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
     /**
      * 评价单个订单（含子订单）
      * @param tid
@@ -97,6 +121,32 @@ public class RateService {
 
 
     /**
+     * 评价单个订单（含子订单）
+     * @param tid
+     * @param rateType
+     * @param content
+     * @return
+     * @throws Exception
+     */
+    public boolean add(Long tid,Long oid,String rateType,String content,String sessionKey) throws Exception {
+        try {
+            TraderateAddRequest request = new TraderateAddRequest();
+            request.setTid(tid);
+            request.setOid(oid);
+            request.setContent(content);
+            request.setRole("seller");
+            request.setAnony(true);
+            request.setResult(rateType);
+            TraderateAddResponse response = taobaoClient.execute(request,sessionKey);
+            return response.isSuccess();
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    /**
      *
      * @param req
      * @throws Exception
@@ -107,6 +157,23 @@ public class RateService {
         req.setFields("tid,oid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,valid_score");
         try {
             TraderatesGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            return response;
+        } catch (ApiException e) {
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    /**
+     *
+     * @param req
+     * @throws Exception
+     */
+    public TraderatesGetResponse searchRate(TraderatesGetRequest req,String sessionKey) throws Exception {
+        req.setFields("tid,oid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,valid_score");
+        try {
+            TraderatesGetResponse response = taobaoClient.execute(req , sessionKey);
             return response;
         } catch (ApiException e) {
             LOG.error(e.getMessage());

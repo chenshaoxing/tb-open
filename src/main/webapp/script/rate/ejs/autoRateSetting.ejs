@@ -21,16 +21,16 @@
                 </div>
             </div>
 
-            <div class="space-4"></div>
+            <!--<div class="space-4"></div>-->
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" > 中评差评警告提醒 </label>
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label no-padding-right" > 中评差评警告提醒 </label>-->
 
-                <div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">
-                    <input id="mediumOrPoorRateAlarm" <%=data.mediumOrPoorRateAlarm?'checked':''%> type="checkbox" name="mediumOrPoorRateAlarm" class="ace ace-switch ace-switch-4">
-                    <span class="lbl"></span>
-                </div>
-            </div>
+                <!--<div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">-->
+                    <!--<input id="mediumOrPoorRateAlarm" <%=data.mediumOrPoorRateAlarm?'checked':''%> type="checkbox" name="mediumOrPoorRateAlarm" class="ace ace-switch ace-switch-4">-->
+                    <!--<span class="lbl"></span>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <div class="space-4"></div>
 
@@ -56,11 +56,11 @@
 
             <div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" >中差评告警邮箱</label>
+                <label class="col-sm-3 control-label no-padding-right" >邮箱</label>
 
                 <div class="col-sm-4">
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="email" value="<%=data.user.email%>" id="email" onfocus="$('#email').tooltip('show')" placeholder="email" data-toggle="tooltip" data-placement="right" title="如果发现买家给的是差评那么会通过该地址发送邮件给亲" class="col-xs-10 col-sm-7 required email">
+                    <input type="text" name="email" value="<%=data.user.email%>" id="email" onfocus="$('#email').tooltip('show')" placeholder="email" data-toggle="tooltip" data-placement="right" title="订购快到期时通过该地址发送邮件给亲" class="col-xs-10 col-sm-7 required email">
 
                 </div>
             </div>
@@ -73,10 +73,10 @@
                 <div class="col-sm-3">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <select class="form-control col-xs-10 col-sm-5 required" id="triggerMode" name="triggerMode" style="margin-top: -20px;">
-                        <option value="">请选择</option>
+                        <!--<option value="">请选择</option>-->
                         <option value="BUYER_CONFIRM_RIGHT_AWAY_RATE">买家确认收货后立即给评价</option>
                         <option value="BUYER_RATE_RIGHT_AWAY_RATE">买家评价后立即给评价</option>
-                        <option value="BUYER_RATE_NOT_RATE">对方评价后暂不给评价</option>
+                        <!--<option value="BUYER_RATE_NOT_RATE">对方评价后暂不给评价</option>-->
                     </select>
 
                 </div>
@@ -153,16 +153,16 @@
                 </div>
             </div>
 
-            <div class="space-4"></div>
+            <!--<div class="space-4"></div>-->
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" > 中评差评警告提醒 </label>
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label no-padding-right" > 中评差评警告提醒 </label>-->
 
-                <div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">
-                    <input id="mediumOrPoorRateAlarm"  type="checkbox" name="mediumOrPoorRateAlarm" class="ace ace-switch ace-switch-4">
-                    <span class="lbl"></span>
-                </div>
-            </div>
+                <!--<div class="col-sm-9" style="margin-top: 5px;margin-left: -5px;">-->
+                    <!--<input id="mediumOrPoorRateAlarm"  type="checkbox" name="mediumOrPoorRateAlarm" class="ace ace-switch ace-switch-4">-->
+                    <!--<span class="lbl"></span>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <div class="space-4"></div>
 
@@ -188,11 +188,11 @@
 
             <div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" >中差评告警邮箱</label>
+                <label class="col-sm-3 control-label no-padding-right" >邮箱</label>
 
                 <div class="col-sm-4">
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="email"  id="email" onfocus="$('#email').tooltip('show')" placeholder="email" data-toggle="tooltip" data-placement="right" title="如果发现买家给的是差评那么会通过该地址发送邮件给亲" class="col-xs-10 col-sm-7 required email">
+                    <input type="text" name="email"  id="email" onfocus="$('#email').tooltip('show')" placeholder="email" data-toggle="tooltip" data-placement="right" title="订购快到期时通过该地址发送邮件给亲" class="col-xs-10 col-sm-7 required email">
 
                 </div>
             </div>
@@ -205,10 +205,10 @@
                 <div class="col-sm-3">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <select class="form-control col-xs-10 col-sm-5 required" id="triggerMode" name="triggerMode" style="margin-top: -20px;">
-                        <option value="">请选择</option>
+                        <!--<option value="">请选择</option>-->
                         <option value="BUYER_CONFIRM_RIGHT_AWAY_RATE">买家确认收货后立即给评价</option>
                         <option value="BUYER_RATE_RIGHT_AWAY_RATE">买家评价后立即给评价</option>
-                        <option value="BUYER_RATE_NOT_RATE">对方评价后暂不给评价</option>
+                        <!--<option value="BUYER_RATE_NOT_RATE">对方评价后暂不给评价</option>-->
                     </select>
 
                 </div>
@@ -290,16 +290,13 @@
         <p>
             2、对方评价后立即给评价：只有对方先给了评价后，才给对方评价（如果买家一直不评价，则在第14天自动抢评）。
         </p>
-        <p>
-            3、对方评价后暂不给评价：买家给评价了，卖家也不评价，但是在第14天自动抢评。
-        </p>
         <div class="hr hr-24"></div>
         <p>
-            <span class="label label-xlg label-pink arrowed-right">Large<strong>是否支持抢评功能？ </strong></span>
+            <span class="label label-xlg label-pink arrowed-right"><strong>是否支持抢评功能？ </strong></span>
         </p>
         <P>所有的订单，只要评价服务状态为“开启”，都将在第14天主动抢评，无需其它设置。 </P>
         <div class="hr hr-24"></div>
-        <p>  <span class="label label-xlg label-info  arrowed-right">Large<strong>什么是抢评？ </strong></span></p>     danger
+        <p>  <span class="label label-xlg label-info  arrowed-right"><strong>什么是抢评？ </strong></span></p>
         <p>
             1、订单如果是淘宝系统默认好评的话，是不计算信用分的（就是升钻的分），很多买家都是收货后一直不评价，卖家也不评价，最后就由淘宝系统默认好评了。 而由淘宝系统默认好评的订单，是不计算卖家信用分的。
         </p>

@@ -7,12 +7,25 @@ var common ={
     },
     fn:{
         init:function(){
-            common.globalVariable.username = $.cookie("name");
+            common.globalVariable.username = decodeURI($.cookie("name"));
             common.globalVariable.userId = $.cookie("id");
+            common.fn.showUserInfo();
 //            if(!$.cookie("id")){
 //                location.href="/index.html";
 //            }
 //            $("#topUsernameArea").html('<a href="/my_info/" title="点击修改个人信息">' + common.globalVariable.username + '</a>');
+        },
+        showUserInfo:function(){
+            function callback(data){
+                if(data.success){
+                    $("#userInfo").text("您的服务到期时间是:"+common.fn.formatDate(data.data.overDate));
+                    //$("#toDay").text("现在是 "+common.fn.formatDate(new Date()));
+                }
+            }
+            var url = "/index/user-info";
+            var params = new Object();
+            params.userId = common.globalVariable.userId;
+            common.fn.ajaxSyncNotLoadingDialog(url,params,callback);
         },
         /**
          * @param url   请求地址

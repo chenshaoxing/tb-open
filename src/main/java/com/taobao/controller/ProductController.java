@@ -3,8 +3,11 @@ package com.taobao.controller;
 import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.Item;
 import com.taobao.api.domain.Trade;
+import com.taobao.common.Utils;
+import com.taobao.entity.User;
 import com.taobao.service.ProductService;
 import com.taobao.service.TradeService;
+import com.taobao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,13 +32,24 @@ public class ProductController {
 
     @Resource
     private ProductService productService;
+    @Resource
+    private UserService userService;
 
     @RequestMapping(value = "/product/info")
     @ResponseBody
-    public Map<String, Object> getProductInfo(@RequestParam Long numId) throws Exception{
+    public Map<String, Object> getProductInfo(@RequestParam Long numId
+                                             ) throws Exception{
         try{
-            Item item = productService.getProductByNumId(numId);
-            return ResultJson.resultSuccess(item);
+
+//            if(userId != null){
+            User user = userService.findById(Utils.getUserId());
+                Item item = productService.getProductByNumId(numId,user.getSessionKey());
+                return ResultJson.resultSuccess(item);
+//            }else{
+//                Item item = productService.getProductByNumId(numId);
+//                return ResultJson.resultSuccess(item);
+//            }
+
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;

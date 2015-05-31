@@ -51,6 +51,10 @@ public class RateController {
     private RateContentService rateContentService;
     @Resource
     private AutoRateLogService autoRateLogService;
+    @Resource
+    private UserPermitService userPermitService;
+    @Resource
+    private NoRateOrdersService noRateOrdersService;
 
 
 
@@ -79,6 +83,7 @@ public class RateController {
                                      @RequestParam(required = false) boolean isBuyerGiveMe
                                      ) throws Exception{
         try{
+            User user = userService.findById(Utils.getUserId());
             TraderatesGetRequest request = new TraderatesGetRequest();
             if(tradeId != null){
                 request.setTid(tradeId);
@@ -98,7 +103,7 @@ public class RateController {
             if(StringUtils.isNotEmpty(result)){
                 request.setResult(result);
             }
-            TraderatesGetResponse response = rateService.searchRate(request);
+            TraderatesGetResponse response = rateService.searchRate(request,user.getSessionKey());
 //            List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
 //            for(TradeRate tradeRate :response.getTradeRates()) {
 //                Map<String,Object> map = Utils.toMap(tradeRate);
@@ -127,6 +132,7 @@ public class RateController {
                                                     @RequestParam(required = false) String rateStatus
     ) throws Exception{
         try{
+            User user = userService.findById(Utils.getUserId());
             TradesSoldGetRequest request = new TradesSoldGetRequest();
             request.setPageNo(currentPage);
             request.setPageSize(pageSize);
@@ -135,7 +141,7 @@ public class RateController {
                 request.setBuyerNick(buyerNick);
             }
             request.setRateStatus(rateStatus);
-            TradesSoldGetResponse response = tradeService.getTradeSold(request);
+            TradesSoldGetResponse response = tradeService.getTradeSold(request,user.getSessionKey());
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
             List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
             if(response.getTrades() != null && response.getTrades().size() > 0){
@@ -174,13 +180,14 @@ public class RateController {
                                                ) throws Exception{
         Map<String, Object> map = new HashMap<String, Object>();
         List<Object> trades = new ArrayList<Object>();
+        User user = userService.findById(Utils.getUserId());
         try{
             int success = 0;
             int failed = 0;
             if(StringUtils.isNotEmpty(tradeIds)){
                 String ids []= tradeIds.split(",");
                 for(String tradeId:ids){
-                    boolean flag = rateService.add(Long.valueOf(tradeId), rateType,content);
+                    boolean flag = rateService.add(Long.valueOf(tradeId), rateType,content,user.getSessionKey());
                     if(flag)
                         success+=1;
                     else {
@@ -198,7 +205,7 @@ public class RateController {
                     totalPage = pageInfo.getPageTotalNum();
                     List<Map<String,Object>> list = pageInfo.getList();
                     for(Map<String,Object> param:list){
-                        boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()), rateType,content);
+                        boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()), rateType,content,user.getSessionKey());
                         if(flag)
                             success+=1;
                         else {
@@ -235,10 +242,10 @@ public class RateController {
     @ResponseBody
     public Map<String, Object> autoRateGlobalSetting(@RequestParam boolean autoRateStatus,
                                                      @RequestParam Long settingId,
-                                                     @RequestParam boolean mediumOrPoorRateAlarm,
+                                                     @RequestParam(required = false) boolean mediumOrPoorRateAlarm,
                                                      @RequestParam String autoRateType,
                                                      @RequestParam Long userId,
-                                                     @RequestParam String email,
+                                                     @RequestParam(required = false) String email,
                                                      @RequestParam String triggerMode,
                                                      @RequestParam String content1,
                                                      @RequestParam String content2,
@@ -246,6 +253,9 @@ public class RateController {
                                                      )throws Exception{
         try{
             User user = userService.findById(userId);
+
+            userPermitService.userPermit(user.getSessionKey());
+
             user.setEmail(email);
             userService.add(user);
             AutoRateSetting setting = null;
@@ -260,6 +270,7 @@ public class RateController {
             setting.setMediumOrPoorRateAlarm(mediumOrPoorRateAlarm);
             setting.setTriggerMode(AutoRateSetting.TriggerMode.valueOf(triggerMode));
             setting = autoRateSettingService.add(setting);
+
             RateContent rateContent1 = null;
             RateContent rateContent2 = null;
             RateContent rateContent3 = null;
@@ -282,6 +293,11 @@ public class RateController {
             rateContentService.add(rateContent1);
             rateContentService.add(rateContent2);
             rateContentService.add(rateContent3);
+
+            if(autoRateStatus){
+                new Thread(new GetHistoryNotRateOrdersTask(user,tradeService,noRateOrdersService)).start();
+            }
+
             return ResultJson.resultSuccess();
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -329,5 +345,7 @@ public class RateController {
             throw e;
         }
     }
+
+
 
 }

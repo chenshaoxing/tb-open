@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+
 /**
  * Created with Intellij IDEA
  * User: star
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Service
 public class TradeService {
+    @Resource(name = "taoBaoClient")
+    private TaobaoClient taobaoClient;
+
     private static final Logger LOG = LoggerFactory.getLogger(TradeService.class);
 
     /**
@@ -37,11 +42,28 @@ public class TradeService {
                     Constants.TB_SANDBOX_APP_KEY,
                     Constants.TB_SANDBOX_APP_SECRET);
             req.setFields("tid,type,status,payment,orders,num," +
-                    "num_iid,price,total_fee,created,pay_time,end_time,buyer_nick,service_orders,buyer_rate," +
-                    "");
+                    "num_iid,price,total_fee,created,pay_time,end_time,buyer_nick,service_orders,buyer_rate");
 
             req.setStatus("TRADE_FINISHED");
             TradesSoldGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            return response;
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * 查询卖家已卖出的交易数据（根据创建时间）
+     * @return
+     */
+    public TradesSoldGetResponse getTradeSold(TradesSoldGetRequest req,String sessionKey) throws Exception{
+        try{
+            req.setFields("tid,type,status,payment,orders,num," +
+                    "num_iid,price,total_fee,created,pay_time,end_time,buyer_nick,service_orders,buyer_rate");
+
+            req.setStatus("TRADE_FINISHED");
+            TradesSoldGetResponse response = taobaoClient.execute(req , sessionKey);
             return response;
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -67,24 +89,39 @@ public class TradeService {
         }
     }
 
-    public void getTradeSnapshot(Long tradeId) throws Exception{
+    public Trade getTradeBuyerContactInfo(Long tradeId,String sessionKey) throws Exception{
         try{
-            TaobaoClient client=new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                    Constants.TB_SANDBOX_APP_KEY,
-                    Constants.TB_SANDBOX_APP_SECRET);
             TradeFullinfoGetRequest req=new TradeFullinfoGetRequest();
-            req.setFields("tid,type,status,snapshot_url,orders,receiver_name,receiver_address,receiver_mobile");
-            req.setTid(192585158051323L);
-            TradeFullinfoGetResponse response = client.execute(req ,   Constants.TB_SANDBOX_SESSION_KEY);
-            System.out.println(response.getTrade());
+            req.setFields("tid,receiver_state,receiver_name,receiver_address,receiver_mobile," +
+                    "receiver_town,receiver_city,receiver_district");
+            req.setTid(tradeId);
+            TradeFullinfoGetResponse response = taobaoClient.execute(req , sessionKey);
+            return response.getTrade();
         }catch (Exception e){
-
+            LOG.error(e.getMessage());
+            throw e;
         }
     }
 
+
+//    public void getTradeSnapshot(Long tradeId) throws Exception{
+//        try{
+//            TaobaoClient client=new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
+//                    Constants.TB_SANDBOX_APP_KEY,
+//                    Constants.TB_SANDBOX_APP_SECRET);
+//            TradeFullinfoGetRequest req=new TradeFullinfoGetRequest();
+//            req.setFields("tid,type,status,snapshot_url,orders,receiver_name,receiver_address,receiver_mobile");
+//            req.setTid(192585158051323L);
+//            TradeFullinfoGetResponse response = client.execute(req ,   Constants.TB_SANDBOX_SESSION_KEY);
+//            System.out.println(response.getTrade());
+//        }catch (Exception e){
+//
+//        }
+//    }
+
     public static void main(String[] args) throws Exception {
-        TradeService tradeService = new TradeService();
-        tradeService.getTradeSnapshot(null);
-        tradeService.getTradeBuyerContactInfo(192585158051323L);
+//        TradeService tradeService = new TradeService();
+//        tradeService.getTradeSnapshot(null);
+//        tradeService.getTradeBuyerContactInfo(192585158051323L);
     }
 }

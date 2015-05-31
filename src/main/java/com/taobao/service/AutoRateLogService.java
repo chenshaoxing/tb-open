@@ -15,4 +15,6 @@ public interface AutoRateLogService {
 
 
     public PageInfo<AutoRateLog> getList(int currentPage,int pageSize,Map<String,Object> params);
+
+    public void remove(AutoRateLog autoRateLog);
 }

@@ -8,7 +8,7 @@ public class Constants {
     public static final String TB_SANDBOX_APP_KEY = "1023175152";
     public static final String TB_SANDBOX_APP_SECRET = "sandbox9e3c1e8c65b37da4d0237a953";
 
-    public static final String TB_SANDBOX_SESSION_KEY = "61005252e13554ed72bc42e80716bfd561ceb1c2d8f79dc2074082787";
+    public static final String TB_SANDBOX_SESSION_KEY = "6102917987b523e06b6565087165bd84a3be5fe4b699a492074082787";
     public static final String TB_SANDBOX_MESSAGE_URL = "ws://mc.api.tbsandbox.com/";
 
 

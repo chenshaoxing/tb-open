@@ -282,16 +282,16 @@
             <!--<artifactId>httpclient</artifactId>-->
             <!--<version>4.3.3</version>-->
         <!--</dependency>-->
-        <dependency>
-            <groupId>com.taobao</groupId>
-            <artifactId>open-api</artifactId>
-            <version>20150518</version>
-        </dependency>
         <!--<dependency>-->
             <!--<groupId>com.taobao</groupId>-->
-            <!--<artifactId>open-sdk</artifactId>-->
-            <!--<version>1.1</version>-->
+            <!--<artifactId>open-api</artifactId>-->
+            <!--<version>20150518</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>com.taobao</groupId>
+            <artifactId>open-sdk</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>

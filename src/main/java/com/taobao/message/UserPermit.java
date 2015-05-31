@@ -17,7 +17,7 @@ import com.taobao.common.Constants;
 public class UserPermit {
     public static void main(String[] args) throws ApiException {
         UserPermit u  = new UserPermit();
-        u.userPermit();
+//        u.userPermit();
         u.get();
     }
 
@@ -28,7 +28,7 @@ public class UserPermit {
         req.setTopics("taobao_trade_TradeRated,taobao_trade_TradeSuccess");
 //        req.setTopics("taobao_trade_TradeSuccess,taobao_trade_TradeCreate,taobao_trade_TradeBuyerPay,taobao_trade_TradeRated");
 
-        TmcUserPermitResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+        TmcUserPermitResponse response = client.execute(req , "6101703948c1f4895505e2cfc0e65de72755af1689921cd2074082787");
         System.out.println(response.getBody());
     }
 

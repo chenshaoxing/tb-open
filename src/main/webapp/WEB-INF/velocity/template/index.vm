@@ -1,7 +1,7 @@
 <div class="container" >
     <div class="content  container-main" style="margin-top: 30px">
         <div class="main-content" style="text-align: center;">
-            <img src="/plug/images/main.png" style="height: 450px;">
+            <img src="/plug/images/main.jpg" style="height: 450px;">
 ##            <h6 class="sub-title">基础信息</h6>
 ##            <form id="userInfoForm">                           lu
 ##                <div class="row form-horizontal" style="margin-top: 30px">

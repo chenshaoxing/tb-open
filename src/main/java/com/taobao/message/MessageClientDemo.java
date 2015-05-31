@@ -57,7 +57,7 @@ public class MessageClientDemo {
 //    }
 
     public void  receive() throws Exception{
-        TmcClient client = new TmcClient(Constants.TB_SANDBOX_MESSAGE_URL,Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET,"default");
+        TmcClient client = new TmcClient(Constants.TB_ONLINE_MESSAGE_URL,Constants.TB_ONLINE_APP_KEY,Constants.TB_ONLINE_APP_SECRET,"default");
         client.setMessageHandler(new MessageHandler() {
             @Override
             public void onMessage(Message message, MessageStatus messageStatus) throws Exception {
@@ -65,6 +65,12 @@ public class MessageClientDemo {
                 String topic = result.get("topic").toString();
                 JSONObject object = JSON.parseObject(message.getContent());
 
+                String buyerNick = object.getString("buyer_nick");
+                BlackList blackList = blackListService.findByName(buyerNick);
+                if(blackList != null){
+                    LOG.info("find blacklist buyer nick is:"+buyerNick);
+                    return;
+                }
                 String sellerNick = object.getString("seller_nick");
 
                 Long tid = Long.valueOf(object.get("tid").toString());
@@ -81,36 +87,28 @@ public class MessageClientDemo {
                     object.put("rateContent",rateContent);
                     if(autoRateSetting.isAutoRateStatus()){
                         if(topic.equals(Constants.TAOBAO_TRADE_TRADESUCCESS)){
-                            NoRateOrders noRate = new NoRateOrders();
-                            noRate.setTid(Long.valueOf(object.get("tid").toString()));
-                            Date currentDate = new Date();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(currentDate);
-                            calendar.add(Calendar.DATE, 14);
-                            noRate.setRate(false);
-                            noRate.setOverTime(calendar.getTime());
-                            noRate = noRateOrdersService.add(noRate);
+                            NoRateOrders noRate = addNoRateOrders(object);
                             if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
-                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent());
+                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
                                 if(isRate){
                                     noRate.setRate(true);
                                     noRateOrdersService.add(noRate);
-                                    getTradeId(tid,user);
+//                                    badOrNeutralSendEmail(tid,user);
                                     addAutoRateLog(object);
                                 }
                             }
                         }else if(topic.equals(Constants.TAOBAO_TRADE_TRADERATED)){
-                            String rater = object.get("rater").toString();
+                            String rater = object.getString("rater");
                             if(rater.equals("buyer")){
                                 if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
-                                    boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent());
+                                    boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent(),user.getSessionKey());
                                     if(isRate){
-                                        getTradeId(tid,user);
+                                        addAutoRateLog(object);
+//                                        badOrNeutralSendEmail(tid,user);
                                         NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);
                                         if(noRate != null){
                                             noRate.setRate(true);
                                             noRateOrdersService.add(noRate);
-                                            addAutoRateLog(object);
                                         }
                                     }
                                 }
@@ -133,8 +131,23 @@ public class MessageClientDemo {
 //        countDownLatch.await();
     }
 
+    private NoRateOrders addNoRateOrders(JSONObject object) {
+        NoRateOrders noRate = new NoRateOrders();
+        noRate.setTid(object.getLong("tid"));
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DATE, 14);
+        noRate.setRate(false);
+        noRate.setOverTime(calendar.getTime());
+        noRate.setBuyer(object.getString("buyer_nick"));
+        noRate.setPayment(object.getFloat("payment"));
+        noRate = noRateOrdersService.add(noRate);
+        return noRate;
+    }
 
-    public void getTradeId(Long tradeId,User user){
+
+    public void badOrNeutralSendEmail(Long tradeId,User user){
         TraderatesGetRequest request = new TraderatesGetRequest();
         if(tradeId != null){
             request.setTid(tradeId);

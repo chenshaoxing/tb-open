@@ -2,6 +2,7 @@ package com.taobao.controller;
 
 import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.User;
+import com.taobao.common.Utils;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.service.AutoRateSettingService;
 import com.taobao.service.RateContentService;
@@ -11,12 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,6 +54,7 @@ public class IndexController {
         if(uu == null){
             uu = new com.taobao.entity.User();
             uu.setNickname(user.getNick());
+            uu.setOverDate(new Date());
             uu = userService.add(uu);
             AutoRateSetting setting = new AutoRateSetting();
             setting.setAutoGrabRate(false);
@@ -64,15 +69,31 @@ public class IndexController {
         Cookie nameCookie = new Cookie("name",uu.getNickname());
         response.addCookie(idCookie);
         response.addCookie(nameCookie);
-        return "index";
+        return "rate/rate-global-setting";
     }
 
     @RequestMapping(value = "/index/seller-info")
     @ResponseBody
     public Map<String, Object> getSellerInfo() throws Exception{
         try{
-            User user = sellerService.getSellerInfo();
+            com.taobao.entity.User uu = userService.findById(Utils.getUserId());
+            User user = sellerService.getSellerInfo(uu.getSessionKey());
             return ResultJson.resultSuccess(user);
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    @RequestMapping(value = "/index/user-info")
+    @ResponseBody
+    public Map<String, Object> getUserInfo(@RequestParam Long userId) throws Exception{
+        try{
+            com.taobao.entity.User user = userService.findById(userId);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("overDate",user.getOverDate());
+            return ResultJson.resultSuccess(map);
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;

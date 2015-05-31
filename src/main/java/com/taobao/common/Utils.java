@@ -2,7 +2,11 @@ package com.taobao.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,5 +72,18 @@ public class Utils {
         String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;//毫秒
         strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
         return strDay+"天"+strHour+"小时"+strMinute+"分"+strSecond+"秒";
+    }
+
+    public static Long getUserId(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Cookie [] cookies = request.getCookies();
+        Long id = null;
+        for(Cookie c:cookies){
+            if(c.getName().equals("id")){
+                id = Long.valueOf(c.getValue());
+                break;
+            }
+        }
+        return id;
     }
 }

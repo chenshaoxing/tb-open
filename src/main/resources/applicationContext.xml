@@ -36,30 +36,51 @@
 
     <!-- Timer schedule -->
 
-    <!--&lt;!&ndash;要调度的对象&ndash;&gt;-->
-    <!--<bean id="jobBean" class="com.hr.system.manage.common.DailyTaskJob" />-->
-    <!--<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
-        <!--<property name="targetObject" ref="jobBean" />-->
-        <!--<property name="targetMethod" value="execute" />-->
-        <!--&lt;!&ndash;将并发设置为false&ndash;&gt;-->
-        <!--<property name="concurrent" value="false" />-->
-    <!--</bean>-->
+    <!--要调度的对象-->
+    <bean id="scanRateTask" class="com.taobao.service.ScanAboutOverRateTask" />
+    <bean id="deleteHistoryRateLogTask" class="com.taobao.service.DeleteHistoryAutoRateLogTask" />
 
-    <!--<bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerBean">-->
-        <!--<property name="jobDetail" ref="jobDetail" />-->
-        <!--&lt;!&ndash;表达式，我的是每天0点 执行一次&ndash;&gt;-->
-        <!--<property name="cronExpression" value="5 4 1 * * ?" />-->
-    <!--</bean>-->
+    <bean id="scanDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="scanRateTask" />
+        <property name="targetMethod" value="scan" />
+        <!--将并发设置为false-->
+        <property name="concurrent" value="false" />
+    </bean>
 
-    <!--&lt;!&ndash;&lt;!&ndash;  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序   &ndash;&gt;&ndash;&gt;-->
-    <!--<bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" >-->
-        <!--<property name="triggers">-->
-            <!--<list>-->
-                <!--&lt;!&ndash;作业调度器,list下可加入其他的调度器&ndash;&gt;-->
-                <!--<ref bean="trigger" />-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="deleteDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="deleteHistoryRateLogTask" />
+        <property name="targetMethod" value="delete" />
+        <!--将并发设置为false-->
+        <property name="concurrent" value="false" />
+    </bean>
+
+
+    <bean id="triggerScan" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="scanDetail" />
+        <property name="cronExpression" value="0 10/30 * * * ?" />
+    </bean>
+
+    <bean id="triggerDelete" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="deleteDetail" />
+        <property name="cronExpression" value="0 0 23 * * ?" />
+    </bean>
+
+    <!--&lt;!&ndash;  总管理类如果将lazy-init='false'那么容器启动就会执行调度程序   &ndash;&gt;-->
+    <bean id="startQuertz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" >
+        <property name="triggers">
+            <list>
+                <!--作业调度器,list下可加入其他的调度器-->
+                <ref bean="triggerScan" />
+                <ref bean="triggerDelete" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="taoBaoClient"  class="com.taobao.api.DefaultTaobaoClient">
+        <constructor-arg name="serverUrl" value="http://gw.api.taobao.com/router/rest"></constructor-arg>
+        <constructor-arg name="appKey" value="23175152"></constructor-arg>
+        <constructor-arg name="appSecret" value="fe3900d9e3c1e8c65b37da4d0237a953"></constructor-arg>
+    </bean>
 
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${email.host}"/>

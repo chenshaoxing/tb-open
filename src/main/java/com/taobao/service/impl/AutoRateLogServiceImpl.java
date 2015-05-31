@@ -45,7 +45,6 @@ public class AutoRateLogServiceImpl implements AutoRateLogService{
             String startTime = params.get("startTime").toString();
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
-                ;
                 Expression startExp = new Expression("rateTime",sf.parse(startTime), Expression.Relation.AND, Expression.Operation.GreaterThanEqual);
                 list.add(startExp);
             } catch (ParseException e) {
@@ -64,5 +63,10 @@ public class AutoRateLogServiceImpl implements AutoRateLogService{
             }
         }
         return iBasePersistence.getEntitiesByExpressions(AutoRateLog.class,list,"id",currentPage,pageSize);
+    }
+
+    @Override
+    public void remove(AutoRateLog autoRateLog) {
+        iBasePersistence.removeEntity(autoRateLog);
     }
 }

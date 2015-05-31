@@ -95,7 +95,7 @@
                                         <tr style="background-color: #6fb3e0!important">
                                             <th class="center">
                                                 <label>
-                                                    <input type="checkbox" class="ace" onclick="Rate.fn.checkAll(this)" id="tradeIds" />
+                                                    <input type="checkbox" class="ace" onclick="Rate.fn.checkAll(this)" id="tradeIdsTmp" />
                                                     <span class="lbl"></span>
                                                 </label>
                                             </th>

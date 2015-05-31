@@ -121,8 +121,8 @@ var Rate = {
                     if(data.success){
                         var content = "content";
                         if(data.data){
-                            for(var i = data.data.contents.length-1;i>=0;i--){
-                                $("#"+content+(i+1)).val(data.data.contents[i].content);
+                            for(var i = data.data.length-1;i>=0;i--){
+                                $("#"+content+(i+1)).val(data.data[i].content);
                             }
                         }else{
                             for(var i = Rate.globalVariable.rateContent.length-1;i>=0;i--){
@@ -160,18 +160,33 @@ var Rate = {
 
                     common.fn.showDialog(Rate.ejs.batchRateResult,data.data,null);
                     Rate.fn.execBatchList();
+                    $("#tradeIdsTmp").removeAttr("checked");
                 }
             }
 
             var batchRateForm = common.fn.getFromJsonData("batchRateForm");
             batchRateForm.buyerNick = $("#buyerNick").val();
             batchRateForm.rateStatus = $("#rateStatus").val();
-            var textArea = $.find(".tab-pane active textarea");
-            if(textArea){
-                batchRateForm.content = $(textArea).val();
+            var tabContent = $(".tab-content");
+            if(tabContent && tabContent.length == 1){
+                var contents  = $(tabContent[0]).children();
+                $(contents).each(function(){
+                    if($(this).hasClass("active")){
+                        batchRateForm.content = $(this).children().get(0).value;
+                        return;
+                    }
+                })
             }
+            //tabPane.each(function(){
+            //    if($(this).hasClass("active")){
+            //        $(this).
+            //    }
+            //})
+            //if(textArea){
+            //    batchRateForm.content = $(textArea).val();
+            //}
             $("#"+dialogId).modal("hide");
-            common.fn.ajax(Rate.url.addBatchRateOrders,batchRateForm,callback);
+            common.fn.ajaxNotLoadingDialog(Rate.url.addBatchRateOrders,batchRateForm,callback);
         },
         readyAutoRateSetting:function(){
             var dataHtml = new EJS({url:Rate.ejs.autoRateSetting}).render({data:{}});

@@ -62,4 +62,9 @@ public class NoRateOrdersServiceImpl implements NoRateOrdersService {
     public NoRateOrders findByTradeId(Long tradeId) {
         return basePersistence.getEntityByField(NoRateOrders.class,"tid",tradeId);
     }
+
+    @Override
+    public void delete(NoRateOrders noRateOrders) {
+        basePersistence.removeEntity(noRateOrders);
+    }
 }

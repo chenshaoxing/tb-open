@@ -3,7 +3,9 @@ package com.taobao.controller;
 import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.Trade;
 import com.taobao.api.domain.User;
+import com.taobao.common.Utils;
 import com.taobao.service.TradeService;
+import com.taobao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,12 +30,15 @@ public class TradeController {
 
     @Resource
     private TradeService tradeService;
+    @Resource
+    private UserService userService;
 
     @RequestMapping(value = "/trade/buyer-info")
     @ResponseBody
     public Map<String, Object> getBuyerInfo(@RequestParam Long tradeId) throws Exception{
         try{
-            Trade trade = tradeService.getTradeBuyerContactInfo(tradeId);
+            com.taobao.entity.User user = userService.findById(Utils.getUserId());
+            Trade trade = tradeService.getTradeBuyerContactInfo(tradeId,user.getSessionKey());
             return ResultJson.resultSuccess(trade);
         }catch (Exception e){
             LOG.error(e.getMessage());

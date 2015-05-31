@@ -1,6 +1,7 @@
 package com.taobao.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created with Intellij IDEA
@@ -25,6 +26,43 @@ public class User extends BaseDomain{
     private String sessionKey;
     @Column
     private String email;
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    @Column
+    private String refreshToken;
+
+
+    @Transient
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date overDate;
+
+    public Date getSessionKeyOverDate() {
+        return sessionKeyOverDate;
+    }
+
+    public void setSessionKeyOverDate(Date sessionKeyOverDate) {
+        this.sessionKeyOverDate = sessionKeyOverDate;
+    }
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sessionKeyOverDate;
+
+    public Date getOverDate() {
+        return overDate;
+    }
+
+    public void setOverDate(Date overDate) {
+        this.overDate = overDate;
+    }
 
     public String getNickname() {
         return nickname;
