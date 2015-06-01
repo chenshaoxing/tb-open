@@ -36,7 +36,6 @@ public class MessageClientDemo {
     private RateContentService rateContentService= null;
     private UserService userService= null;
     private NoRateOrdersService noRateOrdersService= null;
-    private MailService mailService= null;
     public MessageClientDemo(ApplicationContext act) {
         rateService = (RateService)act.getBean("rateService");
         autoRateSettingService = (AutoRateSettingService)act.getBean("autoRateSettingServiceImpl");
@@ -45,7 +44,6 @@ public class MessageClientDemo {
         rateContentService = (RateContentService)act.getBean("rateContentServiceImpl");
         userService = (UserService)act.getBean("userServiceImpl");
         noRateOrdersService = (NoRateOrdersService)act.getBean("noRateOrdersServiceImpl");
-        mailService = (MailService)act.getBean("mailService");
     }
 
 
@@ -160,9 +158,9 @@ public class MessageClientDemo {
             List<TradeRate> list = response.getTradeRates();
             for(TradeRate tradeRate:list){
                 if(tradeRate.getResult().equals("bad")){
-                    mailService.simpleSend(user.getEmail(),"差评通知","亲爱的，您收到一个差评订单，买家id是，请尽快和买家联系");
+//                    mailService.simpleSend(user.getEmail(),"差评通知","亲爱的，您收到一个差评订单，买家id是，请尽快和买家联系");
                 }else if(tradeRate.getResult().equals("neutral")){
-                    mailService.simpleSend(user.getEmail(),"中评通知","亲爱的，您收到一个中评订单，买家id是，请尽快和买家联系");
+//                    mailService.simpleSend(user.getEmail(),"中评通知","亲爱的，您收到一个中评订单，买家id是，请尽快和买家联系");
                 }
             }
         } catch (Exception e) {

@@ -35,6 +35,7 @@ public class OnlineEmailService {
     @Resource
     private VelocityEngine velocityEngine;
 
+
     private JavaMailSenderImpl javaMailSender;
 
     public void  init(){

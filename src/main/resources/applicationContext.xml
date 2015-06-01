@@ -82,7 +82,7 @@
         <constructor-arg name="appSecret" value="${mvn.app.secret}"></constructor-arg>
     </bean>
 
-    <bean id="javaMailSender" class="com.taobao.service.OnlineEmailService">
+    <bean id="onlineEmailService" class="com.taobao.service.OnlineEmailService" init-method="init">
         <property name="mailServerHost" value="${mvn.email.server.host}"/>
         <property name="mailServerPort" value="${mvn.email.server.port}"/>
         <property name="userName" value="${mvn.email.username}"/>

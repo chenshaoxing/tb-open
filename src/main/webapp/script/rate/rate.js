@@ -69,21 +69,7 @@ var Rate = {
             common.fn.ajax(Rate.url.getBuyerInfo,params,callback);
         },
         getProductUrl:function(numId){
-            function callback(data){
-                if(data.success){
-                    if(data.data){
-                        var a = $("<a href='"+data.data.detailUrl+"' target='_blank'>Apple</a>").get(0);
-                        var e = document.createEvent('MouseEvents');
-                        e.initEvent('click', true, true);
-                        a.dispatchEvent(e);
-                    }else{
-                        common.fn.showInfoMessages("提示","该商品不存在!");
-                    }
-                }
-            }
-            var params  = new Object();
-            params.numId = numId;
-            common.fn.ajaxNotLoadingDialog(Rate.url.getProductInfo,params,callback);
+           location.href = "http://item.taobao.com/item.htm?id="+numId;
         },
         getBatchRateOrders:function(currentPage,callback){
             var params = new Object();

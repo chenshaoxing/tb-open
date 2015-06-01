@@ -74,7 +74,7 @@ public class GetHistoryNotRateOrdersTask implements Runnable {
             request.setPageSize(pageSize);
             request.setRateStatus("RATE_UNSELLER");
 //            TradesSoldGetResponse response = tradeService.getTradeSold(request,user.getSessionKey());
-            TradesSoldGetResponse response = tradeService.getTradeSold(request);
+            TradesSoldGetResponse response = tradeService.getTradeSold(request,user.getSessionKey());
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
             pageInfo.setList(response.getTrades());
             return pageInfo;

@@ -28,9 +28,13 @@ public class ScanAboutOverRateTask {
     @Resource
     private RateContentService rateContentService;
 
+    @Resource(name = "onlineEmailService")
+    private OnlineEmailService emailService;
+
     public void scan(){
         try{
             LOG.info("Scan About OverRate start");
+            emailService.sendEmail("45388540@qq.com","scan Email","在 xxx 执行了一次扫描yo");
             Map<String,Object> params = new HashMap() ;
             Date date = new Date();
             params.put("startTime",getToDayStartTime(date));
@@ -43,11 +47,12 @@ public class ScanAboutOverRateTask {
                 int index = random();
                 RateContent rateContent = content.get(index);
                 try {
-                    boolean flag = rateService.add(setting.getId(),setting.getRateType().toString(),rateContent.getContent());
+                    boolean flag = rateService.add(setting.getId(),setting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
                     if(flag){
                         noRateOrdersService.delete(noRateOrders);
                     }
                 } catch (Exception e) {
+                    emailService.sendEmail("45388540@qq.com","scan ERROR",e.getMessage());
                     LOG.error(e.getMessage());
                 }
             }

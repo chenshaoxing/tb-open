@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 /**
 * Created by star on 4/1/15.
 */
-@Service
+//@Service
 public class MailService {
     @Resource(name = "javaMailSender")
     private JavaMailSenderImpl javaMailSender;

@@ -7,10 +7,7 @@ import com.taobao.api.internal.util.WebUtils;
 import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.RateContent;
-import com.taobao.service.AutoRateSettingService;
-import com.taobao.service.RateContentService;
-import com.taobao.service.SellerService;
-import com.taobao.service.UserService;
+import com.taobao.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -55,12 +52,13 @@ public class AuthController {
             String refreshToken = obj.getString("refresh_token");
             User user = sellerService.getSellerInfo(sessionKey);
             com.taobao.entity.User uu = userService.findByName(user.getNick());
-            userPermitService.userPermit(user.getSessionKey());
+            userPermitService.userPermit(sessionKey);
             if(uu == null){
                 uu = new com.taobao.entity.User();
                 uu.setRefreshToken(refreshToken);
                 uu.setNickname(user.getNick());
                 uu.setOverDate(new Date());
+                uu.setSessionKey(sessionKey);
                 uu = userService.add(uu);
                 AutoRateSetting setting = new AutoRateSetting();
                 setting.setAutoGrabRate(false);

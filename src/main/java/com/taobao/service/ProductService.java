@@ -48,15 +48,22 @@ public class ProductService {
      * @return
      */
     public Item getProductByNumId(Long numId,String sessionKey) throws Exception{
+        TaobaoClient taobaoClient1 = new DefaultTaobaoClient(Constants.TB_ONLINE_API_URL,Constants.TB_ONLINE_APP_KEY,
+                Constants.TB_ONLINE_APP_SECRET);
         ItemGetRequest req=new ItemGetRequest();
-        req.setFields("num_iid,title,price,desc_modules,sell_point,nike,detail_url");
+        req.setFields("num_iid,detail_url");
         req.setNumIid(numId);
         try {
-            ItemGetResponse response = taobaoClient.execute(req , sessionKey);
+            ItemGetResponse response = taobaoClient1.execute(req , sessionKey);
             return response.getItem();
         } catch (ApiException e) {
             LOG.error(e.getMessage());
             throw e;
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ProductService service = new ProductService();
+        service.getProductByNumId(40885824720L,"620182534f37a03b480f64bd97dde7f61ZZ9bb5b0fa4c2b178766584");
     }
 }
