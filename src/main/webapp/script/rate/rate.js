@@ -13,7 +13,8 @@ var Rate = {
         addBatchRateOrders:"/rate/batch-rate-orders/rate",
         autoRateSetting:"/rate/auto-rate-global-setting" ,
         initAutoRateSetting:"/rate/auto-rate-global-setting/init",
-        getRateContentsByUser:"/rate/rate-content/getRateContentsByUser"
+        getRateContentsByUser:"/rate/rate-content/getRateContentsByUser",
+        showNull:"/script/rate/ejs/showNull.ejs"
     },
     ejs:{
         alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
@@ -195,6 +196,7 @@ var Rate = {
         addAutoRateSetting:function(){
             function callback(data){
                 if(data.success){
+                    $("#"+dialogId).modal("hide");
                     common.fn.showInfoMessages("提示","自动评价配置设置成功!");
                 }
             }
@@ -212,6 +214,7 @@ var Rate = {
                     params.mediumOrPoorRateAlarm = false;
                 }
                 params.userId = $.cookie("id");
+                var dialogId = common.fn.showDialog(Rate.ejs.showNull,{},null,null,null);
                 common.fn.ajaxNotLoadingDialog(Rate.url.autoRateSetting,params,callback)
             }
         },

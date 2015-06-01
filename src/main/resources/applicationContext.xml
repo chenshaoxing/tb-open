@@ -77,45 +77,36 @@
     </bean>
 
     <bean id="taoBaoClient"  class="com.taobao.api.DefaultTaobaoClient">
-        <constructor-arg name="serverUrl" value="http://gw.api.taobao.com/router/rest"></constructor-arg>
-        <constructor-arg name="appKey" value="23175152"></constructor-arg>
-        <constructor-arg name="appSecret" value="fe3900d9e3c1e8c65b37da4d0237a953"></constructor-arg>
+        <constructor-arg name="serverUrl" value="${mvn.app.url}"></constructor-arg>
+        <constructor-arg name="appKey" value="${mvn.app.key}"></constructor-arg>
+        <constructor-arg name="appSecret" value="${mvn.app.secret}"></constructor-arg>
     </bean>
 
-    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${email.host}"/>
-        <property name="username" value="${email.username}"/>
-        <property name="password" value="${email.password}"/>
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">
-                    ${email.auth}
-                </prop>
-                <prop key="mail.smtp.timeout">
-                    25000
-                </prop>
-            </props>
-        </property>
+    <bean id="javaMailSender" class="com.taobao.service.OnlineEmailService">
+        <property name="mailServerHost" value="${mvn.email.server.host}"/>
+        <property name="mailServerPort" value="${mvn.email.server.port}"/>
+        <property name="userName" value="${mvn.email.username}"/>
+        <property name="password" value="${mvn.email.password}"/>
     </bean>
 
 
-    <bean	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:important.properties</value>
-            </list>
-        </property>
-    </bean>
+    <!--<bean	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>classpath:important.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
+        <property name="url" value="${mvn.jdbc_url}" />
         <!--<property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />-->
         <!--<property name="url" value="jdbc:mysql://sqld.duapp.com:4050/eBdYFaVHDRBXyIkrimel?autoReconnect=true"/>-->
-        <property name="username" value="root" />
+        <property name="username" value="${mvn.jdbc_username}" />
         <!--<property name="username" value="KHRdaNSHIU1AvMVoIc7EEU1C" />-->
-        <property name="password" value="root" />
+        <property name="password" value="${mvn.jdbc_password}" />
         <!--<property name="password" value="RdgWkOmLn1lsDWr50Evu8sV2sidhNB45" />-->
 
     </bean>
@@ -143,5 +134,20 @@
     <tx:annotation-driven transaction-manager="transactionManager" />
 
     <aop:aspectj-autoproxy />
+
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library"></prop>
+                <prop key="input.encoding">utf-8</prop>
+                <prop key="output.encoding">utf-8</prop>
+            </props>
+        </property>
+    </bean>
 
 </beans>

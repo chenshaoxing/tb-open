@@ -241,6 +241,7 @@ var common ={
                     readyFun();
                 })
             }
+            return  randomDialogId;
         },
         /**
          *  显示确认对话框

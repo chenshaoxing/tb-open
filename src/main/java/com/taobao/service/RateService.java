@@ -51,15 +51,13 @@ public class RateService {
      */
     public boolean add(Long tid,String rateType,String content) throws Exception {
         try {
-            TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                    Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
             TraderateAddRequest request = new TraderateAddRequest();
             request.setTid(tid);
             request.setContent(content);
             request.setRole("seller");
             request.setAnony(true);
             request.setResult(rateType);
-            TraderateAddResponse response = client.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
+            TraderateAddResponse response = taobaoClient.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
             return  response.isSuccess();
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -102,8 +100,6 @@ public class RateService {
      */
     public boolean add(Long tid,Long oid,String rateType,String content) throws Exception {
         try {
-            TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                    Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
             TraderateAddRequest request = new TraderateAddRequest();
             request.setTid(tid);
             request.setOid(oid);
@@ -111,7 +107,7 @@ public class RateService {
             request.setRole("seller");
             request.setAnony(true);
             request.setResult(rateType);
-            TraderateAddResponse response = client.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
+            TraderateAddResponse response = taobaoClient.execute(request,Constants.TB_SANDBOX_SESSION_KEY);
             return response.isSuccess();
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -152,11 +148,9 @@ public class RateService {
      * @throws Exception
      */
     public TraderatesGetResponse searchRate(TraderatesGetRequest req) throws Exception {
-        TaobaoClient client = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
         req.setFields("tid,oid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,valid_score");
         try {
-            TraderatesGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            TraderatesGetResponse response = taobaoClient.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
             return response;
         } catch (ApiException e) {
             LOG.error(e.getMessage());

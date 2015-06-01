@@ -2,13 +2,8 @@ package com.taobao.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.taobao.api.ApiException;
-import com.taobao.api.DefaultTaobaoClient;
-import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.User;
 import com.taobao.api.internal.util.WebUtils;
-import com.taobao.api.request.TraderateAddRequest;
-import com.taobao.api.response.TraderateAddResponse;
 import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.RateContent;
@@ -22,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -49,6 +43,8 @@ public class AuthController {
     private AutoRateSettingService autoRateSettingService;
     @Resource
     private RateContentService rateContentService;
+    @Resource
+    private UserPermitService userPermitService;
 
     @RequestMapping(value = "/auth")
     public String auth(@RequestParam String code,@RequestParam String state,HttpServletResponse response) throws Exception{
@@ -59,6 +55,7 @@ public class AuthController {
             String refreshToken = obj.getString("refresh_token");
             User user = sellerService.getSellerInfo(sessionKey);
             com.taobao.entity.User uu = userService.findByName(user.getNick());
+            userPermitService.userPermit(user.getSessionKey());
             if(uu == null){
                 uu = new com.taobao.entity.User();
                 uu.setRefreshToken(refreshToken);

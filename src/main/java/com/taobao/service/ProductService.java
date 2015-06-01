@@ -29,14 +29,12 @@ public class ProductService {
      * @return
      */
     public Item getProductByNumId(Long numId) throws Exception{
-        TaobaoClient client=new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                Constants.TB_SANDBOX_APP_KEY,
-                Constants.TB_SANDBOX_APP_SECRET);
+
         ItemGetRequest req=new ItemGetRequest();
         req.setFields("num_iid,title,price,desc_modules,sell_point,nike,detail_url");
         req.setNumIid(numId);
         try {
-            ItemGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            ItemGetResponse response = taobaoClient.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
             return response.getItem();
         } catch (ApiException e) {
             LOG.error(e.getMessage());

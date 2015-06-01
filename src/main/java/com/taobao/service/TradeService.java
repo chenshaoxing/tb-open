@@ -38,14 +38,11 @@ public class TradeService {
      */
     public TradesSoldGetResponse getTradeSold(TradesSoldGetRequest req) throws Exception{
         try{
-            TaobaoClient client=new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                    Constants.TB_SANDBOX_APP_KEY,
-                    Constants.TB_SANDBOX_APP_SECRET);
             req.setFields("tid,type,status,payment,orders,num," +
                     "num_iid,price,total_fee,created,pay_time,end_time,buyer_nick,service_orders,buyer_rate");
 
             req.setStatus("TRADE_FINISHED");
-            TradesSoldGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            TradesSoldGetResponse response = taobaoClient.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
             return response;
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -74,14 +71,11 @@ public class TradeService {
 
     public Trade getTradeBuyerContactInfo(Long tradeId) throws Exception{
         try{
-            TaobaoClient client=new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                    Constants.TB_SANDBOX_APP_KEY,
-                    Constants.TB_SANDBOX_APP_SECRET);
             TradeFullinfoGetRequest req=new TradeFullinfoGetRequest();
             req.setFields("tid,receiver_state,receiver_name,receiver_address,receiver_mobile," +
                     "receiver_town,receiver_city,receiver_district");
             req.setTid(tradeId);
-            TradeFullinfoGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            TradeFullinfoGetResponse response = taobaoClient.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
             return response.getTrade();
         }catch (Exception e){
             LOG.error(e.getMessage());

@@ -52,8 +52,6 @@ public class RateController {
     @Resource
     private AutoRateLogService autoRateLogService;
     @Resource
-    private UserPermitService userPermitService;
-    @Resource
     private NoRateOrdersService noRateOrdersService;
 
 
@@ -253,9 +251,6 @@ public class RateController {
                                                      )throws Exception{
         try{
             User user = userService.findById(userId);
-
-            userPermitService.userPermit(user.getSessionKey());
-
             user.setEmail(email);
             userService.add(user);
             AutoRateSetting setting = null;

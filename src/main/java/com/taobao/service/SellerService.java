@@ -29,12 +29,9 @@ public class SellerService {
 
     public User getSellerInfo() throws Exception{
         try{
-            TaobaoClient client=new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,
-                    Constants.TB_SANDBOX_APP_KEY,
-                    Constants.TB_SANDBOX_APP_SECRET);
             UserSellerGetRequest req=new UserSellerGetRequest();
             req.setFields("nick,avatar");
-            UserSellerGetResponse response = client.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            UserSellerGetResponse response = taobaoClient.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
             return response.getUser();
         }catch (Exception e){
             LOG.error(e.getMessage());
