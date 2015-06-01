@@ -12,7 +12,7 @@
         <td>
             <% var orders = data.list[i].orders %>
             <% for( var j = 0;j<orders.length;j++) {%>
-                <a target="_blank" href="http://item.taobao.com/item.htm?id=<%=<%=orders[j].numIid%>" ><%=orders[j].title%></a> <br/>
+                <a target="_blank" href="http://item.taobao.com/item.htm?id=<%=orders[j].numIid%>" ><%=orders[j].title%></a> <br/>
                 数量:<%=orders[j].num%>&nbsp;&nbsp;&nbsp;&nbsp; 实付:&nbsp;&nbsp;<i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp;<%=orders[j].payment%>
                 <br/>
             <%}%>
