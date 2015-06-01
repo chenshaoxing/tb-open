@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textillate.js</title>
+  <link href="assets/animate.css" rel="stylesheet">
+  <link href="assets/style.css" rel="stylesheet">
+  <!--<link rel="stylesheet" href="http://dreamsky.github.io/main/blog/common/init.css">-->
+  <body>
+    <div class="decal"></div>
+		<div class="jumbotron">
+			<div class="container">
+  		  <h1 class="glow in tlt">梦想天空</h1>
+  		  <p class="tlt" data-in-effect="bounceInDown">
+  		  	A simple plugin for CSS3 text animations.
+  		  </p>
+  		</div>
+  	</div>
+    <div class="decal"></div>
+  	<div class="container fade in">
+      <div class="playground grid">
+        <div class="col-1-1 viewport">
+          <div class="tlt">
+            <ul class="texts" style="display: none">
+              <li>的复活节复活的空间发挥的 wizards make toxic brew for the evil Queen and Jack.</li>
+              <li>The quick brown fox jumps over the lazy dog.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  	</div>
+<!--<div class="footer-banner" style="width:728px; margin:30px auto"></div>-->
+<script src="http://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
+<script src="assets/jquery.fittext.js"></script>
+<script src="assets/jquery.lettering.js"></script>
+<script src="assets/highlight.min.js"></script>
+<script src="assets/jquery.textillate.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>
+  $(function (){
+    var log = function (msg) {
+      return function () {
+        if (console) console.log(msg);
+      }
+    }
+    $('code').each(function () {
+      var $this = $(this);
+      $this.text($this.html());
+    })
+    var $viewport = $('.playground .viewport');
+    var getFormData = function () {
+      var data = { 
+        loop: true, 
+        in: { callback: log('in callback called.') }, 
+        out: { callback: log('out callback called.') }
+      };
+
+      var key1 = "effect";
+      var type1 = "in";
+      data[type1][key1] = "fadeInLeftBig";
+
+      var key2 = "effect";
+      var type2 = "out";
+      data[type2][key2] = "hinge";
+
+      data[type1].shuffle = false;
+      data[type1].reverse = false;
+      data[type1].sync =false;
+
+      data[type2].shuffle = true;
+      data[type2].reverse = false;
+      data[type2].sync =false;
+      return data;
+    };
+
+    $('.jumbotron h1')
+      .fitText(0.6)
+      .textillate({ in: { effect: 'flipInY' }});
+    
+    $('.jumbotron p')
+      .fitText(3.2, { maxFontSize: 18 })
+      .textillate({ initialDelay: 1000, in: { delay: 3, shuffle: true } });
+
+    setTimeout(function () {
+        $('.fade').addClass('in');
+    }, 250);
+
+    setTimeout(function () {
+      $('h1.glow').removeClass('in');
+    }, 2000);
+
+    var $tlt = $viewport.find('.tlt')
+      .on('start.tlt', log('start.tlt triggered.'))
+      .on('inAnimationBegin.tlt', log('inAnimationBegin.tlt triggered.'))
+      .on('inAnimationEnd.tlt', log('inAnimationEnd.tlt triggered.'))
+      .on('outAnimationBegin.tlt', log('outAnimationBegin.tlt triggered.'))
+      .on('outAnimationEnd.tlt', log('outAnimationEnd.tlt triggered.'))
+      .on('end.tlt', log('end.tlt'));
+    
+      var obj = getFormData();
+      $tlt.textillate(obj);
+
+  });
+
+	</script>
+  <!--<script src="http://dreamsky.github.io/main/blog/common/init.js"></script>-->
+  </body>
+</html>
