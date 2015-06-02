@@ -8,6 +8,7 @@ import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.RateContent;
 import com.taobao.service.*;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -46,9 +47,12 @@ public class AuthController {
     @RequestMapping(value = "/auth")
     public String auth(@RequestParam String code,@RequestParam String state,HttpServletResponse response) throws Exception{
         try{
-            String objStr = getSession(code, state);
+            String objStr = getSession(code, state,response);
             JSONObject obj = JSON.parseObject(objStr);
             String sessionKey = obj.getString("access_token");
+            if(StringUtils.isEmpty(sessionKey)){
+                return "redirect:https://oauth.taobao.com/logoff?client_id=23175152&view=web";
+            }
             String refreshToken = obj.getString("refresh_token");
             User user = sellerService.getSellerInfo(sessionKey);
             com.taobao.entity.User uu = userService.findByName(user.getNick());
@@ -78,6 +82,7 @@ public class AuthController {
             Cookie nameCookie = new Cookie("name",URLEncoder.encode(uu.getNickname(), "utf-8"));
             response.addCookie(idCookie);
             response.addCookie(nameCookie);
+//            return "redirect:rate/rate-global-setting";
             return "rate/rate-global-setting";
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -104,11 +109,12 @@ public class AuthController {
     }
 
     public static void main(String[] args) throws Exception {
-//        getSession();
-        test();
+//        getSession("1Uchp6oe5wjFg4ayKY2X5kd4240289","1212");
+//        test();
     }
 
-    public static String getSession(String code,String state) throws UnsupportedEncodingException {
+    public static String getSession(String code,String state,HttpServletResponse response) throws Exception {
+        LOG.info("exec -------------------------------start");
         String url="https://oauth.taobao.com/token";
         Map<String,String> props=new HashMap<String,String>();
         props.put("grant_type","authorization_code");
@@ -116,15 +122,21 @@ public class AuthController {
         props.put("code",code);
         props.put("client_id","23175152");
         props.put("client_secret","fe3900d9e3c1e8c65b37da4d0237a953");
-        props.put("redirect_uri","http://www.fuckbug.net:15569/auth");
+        props.put("redirect_uri","http://www.fuckbug.net:15569/");
         props.put("view","web");
         props.put("state",state);
         String s="";
         try{
             s= WebUtils.doPost(url, props, 30000, 30000);
+            LOG.info("exec -------------------------------end\n"+s);
             return s;
         }catch(IOException e){
-            e.printStackTrace();
+            JSONObject obj = JSON.parseObject(e.getMessage());
+            LOG.error(e.getMessage());
+            if(obj.getString("error").equals("invalid_client")){
+                response.sendRedirect("https://oauth.taobao.com/logoff?client_id=23175152&view=web");
+            }
+
         }
         return null;
     }
@@ -155,6 +167,6 @@ public class AuthController {
 //        req.setAnony(true);
 //        TraderateAddResponse response = client.execute(req , "6200107f34966f3ZZb7395547912167221b5990a9ebbc63178766584");
 //        System.out.println(response.getTradeRate().getTid());
-        getSession("SNDAFCeHHhIzcutaPMDE0wqt142823","1212");
+//        getSession("1Uchp6oe5wjFg4ayKY2X5kd4240289","1212");
     }
 }
