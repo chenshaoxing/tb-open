@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+/*
+ * Copyright (c) 2010, 2014, Jumei and/or its affiliates. All rights reserved.
+ * JUMEI PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ *
+ */
+-->
+<configuration>
+
+    <property>
+        <name>before.overtime.exec.rate.date</name>  <!-- 在评价过期前多少天对其进行评价 -->
+        <value>4</value>  <!-- 最小1  最大14 单位天 -->
+    </property>
+    <property>
+        <name>global.admin.email</name>
+        <value>45388540@qq.com</value>
+    </property>
+    <property>           <!-- 当用户的过期时间小于5天的时候进行每天发邮件提醒 -->
+        <name>user.over.time.remind.day</name>
+        <value>5</value>
+    </property>
+
+
+</configuration>

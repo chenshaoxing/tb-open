@@ -375,6 +375,7 @@
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
                 <mvn.email.password>xx1991</mvn.email.password>
                 <mvn.email.auth>true</mvn.email.auth>
+                <log.home>D:\\</log.home>
             </properties>
         </profile>
 
@@ -398,6 +399,8 @@
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
                 <mvn.email.password>xx1991</mvn.email.password>
                 <mvn.email.auth>true</mvn.email.auth>
+                <!--<log.home>/home/hadoop/hadoop/logs</log.home>-->
+                <log.home>D:\\</log.home>
             </properties>
 
         </profile>
