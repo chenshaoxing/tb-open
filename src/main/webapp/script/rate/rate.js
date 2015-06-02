@@ -13,8 +13,7 @@ var Rate = {
         addBatchRateOrders:"/rate/batch-rate-orders/rate",
         autoRateSetting:"/rate/auto-rate-global-setting" ,
         initAutoRateSetting:"/rate/auto-rate-global-setting/init",
-        getRateContentsByUser:"/rate/rate-content/getRateContentsByUser",
-        showNull:"/script/rate/ejs/showNull.ejs"
+        getRateContentsByUser:"/rate/rate-content/getRateContentsByUser"
     },
     ejs:{
         alreadyRateOrderList:"/script/rate/ejs/already-rate-order-list.ejs",
@@ -22,7 +21,8 @@ var Rate = {
         buyerInfo:"/script/rate/ejs/showBuyerInfo.ejs",
         batchRateInfo:"/script/rate/ejs/showBatchRateInfo.ejs",
         batchRateResult:"/script/rate/ejs/batchRateResultInfo.ejs",
-        autoRateSetting:"/script/rate/ejs/autoRateSetting.ejs"
+        autoRateSetting:"/script/rate/ejs/autoRateSetting.ejs",
+        showNull:"/script/rate/ejs/showNull.ejs"
     },
     fn:{
         execList:function(){

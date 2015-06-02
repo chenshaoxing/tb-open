@@ -20,4 +20,8 @@ public class Constants {
     public static final String TAOBAO_TRADE_TRADESUCCESS ="taobao_trade_TradeSuccess";
     /*评价变更消息*/
     public static final String TAOBAO_TRADE_TRADERATED = "taobao_trade_TradeRated";
+
+    public static final String BEFORE_OVERTIME_EXEC_RATE_DATE = "before.overtime.exec.rate.date";
+    public static final String GLOBAL_ADMIN_EMAIL="global.admin.email";
+    public static final String USER_OVER_TIME_REMIND_DAY="user.over.time.remind.day";
 }

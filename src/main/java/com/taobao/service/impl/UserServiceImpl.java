@@ -6,6 +6,7 @@ import com.taobao.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by star on 15/5/22.
@@ -29,5 +30,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByName(String nickname) {
         return iBasePersistence.getEntityByField(User.class,"nickname",nickname);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return iBasePersistence.getAllEntities(User.class);
     }
 }

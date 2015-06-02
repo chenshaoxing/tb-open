@@ -8,6 +8,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,5 +87,19 @@ public class Utils {
             }
         }
         return id;
+    }
+
+    public static String getToDayStartTimeStr(Date date,String formatStr){
+        SimpleDateFormat format = new SimpleDateFormat(formatStr);
+        String start = format.format(date);
+        start = start+" 00:00:00";
+        return  start;
+    }
+
+    public static String getToDayEndTimeStr(Date date,String formatStr){
+        SimpleDateFormat format = new SimpleDateFormat(formatStr);
+        String end = format.format(date);
+        end = end+" 23:59:59";
+        return end;
     }
 }

@@ -52,8 +52,8 @@ public class AuthController {
             String refreshToken = obj.getString("refresh_token");
             User user = sellerService.getSellerInfo(sessionKey);
             com.taobao.entity.User uu = userService.findByName(user.getNick());
-            userPermitService.userPermit(sessionKey);
             if(uu == null){
+                userPermitService.userPermit(sessionKey);
                 uu = new com.taobao.entity.User();
                 uu.setRefreshToken(refreshToken);
                 uu.setNickname(user.getNick());

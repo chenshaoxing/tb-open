@@ -1,9 +1,10 @@
-package com.taobao.service;
+package com.taobao.task;
 
 
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.AutoRateLog;
 import com.taobao.entity.AutoRateSetting;
+import com.taobao.service.AutoRateLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

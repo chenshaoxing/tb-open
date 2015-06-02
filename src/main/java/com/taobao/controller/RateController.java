@@ -13,6 +13,7 @@ import com.taobao.common.Utils;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.*;
 import com.taobao.service.*;
+import com.taobao.task.GetHistoryNotRateOrdersTask;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.formula.functions.Rate;
 import org.slf4j.Logger;
@@ -239,7 +240,7 @@ public class RateController {
     @RequestMapping(value = "/rate/auto-rate-global-setting")
     @ResponseBody
     public Map<String, Object> autoRateGlobalSetting(@RequestParam boolean autoRateStatus,
-                                                     @RequestParam Long settingId,
+                                                     @RequestParam(required = false) Long settingId,
                                                      @RequestParam(required = false) boolean mediumOrPoorRateAlarm,
                                                      @RequestParam String autoRateType,
                                                      @RequestParam Long userId,

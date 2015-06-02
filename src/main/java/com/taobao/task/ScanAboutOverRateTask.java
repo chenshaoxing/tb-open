@@ -1,9 +1,12 @@
-package com.taobao.service;
+package com.taobao.task;
 
+import com.taobao.common.ConfigurationManager;
+import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.NoRateOrders;
 import com.taobao.entity.RateContent;
 import com.taobao.entity.User;
+import com.taobao.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -31,10 +34,11 @@ public class ScanAboutOverRateTask {
     @Resource(name = "onlineEmailService")
     private OnlineEmailService emailService;
 
+    private static final String adminEmail = ConfigurationManager.create().get(Constants.GLOBAL_ADMIN_EMAIL);
+
     public void scan(){
         try{
             LOG.info("Scan About OverRate start");
-            emailService.sendEmail("45388540@qq.com","scan Email","在 xxx 执行了一次扫描yo");
             Map<String,Object> params = new HashMap() ;
             Date date = new Date();
             params.put("startTime",getToDayStartTime(date));
@@ -52,12 +56,12 @@ public class ScanAboutOverRateTask {
                         noRateOrdersService.delete(noRateOrders);
                     }
                 } catch (Exception e) {
-                    emailService.sendEmail("45388540@qq.com","scan ERROR",e.getMessage());
                     LOG.error(e.getMessage());
                 }
             }
             LOG.info("Scan About OverRate end");
         }catch (Exception e){
+            emailService.sendEmail(adminEmail,"ScanAboutOverRateTask ERROR","ERROR INFO:\n"+e.getMessage());
             LOG.error(e.getMessage());
         }
     }

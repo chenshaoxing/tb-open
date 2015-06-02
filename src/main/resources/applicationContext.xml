@@ -37,8 +37,16 @@
     <!-- Timer schedule -->
 
     <!--要调度的对象-->
-    <bean id="scanRateTask" class="com.taobao.service.ScanAboutOverRateTask" />
-    <bean id="deleteHistoryRateLogTask" class="com.taobao.service.DeleteHistoryAutoRateLogTask" />
+    <bean id="scanRateTask" class="com.taobao.task.ScanAboutOverRateTask" />
+    <bean id="deleteHistoryRateLogTask" class="com.taobao.task.DeleteHistoryAutoRateLogTask" />
+    <bean id="scanUserOverDateTask" class="com.taobao.task.ScanUserOverDateTask"/>
+
+    <bean id="scanUserOverDateDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="scanUserOverDateTask" />
+        <property name="targetMethod" value="scan" />
+        <!--将并发设置为false-->
+        <property name="concurrent" value="false" />
+    </bean>
 
     <bean id="scanDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="scanRateTask" />
@@ -54,6 +62,11 @@
         <property name="concurrent" value="false" />
     </bean>
 
+    <bean id="triggerScanUserOverDate" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="scanUserOverDateDetail" />
+        <!--<property name="cronExpression" value="0 0 8 * * ?" />-->
+        <property name="cronExpression" value="30 * * * * ?" />
+    </bean>
 
     <bean id="triggerScan" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="scanDetail" />
@@ -72,6 +85,7 @@
                 <!--作业调度器,list下可加入其他的调度器-->
                 <ref bean="triggerScan" />
                 <ref bean="triggerDelete" />
+                <ref bean="triggerScanUserOverDate" />
             </list>
         </property>
     </bean>

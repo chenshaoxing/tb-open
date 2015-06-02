@@ -39,7 +39,7 @@ public class User extends BaseDomain{
     private String refreshToken;
 
 
-    @Transient
+
     @Column
     @Temporal(TemporalType.DATE)
     private Date overDate;
@@ -52,6 +52,7 @@ public class User extends BaseDomain{
         this.sessionKeyOverDate = sessionKeyOverDate;
     }
 
+    @Transient
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionKeyOverDate;

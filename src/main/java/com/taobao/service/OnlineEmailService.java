@@ -51,7 +51,7 @@ public class OnlineEmailService {
         javaMailSender.setJavaMailProperties(prop);
     }
 
-    public void sendEmail(String emailAddress, String subject, String content) throws Exception {
+    public void sendEmail(String emailAddress, String subject, String content){
         MimeMessage mailMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage);
         try {
@@ -66,11 +66,10 @@ public class OnlineEmailService {
             javaMailSender.send(mailMessage);
         } catch (MessagingException e) {
             LOG.error(e.getMessage());
-            throw e;
         }
     }
 
-    public void sendEmail(List<String> emailAddress, String subject, String content) throws Exception {
+    public void sendEmail(List<String> emailAddress, String subject, String content) {
         MimeMessage mailMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage);
         try {
@@ -86,13 +85,12 @@ public class OnlineEmailService {
             javaMailSender.send(mailMessage);
         } catch (MessagingException e) {
             LOG.error(e.getMessage());
-            throw e;
         }
     }
 
 
 
-    public void sendEmail(List<String> emailAddress, String subject, String vmPath, Map<String, Object> model) throws Exception {
+    public void sendEmail(List<String> emailAddress, String subject, String vmPath, Map<String, Object> model) {
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, vmPath, "utf-8", model);
         this.sendEmail(emailAddress,subject,emailText);
     }

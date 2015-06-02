@@ -9,6 +9,7 @@ import com.taobao.api.internal.tmc.MessageStatus;
 import com.taobao.api.internal.tmc.TmcClient;
 import com.taobao.api.request.TraderatesGetRequest;
 import com.taobao.api.response.TraderatesGetResponse;
+import com.taobao.common.ConfigurationManager;
 import com.taobao.common.Constants;
 import com.taobao.entity.*;
 import com.taobao.service.*;
@@ -135,7 +136,8 @@ public class MessageClientDemo {
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
-        calendar.add(Calendar.DATE, 14);
+        int beforeDay = ConfigurationManager.create().getInt(Constants.BEFORE_OVERTIME_EXEC_RATE_DATE,14);
+        calendar.add(Calendar.DATE, beforeDay);
         noRate.setRate(false);
         noRate.setOverTime(calendar.getTime());
         noRate.setBuyer(object.getString("buyer_nick"));
