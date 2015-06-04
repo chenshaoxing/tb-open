@@ -1,10 +1,13 @@
 package com.taobao.task;
 
 
+import com.taobao.common.ConfigurationManager;
+import com.taobao.common.Constants;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.AutoRateLog;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.service.AutoRateLogService;
+import com.taobao.service.OnlineEmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,14 +24,17 @@ public class DeleteHistoryAutoRateLogTask {
     @Resource
     private AutoRateLogService autoRateLogService;
 
+    private static final Integer deleteAutoRateLogDay = ConfigurationManager.create().getInt(Constants.AUTO_RATE_LOG_DELETE_DAY,30);
+
+    @Resource
+    private OnlineEmailService onlineEmailService;
+
     public void delete(){
         try{
-            LOG.info("scan delete autoRateLog start");
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            calendar.add(Calendar.DATE, -5);
-//        calendar.add(Calendar.DATE, -30);
+            calendar.add(Calendar.DATE, deleteAutoRateLogDay);
             Map<String,Object> params = new HashMap();
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             params.put("endTime",sf.format(calendar.getTime()));
@@ -37,9 +43,10 @@ public class DeleteHistoryAutoRateLogTask {
             for(AutoRateLog log : logs){
                 autoRateLogService.remove(log);
             }
-            LOG.info("scan delete autoRateLog end. delete record "+logs.size());
+            LOG.info("scan delete autoRateLog success. delete record "+logs.size());
         }catch (Exception e){
             LOG.error(e.getMessage());
+            onlineEmailService.sendEmail(Constants.ADMIN_EMAIL,"异常邮件","ERROR INFO:\n"+e.getMessage());
         }
     }
 }

@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,8 +40,6 @@ public class AuthController {
     private AutoRateSettingService autoRateSettingService;
     @Resource
     private RateContentService rateContentService;
-    @Resource
-    private UserPermitService userPermitService;
 
     @RequestMapping(value = "/auth")
     public String auth(@RequestParam String code,@RequestParam String state,HttpServletResponse response) throws Exception{
@@ -57,11 +54,12 @@ public class AuthController {
             User user = sellerService.getSellerInfo(sessionKey);
             com.taobao.entity.User uu = userService.findByName(user.getNick());
             if(uu == null){
-                userPermitService.userPermit(sessionKey);
+                Long expires = obj.getLong("expires_in");
+                Long overDate = new Date().getTime()+expires*1000;
                 uu = new com.taobao.entity.User();
                 uu.setRefreshToken(refreshToken);
                 uu.setNickname(user.getNick());
-                uu.setOverDate(new Date());
+                uu.setOverDate(new Date(overDate));
                 uu.setSessionKey(sessionKey);
                 uu = userService.add(uu);
                 AutoRateSetting setting = new AutoRateSetting();
@@ -83,7 +81,7 @@ public class AuthController {
             response.addCookie(idCookie);
             response.addCookie(nameCookie);
 //            return "redirect:rate/rate-global-setting";
-            return "rate/rate-global-setting";
+            return "redirect:rate/rate-global-setting";
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;
@@ -102,6 +100,7 @@ public class AuthController {
            rateContentService.add(rateContent);
        }
     }
+
 
     @RequestMapping(value = "/main")
     public String index(Model model) {

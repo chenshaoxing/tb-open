@@ -32,7 +32,6 @@ public class ScanUserOverDateTask {
     private OnlineEmailService onlineEmailService;
     public void scan(){
         try {
-            LOG.info("ScanUserOverDateTask start");
             Long remindDay = ConfigurationManager.create().getLong(Constants.USER_OVER_TIME_REMIND_DAY,5);
             List<User> users = userService.findAll();
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,9 +46,10 @@ public class ScanUserOverDateTask {
                     }
                 }
             }
-            LOG.info("ScanUserOverDateTask end");
+            LOG.info("ScanUserOverDateTask success");
         } catch (ParseException e) {
             LOG.error(e.getMessage());
+            onlineEmailService.sendEmail(Constants.ADMIN_EMAIL,"异常邮件","ERROR INFO:\n"+e.getMessage());
         }
     }
 }

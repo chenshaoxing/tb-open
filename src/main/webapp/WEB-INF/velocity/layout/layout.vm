@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <!-- start: Mobile Specific -->
+    <link rel="shortcut icon" href="/plug/images/chun.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>史上最纯洁的自动评价系统</title>
 
     <link href="/plug/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/plug/ace/assets/css/font-awesome.min.css" />

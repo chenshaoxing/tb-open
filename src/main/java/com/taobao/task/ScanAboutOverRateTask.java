@@ -34,11 +34,10 @@ public class ScanAboutOverRateTask {
     @Resource(name = "onlineEmailService")
     private OnlineEmailService emailService;
 
-    private static final String adminEmail = ConfigurationManager.create().get(Constants.GLOBAL_ADMIN_EMAIL);
+
 
     public void scan(){
         try{
-            LOG.info("Scan About OverRate start");
             Map<String,Object> params = new HashMap() ;
             Date date = new Date();
             params.put("startTime",getToDayStartTime(date));
@@ -59,9 +58,9 @@ public class ScanAboutOverRateTask {
                     LOG.error(e.getMessage());
                 }
             }
-            LOG.info("Scan About OverRate end");
+            LOG.info("Scan About OverRate success");
         }catch (Exception e){
-            emailService.sendEmail(adminEmail,"ScanAboutOverRateTask ERROR","ERROR INFO:\n"+e.getMessage());
+            emailService.sendEmail(Constants.ADMIN_EMAIL,"异常邮件","ERROR INFO:\n"+e.getMessage());
             LOG.error(e.getMessage());
         }
     }

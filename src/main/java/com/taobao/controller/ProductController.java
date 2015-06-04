@@ -1,12 +1,10 @@
 package com.taobao.controller;
 
-import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.Item;
-import com.taobao.api.domain.Trade;
+import com.taobao.common.ResultJson;
 import com.taobao.common.Utils;
 import com.taobao.entity.User;
 import com.taobao.service.ProductService;
-import com.taobao.service.TradeService;
 import com.taobao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

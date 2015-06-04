@@ -36,7 +36,6 @@ public class GetHistoryNotRateOrdersTask implements Runnable {
     @Override
     public void run() {
         try{
-            LOG.info("GetHistoryNotRateOrdersTask start");
             PageInfo<Trade> pageInfo = this.getBatchRateOrders(1l,10l);
             Long totalPage =  pageInfo.getPageTotalNum();
             for(long i = 1l;i<totalPage+1l;i++){
@@ -44,7 +43,7 @@ public class GetHistoryNotRateOrdersTask implements Runnable {
                 totalPage = pageInfo.getPageTotalNum();
                 insertNoRateOrder(pageInfo.getList());
             }
-            LOG.info("GetHistoryNotRateOrdersTask end");
+            LOG.info("GetHistoryNotRateOrdersTask success");
         }catch (Exception e){
             LOG.error(e.getMessage());
         }

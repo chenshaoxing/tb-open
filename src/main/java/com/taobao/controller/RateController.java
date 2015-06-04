@@ -1,21 +1,17 @@
 package com.taobao.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.hr.system.manage.common.ResultJson;
-import com.taobao.api.domain.Item;
 import com.taobao.api.domain.Trade;
-import com.taobao.api.domain.TradeRate;
 import com.taobao.api.request.TraderatesGetRequest;
 import com.taobao.api.request.TradesSoldGetRequest;
 import com.taobao.api.response.TraderatesGetResponse;
 import com.taobao.api.response.TradesSoldGetResponse;
+import com.taobao.common.ResultJson;
 import com.taobao.common.Utils;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.*;
 import com.taobao.service.*;
 import com.taobao.task.GetHistoryNotRateOrdersTask;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.formula.functions.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,8 +35,6 @@ public class RateController {
     private static final Logger LOG = LoggerFactory.getLogger(RateController.class);
 
     @Resource
-    private ProductService productService;
-    @Resource
     private RateService rateService;
     @Resource
     private TradeService tradeService;
@@ -54,6 +48,8 @@ public class RateController {
     private AutoRateLogService autoRateLogService;
     @Resource
     private NoRateOrdersService noRateOrdersService;
+    @Resource
+    private UserPermitService userPermitService;
 
 
 
@@ -291,6 +287,7 @@ public class RateController {
             rateContentService.add(rateContent3);
 
             if(autoRateStatus){
+                userPermitService.userPermit(user.getSessionKey());
                 new Thread(new GetHistoryNotRateOrdersTask(user,tradeService,noRateOrdersService)).start();
             }
 

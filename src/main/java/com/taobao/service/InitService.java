@@ -1,5 +1,7 @@
 package com.taobao.service;
 
+import com.taobao.common.ConfigurationManager;
+import com.taobao.common.Constants;
 import com.taobao.message.MessageClientDemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

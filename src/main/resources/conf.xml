@@ -21,6 +21,10 @@
         <name>user.over.time.remind.day</name>
         <value>5</value>
     </property>
+    <property>      <!-- 自动评价的日志 保留期限 越过多少天删除 -->
+        <name>auto.rate.log.delete.day</name>
+        <value>-10</value>
+    </property>
 
 
 </configuration>

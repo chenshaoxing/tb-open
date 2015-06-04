@@ -1,7 +1,7 @@
 package com.taobao.controller;
 
-import com.hr.system.manage.common.ResultJson;
 import com.taobao.api.domain.User;
+import com.taobao.common.ResultJson;
 import com.taobao.common.Utils;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.service.AutoRateSettingService;

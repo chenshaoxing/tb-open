@@ -1,9 +1,8 @@
 package com.taobao.controller;
 
-import com.hr.system.manage.common.ResultJson;
+import com.taobao.common.ResultJson;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.AutoRateLog;
-import com.taobao.entity.BlackList;
 import com.taobao.service.AutoRateLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

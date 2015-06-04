@@ -62,6 +62,7 @@ public class MessageClientDemo {
             public void onMessage(Message message, MessageStatus messageStatus) throws Exception {
                 Map<String,Object> result = message.getRaw();
                 String topic = result.get("topic").toString();
+                LOG.info(message.getContent());
                 JSONObject object = JSON.parseObject(message.getContent());
 
                 String buyerNick = object.getString("buyer_nick");
@@ -91,6 +92,7 @@ public class MessageClientDemo {
                                 boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
                                 if(isRate){
                                     noRate.setRate(true);
+                                    LOG.info("add rate success");
                                     noRateOrdersService.add(noRate);
 //                                    badOrNeutralSendEmail(tid,user);
                                     addAutoRateLog(object);
@@ -102,6 +104,7 @@ public class MessageClientDemo {
                                 if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
                                     boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent(),user.getSessionKey());
                                     if(isRate){
+                                        LOG.info("add rate success");
                                         addAutoRateLog(object);
 //                                        badOrNeutralSendEmail(tid,user);
                                         NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);

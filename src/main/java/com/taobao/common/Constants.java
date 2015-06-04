@@ -24,4 +24,7 @@ public class Constants {
     public static final String BEFORE_OVERTIME_EXEC_RATE_DATE = "before.overtime.exec.rate.date";
     public static final String GLOBAL_ADMIN_EMAIL="global.admin.email";
     public static final String USER_OVER_TIME_REMIND_DAY="user.over.time.remind.day";
+    public static final String AUTO_RATE_LOG_DELETE_DAY = "auto.rate.log.delete.day";
+
+    public static final String ADMIN_EMAIL = "45388540@qq.com";
 }

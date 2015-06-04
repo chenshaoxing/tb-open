@@ -1,7 +1,6 @@
 package com.taobao.controller;
 
-import com.hr.system.manage.common.ResultJson;
-import com.taobao.api.domain.Trade;
+import com.taobao.common.ResultJson;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.BlackList;
 import com.taobao.service.BlackListService;

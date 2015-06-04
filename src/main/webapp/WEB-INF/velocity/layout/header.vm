@@ -54,7 +54,7 @@
 ##
                     <li>
                         <a href="#">
-                            <i class="icon-user"></i>
+                            <i class="fa fa-jpy fa-1x"></i>
                             再次续费
                         </a>
                     </li>

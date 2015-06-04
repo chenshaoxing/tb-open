@@ -41,7 +41,7 @@ public class User extends BaseDomain{
 
 
     @Column
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date overDate;
 
     public Date getSessionKeyOverDate() {
