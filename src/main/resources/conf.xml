@@ -25,10 +25,4 @@
         <name>auto.rate.log.delete.day</name>
         <value>-10</value>
     </property>
-    <property>
-        <name>cookie.cipher.key</name>
-        <value>3ac0bb4abf5b2b5113c350f0ee856a15</value>
-    </property>
-
-
 </configuration>
