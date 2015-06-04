@@ -373,7 +373,7 @@
                 <mvn.email.server.host>smtp.163.com</mvn.email.server.host>
                 <mvn.email.server.port>25</mvn.email.server.port>
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
-                <mvn.email.password>xx1991</mvn.email.password>
+                <mvn.email.password></mvn.email.password>
                 <mvn.email.auth>true</mvn.email.auth>
                 <log.home>D:\\</log.home>
             </properties>
@@ -397,7 +397,7 @@
                 <mvn.email.server.host>smtp.163.com</mvn.email.server.host>
                 <mvn.email.server.port>25</mvn.email.server.port>
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
-                <mvn.email.password>xx1991</mvn.email.password>
+                <mvn.email.password></mvn.email.password>
                 <mvn.email.auth>true</mvn.email.auth>
                 <!--<log.home>/home/hadoop/hadoop/logs</log.home>-->
                 <log.home>/home/star/logs</log.home>
