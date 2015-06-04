@@ -59,7 +59,7 @@
 ##                    <li class="divider">再次续费</li>
 
                     <li>
-                        <a href="https://oauth.taobao.com/logoff?client_id=23175152&view=web">
+                        <a href="javascript:System.fn.logout();">
                             <i class="icon-off"></i>
                             退出
                         </a>

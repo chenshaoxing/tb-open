@@ -27,8 +27,12 @@ var System = {
             }
         },
         logout:function(){
-            $.cookie("id",null);
-            location.href='/index.html';
+            common.fn.showConfirmMessage("退出","亲确定要退出系统了么?",function(){
+                $.cookie("id",null);
+                $.cookie("name",null);
+                $.cookie("user-photo",null);
+                location.href='https://oauth.taobao.com/logoff?client_id=23175152&view=web';
+            })
         }
 
     }
