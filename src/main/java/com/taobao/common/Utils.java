@@ -76,17 +76,23 @@ public class Utils {
         return strDay+"天"+strHour+"小时"+strMinute+"分"+strSecond+"秒";
     }
 
-    public static Long getUserId(){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Cookie [] cookies = request.getCookies();
-        Long id = null;
-        for(Cookie c:cookies){
-            if(c.getName().equals("id")){
-                id = Long.valueOf(c.getValue());
-                break;
+    public static Long getUserId() throws Exception{
+        try{
+            CipherTools cipherTools = new CipherTools();
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            Cookie [] cookies = request.getCookies();
+            Long id = null;
+            for(Cookie c:cookies){
+                if(c.getName().equals("id")){
+                    id = Long.valueOf(cipherTools.decrypt(c.getValue(),Constants.COOKIE_CIPHER_KEY));
+                    break;
+                }
             }
+            return id;
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
         }
-        return id;
     }
 
     public static String getToDayStartTimeStr(Date date,String formatStr){

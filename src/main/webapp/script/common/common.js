@@ -9,6 +9,9 @@ var common ={
         init:function(){
             common.globalVariable.username = decodeURI($.cookie("name"));
             common.globalVariable.userId = $.cookie("id");
+            if(!common.globalVariable.userId){
+                location.href = "https://oauth.taobao.com/authorize?response_type=code&client_id=23175152&redirect_uri=http://www.fuckbug.net:8080/auth&state=1212&view=web"
+            }
             common.fn.showUserInfo();
 //            if(!$.cookie("id")){
 //                location.href="/index.html";

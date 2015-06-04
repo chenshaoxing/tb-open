@@ -2,6 +2,7 @@ package com.taobao.task;
 
 import com.taobao.common.ConfigurationManager;
 import com.taobao.common.Constants;
+import com.taobao.common.Utils;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.NoRateOrders;
 import com.taobao.entity.RateContent;
@@ -40,8 +41,8 @@ public class ScanAboutOverRateTask {
         try{
             Map<String,Object> params = new HashMap() ;
             Date date = new Date();
-            params.put("startTime",getToDayStartTime(date));
-            params.put("endTime",getToDayEndTime(date));
+            params.put("startTime", Utils.getToDayStartTimeStr(date,"yyyy-MM-dd"));
+            params.put("endTime",Utils.getToDayEndTimeStr(date,"yyyy-MM-dd"));
             List<NoRateOrders> list = noRateOrdersService.getList(params);
             for(NoRateOrders noRateOrders:list){
                 User user = noRateOrders.getUser();
@@ -65,24 +66,9 @@ public class ScanAboutOverRateTask {
         }
     }
 
-    public String getToDayStartTime(Date date){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String start = format.format(date);
-        start = start+" 00:00:00";
-        return  start;
-    }
-
-    public String getToDayEndTime(Date date){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String end = format.format(date);
-        end = end+" 23:59:59";
-       return end;
-    }
-
     public int random(){
         Random random = new Random();
         int n3 = random.nextInt(3);
-
         n3 = Math.abs(random.nextInt() % 3);
         return n3;
     }

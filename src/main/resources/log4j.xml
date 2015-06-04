@@ -15,18 +15,41 @@
     </filter>
 </appender>
 
-<appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
+<appender name="PROJECT" class="com.taobao.common.AdvancedDailyRollingFileAppender">
     <!--<param name="file" value="${log.home}/squirrel/squirrel-adapter" />-->
     <param name="file" value="${log.home}/rate-log" />
     <param name="append" value="false" />
     <param name="encoding" value="UTF-8" />
     <param name="threshold" value="INFO" />
-    <param name="maxBackupIndex" value="49"/>
-    <param name="DatePattern" value="'-'yyyy-MM-dd-HH'.log'" />
+    <param name="maxBackupIndex" value="10"/>
+    <!--<param name="DatePattern" value="'-'yyyy-MM-dd-HH'.log'" />-->
+    <param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />
     <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %C{1},%L - %m%n" />
     </layout>
 </appender>
+
+
+    <!--  操作日志配置   -->
+    <appender name="BROWSE_IP" class="com.taobao.common.AdvancedDailyRollingFileAppender">
+        <param name="file" value="${log.home}/browse-log" />
+        <param name="append" value="false" />
+        <param name="Encoding" value="UTF-8" />
+        <param name="threshold" value="INFO" />
+        <param name="maxBackupIndex" value="5"/>
+        <param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %C{1},%L - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- ===================================================================== -->
+    <!-- 以下是binlog Skip日志的定义  -->
+    <!-- ===================================================================== -->
+    <logger name="browseIpLogger" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="BROWSE_IP" />
+    </logger>
 
 
 <!-- ===================================================================== -->

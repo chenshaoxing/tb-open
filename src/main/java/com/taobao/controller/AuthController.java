@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.api.domain.User;
 import com.taobao.api.internal.util.WebUtils;
+import com.taobao.common.CipherTools;
 import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.RateContent;
@@ -48,7 +49,7 @@ public class AuthController {
             JSONObject obj = JSON.parseObject(objStr);
             String sessionKey = obj.getString("access_token");
             if(StringUtils.isEmpty(sessionKey)){
-                return "redirect:https://oauth.taobao.com/logoff?client_id=23175152&view=web";
+                return "redirect:"+Constants.LOGOUT_URL;
             }
             String refreshToken = obj.getString("refresh_token");
             User user = sellerService.getSellerInfo(sessionKey);
@@ -76,7 +77,7 @@ public class AuthController {
                 uu.setRefreshToken(refreshToken);
                 userService.add(uu);
             }
-            Cookie idCookie = new Cookie("id",String.valueOf(uu.getId()));
+            Cookie idCookie = new Cookie("id",cookieIdEncrypt(String.valueOf(uu.getId())));
             Cookie nameCookie = new Cookie("name",URLEncoder.encode(uu.getNickname(), "utf-8"));
             response.addCookie(idCookie);
             response.addCookie(nameCookie);
@@ -87,6 +88,11 @@ public class AuthController {
             throw e;
         }
 
+    }
+
+    private String cookieIdEncrypt(String value) {
+        CipherTools cipher = new CipherTools();
+        return cipher.encrypt(value,Constants.COOKIE_CIPHER_KEY);
     }
 
     private void addRateContent(AutoRateSetting setting){

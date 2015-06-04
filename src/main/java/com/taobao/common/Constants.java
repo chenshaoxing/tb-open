@@ -27,4 +27,9 @@ public class Constants {
     public static final String AUTO_RATE_LOG_DELETE_DAY = "auto.rate.log.delete.day";
 
     public static final String ADMIN_EMAIL = "45388540@qq.com";
+
+//    public static final String COOKIE_CIPHER_KEY = "cookie.cipher.key";
+    public static final String COOKIE_CIPHER_KEY = "3ac0bb4abf5b2b5113c350f0ee856a15";
+    public static final String LOG_URL = "https://oauth.taobao.com/authorize?response_type=code&client_id=23175152&redirect_uri=http://www.fuckbug.net:8080/auth&state=1212&view=web";
+    public static final String LOGOUT_URL = "https://oauth.taobao.com/logoff?client_id=23175152&view=web";
 }
