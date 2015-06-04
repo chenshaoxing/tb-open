@@ -1,8 +1,8 @@
 package com.taobao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.hr.system.manage.repository.domain.Employee;
+
+import javax.persistence.*;
 
 /**
  * Created with Intellij IDEA
@@ -25,4 +25,16 @@ public class BlackList extends BaseDomain {
 
     @Column
     private String buyerNickname;
+
+    @ManyToOne(cascade = {CascadeType.REFRESH},optional = true,fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

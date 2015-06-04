@@ -18,6 +18,19 @@ import java.util.Date;
 public class AutoRateLog extends BaseDomain {
     @Column
     private Long tid;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne(cascade = {CascadeType.REFRESH},optional = true,fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+    private User user;
+
     @Column
     @Enumerated(EnumType.STRING)
     private RateStatus rateStatus;
@@ -45,8 +58,7 @@ public class AutoRateLog extends BaseDomain {
         this.productTitle = productTitle;
     }
 
-    @Column
-    private String tradeType;
+
     @Column
     private String buyerNickname;
     @Column
@@ -95,13 +107,6 @@ public class AutoRateLog extends BaseDomain {
         this.rateStatus = rateStatus;
     }
 
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
 
     public String getBuyerNickname() {
         return buyerNickname;

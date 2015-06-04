@@ -24,9 +24,11 @@ var AutoLog = {
 
            function callBack(data){
                if(data.success){
-                  var dataHtml = new EJS({url:AutoLog.ejs.getList}).render({data:data.data});
-                  $("#autoRateLogListBody").html('');
-                  $("#autoRateLogListBody").html(dataHtml);
+                   $("#autoRateLogListBody").html('');
+                   if(data.data.list){
+                       var dataHtml = new EJS({url:AutoLog.ejs.getList}).render({data:data.data});
+                       $("#autoRateLogListBody").html(dataHtml);
+                   }
                    if(data.data.recordTotalCount){
                        callback(data.data.recordTotalCount);
                    }else{

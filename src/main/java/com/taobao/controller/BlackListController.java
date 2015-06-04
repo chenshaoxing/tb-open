@@ -1,8 +1,10 @@
 package com.taobao.controller;
 
 import com.taobao.common.ResultJson;
+import com.taobao.common.Utils;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.BlackList;
+import com.taobao.entity.User;
 import com.taobao.service.BlackListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,9 @@ public class BlackListController {
         try{
             BlackList blackList = new BlackList();
             blackList.setBuyerNickname(buyerNick);
+            User user = new User();
+            user.setId(Utils.getUserId());
+            blackList.setUser(user);
             blackListService.add(blackList);
             return ResultJson.resultSuccess();
         }catch (Exception e){
@@ -63,7 +68,7 @@ public class BlackListController {
                                        @RequestParam int pageSize,
                                        @RequestParam(required = false) String buyerNick) throws Exception{
         try{
-            PageInfo<BlackList> pageInfo = blackListService.getList(currentPage, pageSize, buyerNick);
+            PageInfo<BlackList> pageInfo = blackListService.getList(currentPage, pageSize, buyerNick, Utils.getUserId());
             return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){
             LOG.error(e.getMessage());

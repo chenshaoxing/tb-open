@@ -34,11 +34,15 @@ public class BlackListServiceImpl implements BlackListService{
     }
 
     @Override
-    public PageInfo<BlackList> getList(int currentPage, int pageSize, String buyerNick) {
+    public PageInfo<BlackList> getList(int currentPage, int pageSize, String buyerNick,Long userId) {
         List<Expression> list = new ArrayList<Expression>() ;
         if(StringUtils.isNotEmpty(buyerNick)){
             Expression expression = new Expression("buyerNickname",buyerNick, Expression.Relation.AND, Expression.Operation.AllLike);
             list.add(expression);
+        }
+        if(userId != null){
+            Expression userIdExp = new Expression("user.id",userId, Expression.Relation.AND, Expression.Operation.Equal);
+            list.add(userIdExp);
         }
         return iBasePersistence.getEntitiesByExpressions(BlackList.class,list,"id",currentPage,pageSize);
     }

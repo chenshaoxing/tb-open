@@ -88,9 +88,9 @@ public class IndexController {
 
     @RequestMapping(value = "/index/user-info")
     @ResponseBody
-    public Map<String, Object> getUserInfo(@RequestParam Long userId) throws Exception{
+    public Map<String, Object> getUserInfo() throws Exception{
         try{
-            com.taobao.entity.User user = userService.findById(userId);
+            com.taobao.entity.User user = userService.findById(Utils.getUserId());
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("overDate",user.getOverDate());
             return ResultJson.resultSuccess(map);

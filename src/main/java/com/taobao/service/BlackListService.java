@@ -13,7 +13,7 @@ public interface BlackListService {
 
     public void delete(Long id);
 
-    public PageInfo<BlackList> getList(int currentPage,int pageSize,String buyerNick);
+    public PageInfo<BlackList> getList(int currentPage,int pageSize,String buyerNick,Long userId);
 
     public BlackList findByName(String buyerNick);
 

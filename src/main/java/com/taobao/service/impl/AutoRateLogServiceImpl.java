@@ -62,6 +62,10 @@ public class AutoRateLogServiceImpl implements AutoRateLogService{
                 LOG.error(e.getMessage());
             }
         }
+        if(params.get("userId") != null){
+             Expression userExp = new Expression("user.id",params.get("userId"), Expression.Relation.AND, Expression.Operation.Equal);
+            list.add(userExp);
+        }
         return iBasePersistence.getEntitiesByExpressions(AutoRateLog.class,list,"id",currentPage,pageSize);
     }
 

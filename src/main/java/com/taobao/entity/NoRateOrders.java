@@ -26,7 +26,6 @@ public class NoRateOrders extends BaseDomain{
     }
 
     @Column
-
     private Float payment;
     @Column
     private String buyer;

@@ -22,9 +22,11 @@ var Black = {
             common.fn.ajax(Black.url.getList,params,callBack);
            function callBack(data){
                if(data.success){
-                  var dataHtml = new EJS({url:Black.ejs.getList}).render({data:data.data});
-                  $("#blackListBody").html('');
-                  $("#blackListBody").html(dataHtml);
+                   $("#blackListBody").html('');
+                   if(data.data.list){
+                       var dataHtml = new EJS({url:Black.ejs.getList}).render({data:data.data});
+                       $("#blackListBody").html(dataHtml);
+                   }
                    if(data.data.recordTotalCount){
                        callback(data.data.recordTotalCount);
                    }else{

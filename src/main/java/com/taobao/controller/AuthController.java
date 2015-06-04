@@ -108,16 +108,6 @@ public class AuthController {
     }
 
 
-    @RequestMapping(value = "/main")
-    public String index(Model model) {
-        return "main/main";
-    }
-
-    public static void main(String[] args) throws Exception {
-//        getSession("1Uchp6oe5wjFg4ayKY2X5kd4240289","1212");
-//        test();
-    }
-
     public static String getSession(String code,String state,HttpServletResponse response) throws Exception {
         LOG.info("exec -------------------------------start");
         String url="https://oauth.taobao.com/token";
@@ -139,7 +129,7 @@ public class AuthController {
             JSONObject obj = JSON.parseObject(e.getMessage());
             LOG.error(e.getMessage());
             if(obj.getString("error").equals("invalid_client")){
-                response.sendRedirect("https://oauth.taobao.com/logoff?client_id=23175152&view=web");
+                response.sendRedirect(Constants.LOGOUT_URL);
             }
 
         }
@@ -161,17 +151,4 @@ public class AuthController {
      }
 
 
-    public static void ping() throws Exception {
-//        TaobaoClient client=new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23175152", "fe3900d9e3c1e8c65b37da4d0237a953");
-//        TraderateAddRequest req=new TraderateAddRequest();
-//        req.setTid(1048548482818420L);
-////        req.setOid(1234L);
-//        req.setResult("good");
-//        req.setRole("seller");
-//        req.setContent("很好的买家");
-//        req.setAnony(true);
-//        TraderateAddResponse response = client.execute(req , "6200107f34966f3ZZb7395547912167221b5990a9ebbc63178766584");
-//        System.out.println(response.getTradeRate().getTid());
-//        getSession("1Uchp6oe5wjFg4ayKY2X5kd4240289","1212");
-    }
 }

@@ -1,6 +1,7 @@
 package com.taobao.controller;
 
 import com.taobao.common.ResultJson;
+import com.taobao.common.Utils;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.AutoRateLog;
 import com.taobao.service.AutoRateLogService;
@@ -46,6 +47,7 @@ public class AutoRateLogController {
             params.put("buyerNick",buyerNick);
             params.put("startTime",startTime);
             params.put("endTime",endTime);
+            params.put("userId", Utils.getUserId());
             PageInfo<AutoRateLog> pageInfo = autoRateLogService.getList(currentPage, pageSize, params);
             return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){

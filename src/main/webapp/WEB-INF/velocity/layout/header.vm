@@ -53,10 +53,7 @@
 ##                    </li>
 ##
                     <li>
-                        <a href="#">
-                            <i class="fa fa-jpy fa-1x"></i>
-                            再次续费
-                        </a>
+                        <a href="#">&nbsp;&nbsp;<i class="fa fa-jpy fa-1x"></i>&nbsp;&nbsp;&nbsp;再次续费</a>
                     </li>
 
 ##                    <li class="divider">再次续费</li>
