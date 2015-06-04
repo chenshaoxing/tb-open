@@ -42,14 +42,17 @@ var Rate = {
            function callBack(data){
                if(data.success){
                   data.data.isBuyerGiveMe = isBuyerGiveMe;
-                  var dataHtml = new EJS({url:Rate.ejs.alreadyRateOrderList}).render({data:data.data});
-                  $("#alreadyRateOrderListBody").html('');
-                  $("#alreadyRateOrderListBody").html(dataHtml);
+                   $("#alreadyRateOrderListBody").html('');
+                   if(data.data.list){
+                       var dataHtml = new EJS({url:Rate.ejs.alreadyRateOrderList}).render({data:data.data});
+                       $("#alreadyRateOrderListBody").html(dataHtml);
+                   }
                    if(data.data.recordTotalCount){
                        callback(data.data.recordTotalCount);
                    }else{
                        callback(0);
                    }
+
                }
            }
 
@@ -82,9 +85,11 @@ var Rate = {
             }
             function callBack(data){
                 if(data.success){
-                    var dataHtml = new EJS({url:Rate.ejs.batchRateOrderList}).render({data:data.data});
                     $("#batchRateOrderListBody").html('');
-                    $("#batchRateOrderListBody").html(dataHtml);
+                    if(data.data.list){
+                        var dataHtml = new EJS({url:Rate.ejs.batchRateOrderList}).render({data:data.data});
+                        $("#batchRateOrderListBody").html(dataHtml);
+                    }
                     if(data.data.recordTotalCount){
                         callback(data.data.recordTotalCount);
                     }else{
@@ -120,7 +125,6 @@ var Rate = {
                     }
                 }
                 var params = {};
-                params.userId =  $.cookie("id");
                 common.fn.ajaxSyncNotLoadingDialog(Rate.url.getRateContentsByUser,params,cbFun);
             }
             var params  = new Object();
@@ -199,7 +203,6 @@ var Rate = {
                 }else{
                     params.mediumOrPoorRateAlarm = false;
                 }
-                params.userId = $.cookie("id");
                 var dialogId = common.fn.showDialog(Rate.ejs.showNull,{},null,null,null);
                 common.fn.ajaxNotLoadingDialog(Rate.url.autoRateSetting,params,callback)
             }
@@ -230,7 +233,6 @@ var Rate = {
                 }
             }
             var params = new Object();
-            params.userId = $.cookie("id");
             common.fn.ajax(Rate.url.initAutoRateSetting,params,callback)
         }
     }

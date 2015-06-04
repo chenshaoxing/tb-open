@@ -239,7 +239,6 @@ public class RateController {
                                                      @RequestParam(required = false) Long settingId,
                                                      @RequestParam(required = false) boolean mediumOrPoorRateAlarm,
                                                      @RequestParam String autoRateType,
-                                                     @RequestParam Long userId,
                                                      @RequestParam(required = false) String email,
                                                      @RequestParam String triggerMode,
                                                      @RequestParam String content1,
@@ -247,7 +246,7 @@ public class RateController {
                                                      @RequestParam String content3
                                                      )throws Exception{
         try{
-            User user = userService.findById(userId);
+            User user = userService.findById(Utils.getUserId());
             user.setEmail(email);
             userService.add(user);
             AutoRateSetting setting = null;
@@ -301,10 +300,10 @@ public class RateController {
 
     @RequestMapping(value = "/rate/auto-rate-global-setting/init")
     @ResponseBody
-    public Map<String, Object> initAutoRateGlobalSetting(@RequestParam Long userId) throws Exception{
+    public Map<String, Object> initAutoRateGlobalSetting() throws Exception{
         try{
             User user = new User();
-            user.setId(userId);
+            user.setId(Utils.getUserId());
             AutoRateSetting setting = autoRateSettingService.findByUser(user);
             List<RateContent> contents = new ArrayList<RateContent>();
             if(setting != null){
@@ -323,10 +322,10 @@ public class RateController {
 
     @RequestMapping(value = "/rate/rate-content/getRateContentsByUser")
     @ResponseBody
-    public Map<String, Object> getRateContentsByUser(@RequestParam Long userId) throws Exception{
+    public Map<String, Object> getRateContentsByUser() throws Exception{
         try{
             User user = new User();
-            user.setId(userId);
+            user.setId(Utils.getUserId());
             AutoRateSetting setting = autoRateSettingService.findByUser(user);
             List<RateContent> contents = new ArrayList<RateContent>();
             if(setting != null){
