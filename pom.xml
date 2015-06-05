@@ -277,21 +277,26 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.11</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.httpcomponents</groupId>-->
-            <!--<artifactId>httpclient</artifactId>-->
-            <!--<version>4.3.3</version>-->
-        <!--</dependency>-->
         <dependency>
-            <groupId>com.taobao</groupId>
-            <artifactId>open-api</artifactId>
-            <version>20150518</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.6.3</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>com.taobao</groupId>-->
-            <!--<artifactId>open-sdk</artifactId>-->
-            <!--<version>1.1</version>-->
+            <!--<artifactId>open-api</artifactId>-->
+            <!--<version>20150518</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>com.taobao</groupId>
+            <artifactId>open-sdk</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -397,7 +402,6 @@
                 <mvn.email.server.host>smtp.163.com</mvn.email.server.host>
                 <mvn.email.server.port>25</mvn.email.server.port>
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
-                <mvn.email.password></mvn.email.password>
                 <mvn.email.auth>true</mvn.email.auth>
                 <!--<log.home>/home/hadoop/hadoop/logs</log.home>-->
                 <log.home>/home/star/logs</log.home>
