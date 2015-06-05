@@ -14,7 +14,7 @@ public enum RateStatus {
     //自动评价
     AUTO_RATE,
     //手动批量评价
-//    HAND_BATCH_RATE,
+    HAND_BATCH_RATE,
     //手动评价
-//    HAND_RATE
+    HAND_RATE
 }

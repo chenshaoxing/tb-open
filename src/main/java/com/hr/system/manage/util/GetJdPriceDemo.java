@@ -2,16 +2,23 @@ package com.hr.system.manage.util;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,6 +74,35 @@ public class GetJdPriceDemo {
             System.out.println(key.attr("name"));
             System.out.println(key.val());
 
+            HttpPost httppost = new HttpPost("https://passport.jd.com/uc/loginService?uuid="+uuid.val()+"&ltype=logout&r="+ Math.random()+"&version=2015");
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("loginname", "lucky_xingxing"));
+            params.add(new BasicNameValuePair("nloginpwd","xx1991"));
+            params.add(new BasicNameValuePair("loginpwd","xx1991"));
+            params.add(new BasicNameValuePair("uuid",uuid.val()));
+            params.add(new BasicNameValuePair("machineNet",""));
+            params.add(new BasicNameValuePair("machineCpu",""));
+            params.add(new BasicNameValuePair("machineDisk",""));
+            params.add(new BasicNameValuePair("authcode",""));
+            params.add(new BasicNameValuePair("chkRememberMe","on"));
+            params.add(new BasicNameValuePair(key.attr("name"),key.val()));
+            httppost.setEntity(new UrlEncodedFormEntity(params));
+            HttpResponse re = httpClient.execute(httppost);
+            HttpEntity entity1 = re.getEntity();
+            System.out.println(EntityUtils.toString(entity1));
+
+            String cardUrl = "http://active.coupon.jd.com/ilink/couponActiveFront/front_index.action?key=13c5c272bbeb40bfac4934830f8183a8&roleId=1055399&to=sale.jd.com/act/flgmvjxtai.html";
+            HttpGet cardHttpGet = new HttpGet(cardUrl);
+            CloseableHttpResponse responseCard = httpClient.execute(cardHttpGet);
+            String ll = EntityUtils.toString(responseCard.getEntity());
+            System.out.println(ll);
+            Document documentResult = Jsoup.parse(ll);
+            Elements elements = documentResult.getElementsByClass("ctxt02");
+            for(Element e:elements){
+                System.out.println(e.text());
+            }
+//            System.out.println(responseCard.getStatusLine());
         }
         response.close();
         httpClient.close();

@@ -183,15 +183,21 @@ public class RateController {
                 String ids []= tradeIds.split(",");
                 for(String tradeId:ids){
                     boolean flag = rateService.add(Long.valueOf(tradeId), rateType,content,user.getSessionKey());
-                    if(flag)
+                    if(flag){
                         success+=1;
-                    else {
+                        AutoRateLog log = new AutoRateLog();
+                        log.setUser(user);
+                        log.setTid(Long.valueOf(tradeId));
+                        log.setRateEnum(AutoRateSetting.RateType.valueOf(rateType));
+                        log.setRateStatus(RateStatus.HAND_BATCH_RATE);
+//                        log.setRateContent();
+                    }else {
                         failed += 1;
                         trades.add(tradeId);
                     }
                 }
             }else{
-                Map<String,Object> result = this.getBatchRateOrders(1l,10l,buyerNick,rateStatus);
+                Map<String,Object> result = this.getBatchRateOrders(1l, 10l, buyerNick, rateStatus);
                 PageInfo pageInfo  = (PageInfo)result.get("data");
                 Long totalPage =  pageInfo.getPageTotalNum();
                 for(long i = 1l;i<totalPage+1l;i++){
