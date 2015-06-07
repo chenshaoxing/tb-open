@@ -1,0 +1,142 @@
+
+<!--Step:1 Prepare a dom for ECharts which (must) has size (width & hight)-->
+<!--Step:1 为ECharts准备一个具备大小（宽高）的Dom-->
+##<div id="main" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+##<div id="mainMap" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+
+<!--Step:2 Import echarts.js-->
+<!--Step:2 引入echarts.js-->
+<script src="/plug/echarts/js/echarts.js"></script>
+
+
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="page-header">
+            <h1>
+                评价统计报表
+                <small>
+                    <i class="icon-double-angle-right"></i>
+                   能查看近一个月的评价量统计报表
+                </small>
+            </h1>
+        </div>
+
+
+
+        <!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="header smaller lighter blue">统计报表</h3>
+                        <div style="width: 900px;height: 400px;max-width: 1400px" class="table-responsive" id="main">
+                        </div><!-- /.col -->
+                        <br>
+                        <br>
+                        <br>
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    // Step:3 conifg ECharts's path, link to echarts.js from current page.
+    // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+
+    $(document).ready(function(){
+        require.config({
+            paths: {
+                echarts: '/plug/echarts/js'
+            }
+        });
+
+        // Step:4 require echarts and use it in the callback.
+        // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+        require(
+                [
+                    'echarts',
+                    'echarts/chart/bar',
+                    'echarts/chart/line',
+                    'echarts/chart/map'
+                ],
+                function (ec) {
+                    //--- 折柱 ---
+                    function callback(data){
+                        if(data.success){
+                            if(data.data){
+                                var myChart = ec.init(document.getElementById('main'),'macarons');
+                                myChart.setOption(data.data.data)
+                            }else{
+                                $("#main").html('<div class="alert alert-success" role="alert">暂时还没有评价记录哟，快快努力奋斗吧，么么哒!</div>')
+
+                            }
+                        }
+                    }
+                    common.fn.ajaxSync("/auto-rate-log/report/count",{},callback);
+                }
+        );
+    })
+
+</script>
+
+<!-- 更改背景颜色等 -->
+##        <div class="ace-settings-container" id="ace-settings-container">
+##    <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+##        <i class="icon-cog bigger-150"></i>
+##    </div>
+##
+##    <div class="ace-settings-box" id="ace-settings-box">
+##        <div>
+##            <div class="pull-left">
+##                <select id="skin-colorpicker" class="hide">
+##                    <option data-skin="default" value="#438EB9">#438EB9</option>
+##                    <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+##                    <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+##                    <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+##                </select>
+##            </div>
+##            <span>&nbsp; Choose Skin</span>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+##            <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+##            <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+##            <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+##            <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+##        </div>
+##
+##        <div>
+##            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+##            <label class="lbl" for="ace-settings-add-container">
+##                Inside
+##                <b>.container</b>
+##            </label>
+##        </div>
+##    </div>
+##</div><!-- /#ace-settings-container -->
+<!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+##</div><!-- /.main-container -->
