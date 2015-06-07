@@ -11,4 +11,6 @@ public interface RateContentService {
     public RateContent add(RateContent rateContent);
 
     public List<RateContent> findBySettingId(Long id);
+
+    public RateContent findById(Long id);
 }

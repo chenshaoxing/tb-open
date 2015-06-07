@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.taobao.api.domain.User;
 import com.taobao.api.internal.util.WebUtils;
 import com.taobao.common.CipherTools;
+import com.taobao.common.ConfigurationManager;
 import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.RateContent;
@@ -90,6 +91,53 @@ public class AuthController {
 
     }
 
+
+
+//    @RequestMapping(value = "/authTest")
+    public String authTest(HttpServletResponse response) throws Exception{
+        try{
+
+            String sessionKey = Constants.TB_SANDBOX_SESSION_KEY;
+            if(StringUtils.isEmpty(sessionKey)){
+                return "redirect:"+Constants.LOGOUT_URL;
+            }
+            User user = sellerService.getSellerInfo(sessionKey);
+            com.taobao.entity.User uu = userService.findByName(user.getNick());
+            if(uu == null){
+                uu = new com.taobao.entity.User();
+                uu.setRefreshToken(Constants.TB_SANDBOX_SESSION_KEY);
+                uu.setNickname(user.getNick());
+                uu.setOverDate(new Date());
+                uu.setSessionKey(sessionKey);
+                uu = userService.add(uu);
+                AutoRateSetting setting = new AutoRateSetting();
+                setting.setAutoGrabRate(false);
+                setting.setAutoRateStatus(false);
+                setting.setMediumOrPoorRateAlarm(false);
+                setting.setUser(uu);
+                setting.setTriggerMode(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE);
+                setting.setRateType(AutoRateSetting.RateType.good);
+                setting =autoRateSettingService.add(setting);
+                addRateContent(setting);
+            }else{
+                uu.setSessionKey(sessionKey);
+                uu.setRefreshToken(Constants.TB_SANDBOX_SESSION_KEY);
+                userService.add(uu);
+            }
+            Cookie idCookie = new Cookie("id",cookieIdEncrypt(String.valueOf(uu.getId())));
+            Cookie nameCookie = new Cookie("name",URLEncoder.encode(uu.getNickname(), "utf-8"));
+            response.addCookie(idCookie);
+            response.addCookie(nameCookie);
+//            return "redirect:rate/rate-global-setting";
+            return "redirect:rate/rate-global-setting";
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+
+    }
+
+
     private String cookieIdEncrypt(String value) {
         CipherTools cipher = new CipherTools();
         return cipher.encrypt(value,Constants.COOKIE_CIPHER_KEY);
@@ -97,7 +145,7 @@ public class AuthController {
 
     private void addRateContent(AutoRateSetting setting){
        String [] contents = new String[]{"亲~~欢迎您下次光临小店~~~小店需要亲的大力支持~~·祝亲生活愉快！！",
-               "非常感谢您的光临，希望您在本店选购的商品能给您带来快乐和满意！也许我们不是最好的，但我们一定会尽最大的努力做到更好，让每一位消费者都能真正的享受到网购的实惠和快乐！如果我们有什么地方做得不好，请您多多提提宝贵意见，因为在成长的路上我们需要您的支持和监督，这样我们就能做得更好！谢谢！",
+               "非常感谢您的光临，希望您在本店选购的商品能给您带来快乐和满意！也许我们不是最好的，但我们一定会尽最大的努力做到更好！",
                "每一个好评都是一份感动，每一个好评都是一种激励。最简单的好评，都给予我们的是动力和坚持，感谢亲的支持！欢迎下次光临！"};
        for(String content:contents){
            RateContent rateContent = new RateContent();
@@ -113,11 +161,11 @@ public class AuthController {
         String url="https://oauth.taobao.com/token";
         Map<String,String> props=new HashMap<String,String>();
         props.put("grant_type","authorization_code");
-/*测试时，需把test参数换成自己应用对应的值*/
         props.put("code",code);
-        props.put("client_id","23175152");
-        props.put("client_secret","fe3900d9e3c1e8c65b37da4d0237a953");
-        props.put("redirect_uri","http://www.fuckbug.net:15569/");
+        props.put("client_id",Constants.TB_ONLINE_APP_KEY);
+        props.put("client_secret",Constants.TB_ONLINE_APP_SECRET);
+        String redirectUrl = ConfigurationManager.create().get(Constants.BROWSE_URL);
+        props.put("redirect_uri",redirectUrl);
         props.put("view","web");
         props.put("state",state);
         String s="";

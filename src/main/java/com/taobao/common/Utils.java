@@ -108,4 +108,10 @@ public class Utils {
         end = end+" 23:59:59";
         return end;
     }
+
+    public static String getTimeStr(Date date,String formatStr){
+        SimpleDateFormat format = new SimpleDateFormat(formatStr);
+        String dateStr = format.format(date);
+        return dateStr;
+    }
 }

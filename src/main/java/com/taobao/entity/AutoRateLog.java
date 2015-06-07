@@ -19,6 +19,17 @@ public class AutoRateLog extends BaseDomain {
     @Column
     private Long tid;
 
+    @Column
+    private Long oid;
+
+    public Long getOid() {
+        return oid;
+    }
+
+    public void setOid(Long oid) {
+        this.oid = oid;
+    }
+
     public User getUser() {
         return user;
     }
@@ -61,11 +72,22 @@ public class AutoRateLog extends BaseDomain {
 
     @Column
     private String buyerNickname;
-    @Column
-    private Float realPrice;
+
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date rateTime;
+
+    public Date getRateDate() {
+        return rateDate;
+    }
+
+    public void setRateDate(Date rateDate) {
+        this.rateDate = rateDate;
+    }
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date rateDate;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -116,13 +138,6 @@ public class AutoRateLog extends BaseDomain {
         this.buyerNickname = buyerNickname;
     }
 
-    public Float getRealPrice() {
-        return realPrice;
-    }
-
-    public void setRealPrice(Float realPrice) {
-        this.realPrice = realPrice;
-    }
 
     public Date getRateTime() {
         return rateTime;

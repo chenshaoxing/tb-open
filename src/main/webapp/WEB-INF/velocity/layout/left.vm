@@ -71,6 +71,12 @@
                         自动评价日志
                     </a>
                 </li>
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        评价统计报表
+                    </a>
+                </li>
 
             </ul>
         </a>

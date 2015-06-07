@@ -368,7 +368,7 @@
             <properties>
                 <!-- 数据库有关的配置 -->
                 <mvn.jdbc_driver>com.mysql.jdbc.Driver</mvn.jdbc_driver>
-                <mvn.jdbc_url><![CDATA[jdbc:mysql://localhost:3306/test?autoreconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8]]></mvn.jdbc_url>
+                <mvn.jdbc_url><![CDATA[jdbc:mysql://10.211.55.4:3306/test?autoreconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8]]></mvn.jdbc_url>
                 <mvn.jdbc_username>root</mvn.jdbc_username>
                 <mvn.jdbc_password>root</mvn.jdbc_password>
                 <mvn.app.key>1023175152</mvn.app.key>
@@ -402,6 +402,7 @@
                 <mvn.email.server.host>smtp.163.com</mvn.email.server.host>
                 <mvn.email.server.port>25</mvn.email.server.port>
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
+                <mvn.email.password></mvn.email.password>
                 <mvn.email.auth>true</mvn.email.auth>
                 <!--<log.home>/home/hadoop/hadoop/logs</log.home>-->
                 <log.home>/home/star/logs</log.home>

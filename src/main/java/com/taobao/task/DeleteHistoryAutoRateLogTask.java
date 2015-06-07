@@ -24,13 +24,14 @@ public class DeleteHistoryAutoRateLogTask {
     @Resource
     private AutoRateLogService autoRateLogService;
 
-    private static final Integer deleteAutoRateLogDay = ConfigurationManager.create().getInt(Constants.AUTO_RATE_LOG_DELETE_DAY,30);
+
 
     @Resource
     private OnlineEmailService onlineEmailService;
 
     public void delete(){
         try{
+            Integer deleteAutoRateLogDay = ConfigurationManager.create().getInt(Constants.AUTO_RATE_LOG_DELETE_DAY,-30);
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);

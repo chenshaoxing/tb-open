@@ -40,7 +40,6 @@ public interface IBasePersistence {
 
 
 
-
     public <T extends BaseDomain> List<T> getAllEntities(Class<T> clazz);
 
     public <T extends BaseDomain> List<T> getAllEntities(Class<T> clazz, String orderby);
@@ -69,5 +68,9 @@ public interface IBasePersistence {
      * @return
      */
     public <T extends BaseDomain> long getEntitiesByExpressionsTotalCount(Class<T> clazz, List<Expression> conditions);
+
+    public List<Map<String,Object>> countAutoRateNum(Long userId);
+
+    public Map<String,Object> minAutoRateTime(Long userId);
 
 }

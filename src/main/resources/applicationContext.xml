@@ -18,24 +18,6 @@
         <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
     </context:component-scan>
 
-    <!--&lt;!&ndash;<bean id="staffService" class="com.hr.system.manage.service.impl.StaffServiceImpl" />&ndash;&gt;-->
-    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
-        <!--<property name="driverClassName" value="${squirrel_jdbc_driver}" />-->
-        <!--<property name="url" value="${squirrel_jdbc_url}" />-->
-        <!--<property name="username" value="${squirrel_jdbc_username}" />-->
-        <!--<property name="password" value="${squirrel_jdbc_password}" />-->
-        <!--<property name="validationQuery" value="select 1" />-->
-        <!--<property name="initialSize" value="5" />-->
-        <!--<property name="testWhileIdle" value="true"/>-->
-        <!--<property name="maxIdle" value="20" />-->
-        <!--<property name="minIdle" value="5" />-->
-        <!--<property name="maxActive" value="50" />-->
-        <!--<property name="removeAbandonedTimeout" value="180" />-->
-        <!--<property name="maxWait" value="30000" />-->
-    <!--</bean>-->
-
-    <!-- Timer schedule -->
-
     <!--要调度的对象-->
     <bean id="scanRateTask" class="com.taobao.task.ScanAboutOverRateTask" />
     <bean id="deleteHistoryRateLogTask" class="com.taobao.task.DeleteHistoryAutoRateLogTask" />

@@ -36,6 +36,10 @@ public class BlackListController {
     @ResponseBody
     public Map<String, Object> add(@RequestParam String buyerNick) throws Exception{
         try{
+            Long count = blackListService.count(Utils.getUserId());
+            if(count >= 500){
+                return ResultJson.resultError();
+            }
             BlackList blackList = new BlackList();
             blackList.setBuyerNickname(buyerNick);
             User user = new User();

@@ -11,7 +11,7 @@
 
     <property>
         <name>before.overtime.exec.rate.date</name>  <!-- 在评价过期前多少天对其进行评价 -->
-        <value>4</value>  <!-- 最小1  最大14 单位天 -->
+        <value>13</value>  <!-- 最小1  最大14 单位天 -->
     </property>
     <property>
         <name>global.admin.email</name>
@@ -23,6 +23,10 @@
     </property>
     <property>      <!-- 自动评价的日志 保留期限 越过多少天删除 -->
         <name>auto.rate.log.delete.day</name>
-        <value>-10</value>
+        <value>-30</value>
+    </property>
+    <property>
+        <name>browse.url</name>
+        <value>http://120.25.250.133:8080/auth</value>
     </property>
 </configuration>

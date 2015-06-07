@@ -1,10 +1,12 @@
 package com.taobao.controller;
 
+import com.taobao.api.domain.Order;
 import com.taobao.api.domain.Trade;
 import com.taobao.api.request.TraderatesGetRequest;
 import com.taobao.api.request.TradesSoldGetRequest;
 import com.taobao.api.response.TraderatesGetResponse;
 import com.taobao.api.response.TradesSoldGetResponse;
+import com.taobao.common.Constants;
 import com.taobao.common.ResultJson;
 import com.taobao.common.Utils;
 import com.taobao.dao.PageInfo;
@@ -99,15 +101,9 @@ public class RateController {
                 request.setResult(result);
             }
             TraderatesGetResponse response = rateService.searchRate(request,user.getSessionKey());
-//            List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
-//            for(TradeRate tradeRate :response.getTradeRates()) {
-//                Map<String,Object> map = Utils.toMap(tradeRate);
-//                Item item = productService.getProductByNumId(tradeRate.getNumIid());
-//                if(item != null){
-//                    map.put("productUrl",item.getDetailUrl());
-//                }
-//                list.add(map);
-//            }
+            if(!response.isSuccess() && response.getSubCode().equals(Constants.TAOBAO_TRADERATES_GET_TID_NO_EXIST)){
+                return ResultJson.resultError("570");
+            }
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
 //            pageInfo.setList(list);
             pageInfo.setList(response.getTradeRates());
@@ -137,6 +133,9 @@ public class RateController {
             }
             request.setRateStatus(rateStatus);
             TradesSoldGetResponse response = tradeService.getTradeSold(request,user.getSessionKey());
+            if(!response.isSuccess() && response.getSubCode().equals(Constants.TAOBAO_TRADES_SOLD_GET_BUYER_NO_EXIST)){
+                return ResultJson.resultError("520");
+            }
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
             List<Map<String,Object>> list = new ArrayList<Map<String, Object>>() ;
             if(response.getTrades() != null && response.getTrades().size() > 0){
@@ -168,7 +167,7 @@ public class RateController {
     @RequestMapping(value = "/rate/batch-rate-orders/rate")
     @ResponseBody
     public Map<String, Object> rateBatchOrders(@RequestParam(required = false) String tradeIds,
-                                               @RequestParam String content,
+                                               @RequestParam Long rid,
                                                @RequestParam String rateType,
                                                @RequestParam(required = false) String buyerNick,
                                                @RequestParam(required = false) String rateStatus
@@ -176,25 +175,43 @@ public class RateController {
         Map<String, Object> map = new HashMap<String, Object>();
         List<Object> trades = new ArrayList<Object>();
         User user = userService.findById(Utils.getUserId());
+        RateContent rateContent = rateContentService.findById(rid);
+        if(StringUtils.isNotEmpty(tradeIds)){
+            tradeIds = tradeIds.substring(0,tradeIds.lastIndexOf("$"));
+        }
         try{
             int success = 0;
             int failed = 0;
             if(StringUtils.isNotEmpty(tradeIds)){
                 String ids []= tradeIds.split(",");
-                for(String tradeId:ids){
-                    boolean flag = rateService.add(Long.valueOf(tradeId), rateType,content,user.getSessionKey());
-                    if(flag){
-                        success+=1;
-                        AutoRateLog log = new AutoRateLog();
-                        log.setUser(user);
-                        log.setTid(Long.valueOf(tradeId));
-                        log.setRateEnum(AutoRateSetting.RateType.valueOf(rateType));
-                        log.setRateStatus(RateStatus.HAND_BATCH_RATE);
-//                        log.setRateContent();
-                    }else {
-                        failed += 1;
-                        trades.add(tradeId);
+                for(String trade:ids){
+                    String tradeInfo []  = trade.split("\\?");
+                    Long tradeId = Long.valueOf(tradeInfo[0]);
+                    String oIdsStr [] = tradeInfo[3].split("\\$");
+                    for(String oIdStr:oIdsStr){
+                        Long oid = Long.valueOf(oIdStr);
+                        boolean flag = rateService.add(tradeId, oid,rateType,rateContent.getContent(),user.getSessionKey());
+                        if(flag){
+                            success+=1;
+
+                            AutoRateLog log = new AutoRateLog();
+                            Date date = new Date();
+                            log.setUser(user);
+                            log.setTid(tradeId);
+                            log.setRateEnum(AutoRateSetting.RateType.valueOf(rateType));
+                            log.setRateStatus(RateStatus.HAND_BATCH_RATE);
+                            log.setRateContent(rateContent);
+                            log.setRateTime(date);
+                            log.setRateDate(date);
+                            log.setOid(oid);
+                            log.setBuyerNickname(tradeInfo[2]);
+                            autoRateLogService.add(log);
+                        }else {
+                            failed += 1;
+                            trades.add(tradeId);
+                        }
                     }
+
                 }
             }else{
                 Map<String,Object> result = this.getBatchRateOrders(1l, 10l, buyerNick, rateStatus);
@@ -205,14 +222,30 @@ public class RateController {
                     pageInfo  = (PageInfo)result.get("data");
                     totalPage = pageInfo.getPageTotalNum();
                     List<Map<String,Object>> list = pageInfo.getList();
-                    for(Map<String,Object> param:list){
-                        boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()), rateType,content,user.getSessionKey());
-                        if(flag)
-                            success+=1;
-                        else {
-                            failed += 1;
-                            trades.add(param.get("tid").toString());
+                    for(Map<String,Object> param:list) {
+                        List<Order> orders = (List<Order>)param.get("orders");
+                        for(Order o:orders){
+                            boolean flag = rateService.add(Long.valueOf(param.get("tid").toString()),o.getOid() ,rateType, rateContent.getContent(), user.getSessionKey());
+                            if (flag){
+                                success += 1;
+                                AutoRateLog log = new AutoRateLog();
+                                Date date = new Date();
+                                log.setUser(user);
+                                log.setTid(Long.valueOf(param.get("tid").toString()));
+                                log.setRateEnum(AutoRateSetting.RateType.valueOf(rateType));
+                                log.setRateStatus(RateStatus.HAND_BATCH_RATE);
+                                log.setRateContent(rateContent);
+                                log.setBuyerNickname(param.get("buyerNick").toString());
+                                log.setOid(o.getOid());
+                                log.setRateTime(date);
+                                log.setRateDate(date);
+                                autoRateLogService.add(log);
+                            }else {
+                                failed += 1;
+                                trades.add(param.get("tid").toString());
+                            }
                         }
+
                     }
                 }
             }
@@ -232,7 +265,6 @@ public class RateController {
         log.setTid(tid);
         log.setBuyerNickname(buyerNick);
         log.setRateTime(new Date());
-        log.setRealPrice(payment);
         log.setRateContent(content);
         log.setRateStatus(RateStatus.AUTO_RATE);
         log.setRateEnum(AutoRateSetting.RateType.valueOf(rateType));

@@ -17,4 +17,6 @@ public interface BlackListService {
 
     public BlackList findByName(String buyerNick);
 
+    public Long count(Long userId);
+
 }

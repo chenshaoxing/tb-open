@@ -3,7 +3,8 @@ var AutoLog = {
         ajaxSuccess:"success"
     },
     url:{
-        getList:"/auto-rate-log/getList"
+        getList:"/auto-rate-log/getList",
+        report:"/auto-rate-log/report/count"
     },
     ejs:{
         getList:"/script/auto-rate-log/ejs/auto-rate-log.ejs"
@@ -36,7 +37,10 @@ var AutoLog = {
                    }
                }
            }
-       }
+       },
+        report:function(){
+
+        }
     }
 }
 

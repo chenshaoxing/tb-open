@@ -2,9 +2,8 @@ package com.taobao.dao;
 
 
 import com.taobao.entity.BaseDomain;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -118,6 +117,8 @@ public class BasePersistenceImpl implements IBasePersistence {
         Query query = getEntityManager().createQuery(sql);
         return (Long) query.uniqueResult();
     }
+
+
 
 
     public <T extends BaseDomain> List<T> getEntitiesByField(Class<T> clazz, String fieldName, Object fieldValue, String orderField, int pageIndex, int pageSize) {
@@ -375,8 +376,28 @@ public class BasePersistenceImpl implements IBasePersistence {
 
 
 
+   public List<Map<String,Object>> countAutoRateNum(Long userId){
+       String sql = "SELECT rateDate,count(user_id) as num from t_auto_rate_log where user_id = "+userId+" group by rateDate  \n" +
+               "ORDER BY rateDate";
+        SQLQuery sqlQuery = getEntityManager().createSQLQuery(sql);
+        sqlQuery.addScalar("rateDate", Hibernate.DATE);
+       sqlQuery.addScalar("num",Hibernate.LONG);
+       sqlQuery.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+       return sqlQuery.list();
+   }
 
-
+    @Override
+    public Map<String, Object> minAutoRateTime(Long userId) {
+        String sql = "SELECT min(rateDate) as rateTime from t_auto_rate_log where user_id = "+userId;
+        SQLQuery sqlQuery = getEntityManager().createSQLQuery(sql);
+        sqlQuery.addScalar("rateDate", Hibernate.DATE);
+        List<Map<String,Object>> list = sqlQuery.list();
+        if(list != null && list.size() > 0){
+            return (Map<String, Object>)sqlQuery.list().get(0);
+        }else {
+            return null;
+        }
+    }
 
 
 }

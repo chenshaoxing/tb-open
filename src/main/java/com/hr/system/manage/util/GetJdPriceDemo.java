@@ -96,7 +96,7 @@ public class GetJdPriceDemo {
             HttpGet cardHttpGet = new HttpGet(cardUrl);
             CloseableHttpResponse responseCard = httpClient.execute(cardHttpGet);
             String ll = EntityUtils.toString(responseCard.getEntity());
-            System.out.println(ll);
+//            System.out.println(ll);
             Document documentResult = Jsoup.parse(ll);
             Elements elements = documentResult.getElementsByClass("ctxt02");
             for(Element e:elements){

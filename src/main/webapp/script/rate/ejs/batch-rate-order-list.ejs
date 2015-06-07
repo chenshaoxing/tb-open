@@ -2,7 +2,15 @@
     <tr>
         <td class="center">
             <label>
-                <input name="tradeIds" type="checkbox" class="ace" value="<%=data.list[i].tid%>" />
+                <%  var oIds = '' %>
+                <% var oArr = data.list[i].orders %>
+                <% for( var k = 0;k<oArr.length;k++) {%>
+
+                    <% oIds= oIds+ oArr[k].oid +'$' %>
+
+                <%}%>
+
+                <input name="tradeIds" type="checkbox" class="ace" value="<%=data.list[i].tid%>?<%=data.list[i].payment%>?<%=data.list[i].buyerNick%>?<%=oIds%>" />
                 <span class="lbl"></span>
             </label>
         </td>
@@ -29,7 +37,7 @@
             <%=data.list[i].buyerNick%>
             <a target="_blank" href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%=data.list[i].buyerNick%>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"><img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=yangyan641102&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" alt="点击这里给我发消息"></a>
             <br/>
-            <button type="button" class="btn btn-minier btn-purple" onclick="Rate.fn.showBuyerInfo(<%=data.list[i].tid%>)">联系信息</button>
+            <!--<button type="button" class="btn btn-minier btn-purple" onclick="Rate.fn.showBuyerInfo(<%=data.list[i].tid%>)">联系信息</button>-->
         </td>
         <td><%=data.list[i].overTime == 'false'?'<span class="label label-danger ">已失效</span>':data.list[i].overTime%></td>
 

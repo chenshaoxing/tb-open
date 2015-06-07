@@ -42,6 +42,8 @@ var Black = {
                    common.fn.showInfoMessages("提示","添加成功")   ;
                    $("#buyerNick").val("");
                    Black.fn.execList();
+               }else{
+                   common.fn.showInfoMessages("提示","您的黑名单数量已经达到500名的上限了!")   ;
                }
            }
            var params = new Object();

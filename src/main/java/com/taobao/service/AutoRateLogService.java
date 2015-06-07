@@ -17,4 +17,10 @@ public interface AutoRateLogService {
     public PageInfo<AutoRateLog> getList(int currentPage,int pageSize,Map<String,Object> params);
 
     public void remove(AutoRateLog autoRateLog);
+
+    public Long countRateNumByDate(Map<String,Object> params);
+
+    public List<Map<String,Object>> countNumByUserId(Long userId);
+
+    public Map<String, Object> minAutoRateTime(Long userId);
 }

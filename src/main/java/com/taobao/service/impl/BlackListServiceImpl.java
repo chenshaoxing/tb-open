@@ -51,4 +51,9 @@ public class BlackListServiceImpl implements BlackListService{
     public BlackList findByName(String buyerNick) {
         return iBasePersistence.getEntityByField(BlackList.class,"buyerNickname",buyerNick);
     }
+
+    @Override
+    public Long count(Long userId) {
+        return iBasePersistence.getEntityTotalCount(BlackList.class,"user.id",userId);
+    }
 }

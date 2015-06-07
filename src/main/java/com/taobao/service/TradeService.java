@@ -56,7 +56,7 @@ public class TradeService {
      */
     public TradesSoldGetResponse getTradeSold(TradesSoldGetRequest req,String sessionKey) throws Exception{
         try{
-            req.setFields("tid,type,status,payment,orders,num," +
+            req.setFields("tid,oid,type,status,payment,orders,num," +
                     "num_iid,price,total_fee,created,pay_time,end_time,buyer_nick,service_orders,buyer_rate");
 
             req.setStatus("TRADE_FINISHED");

@@ -21,7 +21,7 @@
     <param name="append" value="false" />
     <param name="encoding" value="UTF-8" />
     <param name="threshold" value="INFO" />
-    <param name="maxBackupIndex" value="10"/>
+    <param name="maxBackupIndex" value="5"/>
     <!--<param name="DatePattern" value="'-'yyyy-MM-dd-HH'.log'" />-->
     <param name="DatePattern" value="'-'yyyy-MM-dd'.log'" />
     <layout class="org.apache.log4j.PatternLayout">
@@ -58,6 +58,6 @@
 <root>
     <level value="INFO" />
     <appender-ref ref="PROJECT" />
- <!--   <appender-ref ref="CONSOLE" />   -->
+   <!-- <appender-ref ref="CONSOLE" />  -->
 </root>
 </log4j:configuration>

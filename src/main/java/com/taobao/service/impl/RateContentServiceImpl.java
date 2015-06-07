@@ -25,4 +25,11 @@ public class RateContentServiceImpl implements RateContentService{
     public List<RateContent> findBySettingId(Long id) {
         return iBasePersistence.getEntitiesByField(RateContent.class,"autoRateSetting.id",id);
     }
+
+    @Override
+    public RateContent findById(Long id) {
+        RateContent rateContent = new RateContent();
+        rateContent.setId(id);
+        return iBasePersistence.getEntityById(RateContent.class,rateContent);
+    }
 }

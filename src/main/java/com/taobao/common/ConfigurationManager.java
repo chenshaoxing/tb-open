@@ -20,9 +20,7 @@ public class ConfigurationManager extends Configuration {
     private static final Logger LOG = LoggerFactory.getLogger(ConfigurationManager.class);
 
     public static Configuration addSquirrelResources(Configuration conf) {
-        conf.addResource("squirrel-default.xml");
-        conf.addResource("squirrel-filelog-default.xml");
-        conf.addResource("squirrel-site.xml");
+        conf.addResource("conf.xml");
 
         //checkDefaultsVersion(conf);
         //checkForClusterFreeMemoryLimit(conf);

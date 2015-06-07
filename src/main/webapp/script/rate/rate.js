@@ -52,7 +52,10 @@ var Rate = {
                    }else{
                        callback(0);
                    }
-
+               }else{
+                   if(data.msg == "570"){
+                       common.fn.showInfoMessages("提示","该交易号不存在哟!");
+                   }
                }
            }
 
@@ -95,6 +98,10 @@ var Rate = {
                     }else{
                         callback(0);
                     }
+                }else{
+                    if(data.msg == "520"){
+                        common.fn.showInfoMessages("提示","该买家昵称不存在噢!");
+                    }
                 }
             }
         },
@@ -115,13 +122,9 @@ var Rate = {
                         if(data.data){
                             for(var i = data.data.length-1;i>=0;i--){
                                 $("#"+content+(i+1)).val(data.data[i].content);
-                            }
-                        }else{
-                            for(var i = Rate.globalVariable.rateContent.length-1;i>=0;i--){
-                                $("#"+content+(i+1)).val(Rate.globalVariable.rateContent[i]);
+                                $("#"+content+(i+1)).attr("rid",data.data[i].id);
                             }
                         }
-
                     }
                 }
                 var params = {};
@@ -163,7 +166,8 @@ var Rate = {
                 var contents  = $(tabContent[0]).children();
                 $(contents).each(function(){
                     if($(this).hasClass("active")){
-                        batchRateForm.content = $(this).children().get(0).value;
+                        var checkTextarea = $(this).children().get(0);
+                        batchRateForm.rid = $(checkTextarea).attr("rid");
                         return;
                     }
                 })

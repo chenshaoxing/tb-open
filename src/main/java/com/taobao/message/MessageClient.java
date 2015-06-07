@@ -174,11 +174,13 @@ public class MessageClient {
 
     public void addAutoRateLog(JSONObject object,User user){
         AutoRateLog log = new AutoRateLog();
+        Date date = new Date();
         log.setUser(user);
         log.setTid(object.getLong("tid"));
         log.setBuyerNickname(object.getString("buyer_nick"));
-        log.setRateTime(new Date());
-        log.setRealPrice(object.getFloat("payment"));
+        log.setRateDate(date);
+        log.setRateTime(date);
+        log.setOid(object.getLong("oid"));
         log.setRateContent((RateContent) object.get("rateContent"));
         log.setRateStatus(RateStatus.AUTO_RATE);
         log.setRateEnum((AutoRateSetting.RateType)object.get("rateEnum"));

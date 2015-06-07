@@ -122,8 +122,8 @@
                                     <thead >
                                         <tr style="background-color: #6fb3e0!important">
                                             <th style="width: 13%">交易ID</th>
-##                                            <th style="width: 20%">商品名称</th>
-                                            <th style="width: 7%">实付金额</th>
+                                            <th style="width: 13%">子订单ID</th>
+##                                            <th style="width: 7%">实付金额</th>
                                             <th style="width: 10%">评价方式</th>
                                             <th style="width: 7%">评价结果</th>
                                             <th style="width: 15%">评价时间</th>
@@ -136,7 +136,7 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="8" id="autoRateLogListPagination"></td>
+                                        <td colspan="7" id="autoRateLogListPagination"></td>
                                     </tr>
                                     </tfoot>
                                 </table>

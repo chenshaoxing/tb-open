@@ -55,7 +55,6 @@ public class AutoRateLogServiceImpl implements AutoRateLogService{
             String endTime = params.get("endTime").toString();
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
-                ;
                 Expression endExp = new Expression("rateTime",sf.parse(endTime), Expression.Relation.AND, Expression.Operation.LessThanEqual);
                 list.add(endExp);
             } catch (ParseException e) {
@@ -72,5 +71,45 @@ public class AutoRateLogServiceImpl implements AutoRateLogService{
     @Override
     public void remove(AutoRateLog autoRateLog) {
         iBasePersistence.removeEntity(autoRateLog);
+    }
+
+    @Override
+    public Long countRateNumByDate(Map<String, Object> params) {
+        List<Expression> list = new ArrayList<Expression>();
+        if(params.get("startTime") != null){
+            String startTime = params.get("startTime").toString();
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Expression startExp = new Expression("rateTime",sf.parse(startTime), Expression.Relation.AND, Expression.Operation.GreaterThanEqual);
+                list.add(startExp);
+            } catch (ParseException e) {
+                LOG.error(e.getMessage());
+            }
+        }
+        if(params.get("endTime") != null){
+            String endTime = params.get("endTime").toString();
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                ;
+                Expression endExp = new Expression("rateTime",sf.parse(endTime), Expression.Relation.AND, Expression.Operation.LessThanEqual);
+                list.add(endExp);
+            } catch (ParseException e) {
+                LOG.error(e.getMessage());
+            }
+        }
+        if(params.get("userId") != null){
+            Expression userExp = new Expression("user.id",params.get("userId"), Expression.Relation.AND, Expression.Operation.Equal);
+            list.add(userExp);
+        }
+        return iBasePersistence.getEntitiesByExpressionsTotalCount(AutoRateLog.class,list);
+    }
+
+    @Override
+    public List<Map<String, Object>> countNumByUserId(Long userId) {
+        return iBasePersistence.countAutoRateNum(userId);
+    }
+
+    public Map<String, Object> minAutoRateTime(Long userId){
+        return iBasePersistence.minAutoRateTime(userId);
     }
 }
