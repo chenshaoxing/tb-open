@@ -287,16 +287,16 @@
             <artifactId>jsoup</artifactId>
             <version>1.6.3</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.taobao</groupId>-->
-            <!--<artifactId>open-api</artifactId>-->
-            <!--<version>20150518</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.taobao</groupId>
-            <artifactId>open-sdk</artifactId>
-            <version>1.1</version>
+            <artifactId>open-api</artifactId>
+            <version>20150518</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.taobao</groupId>-->
+            <!--<artifactId>open-sdk</artifactId>-->
+            <!--<version>1.1</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -375,6 +375,7 @@
                 <mvn.app.secret>sandbox9e3c1e8c65b37da4d0237a953</mvn.app.secret>
                 <mvn.app.url>http://gw.api.tbsandbox.com/router/rest</mvn.app.url>
                 <mvn.message.url>ws://mc.api.tbsandbox.com/</mvn.message.url>
+                <mvn.session.refresh.url>http://container.api.tbsandbox.com/</mvn.session.refresh.url>
                 <mvn.email.server.host>smtp.163.com</mvn.email.server.host>
                 <mvn.email.server.port>25</mvn.email.server.port>
                 <mvn.email.username>18680188225@163.com</mvn.email.username>
@@ -398,6 +399,7 @@
                 <mvn.app.key>23175152</mvn.app.key>
                 <mvn.app.secret>fe3900d9e3c1e8c65b37da4d0237a953</mvn.app.secret>
                 <mvn.app.url>http://gw.api.taobao.com/router/rest</mvn.app.url>
+                <mvn.session.refresh.url>http://container.open.taobao.com/</mvn.session.refresh.url>
                 <mvn.message.url>ws://mc.api.taobao.com/</mvn.message.url>
                 <mvn.email.server.host>smtp.163.com</mvn.email.server.host>
                 <mvn.email.server.port>25</mvn.email.server.port>

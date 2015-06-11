@@ -10,6 +10,7 @@ import com.taobao.common.Constants;
 import com.taobao.entity.AutoRateSetting;
 import com.taobao.entity.RateContent;
 import com.taobao.service.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by star on 15/5/15.
@@ -197,6 +196,38 @@ public class AuthController {
          String responseJson=WebUtils.doPost(url, param, 3000, 3000);
          System.out.println(responseJson);
      }
+
+    private static void url() throws Exception{
+        String appkey = Constants.TB_SANDBOX_APP_KEY;
+        String secret = Constants.TB_SANDBOX_APP_SECRET;
+        String refreshToken = Constants.TB_SANDBOX_SESSION_KEY;
+        String sessionkey = Constants.TB_SANDBOX_SESSION_KEY;
+
+        Map<String,String> signParams = new TreeMap<String, String>();
+        signParams.put("appkey", appkey);
+        signParams.put("refresh_token", refreshToken);
+        signParams.put("sessionkey", sessionkey);
+
+        StringBuilder paramsString = new StringBuilder();
+        Set<Map.Entry<String, String>> paramsEntry = signParams.entrySet();
+        for(Map.Entry paramEntry : paramsEntry){
+            paramsString.append(paramEntry.getKey()).append(paramEntry.getValue());
+        }
+        String sign = DigestUtils.md5Hex((paramsString.toString() + secret).getBytes("utf-8")).toUpperCase();
+        String signEncoder = URLEncoder.encode(sign,"utf-8");
+        String appkeyEncoder = URLEncoder.encode(appkey,"utf-8");
+        String refreshTokenEncoder = URLEncoder.encode(refreshToken,"utf-8");
+        String sessionkeyEncoder = URLEncoder.encode(sessionkey,"utf-8");
+        String freshUrl = "http://container.api.tbsandbox.com/container/refresh?appkey="+appkeyEncoder+"&refresh_token="+refreshTokenEncoder+"&sessionkey="+sessionkeyEncoder+"&sign="+signEncoder;
+        System.out.println(freshUrl);
+        String text = WebUtils.doGet(freshUrl,null);
+        JSONObject jsonObject = JSON.parseObject(text);
+        System.out.println(text);
+    }
+
+    public static void main(String[] args) throws Exception{
+        url();
+    }
 
 
 }

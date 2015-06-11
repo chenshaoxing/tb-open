@@ -121,6 +121,12 @@
 
     </bean>
 
+    <bean id="sessionKeyService" class="com.taobao.service.SessionKeyService">
+        <property name="appKey" value="${mvn.app.key}"/>
+        <property name="secret" value="${mvn.app.secret}"/>
+        <property name="refreshUrl" value="${mvn.session.refresh.url}"/>
+    </bean>
+
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
