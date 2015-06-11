@@ -61,7 +61,7 @@ public class SessionKeyService {
     private String refreshUrl;
 
 
-    public User refreshSessionKeyAndSave(User user) throws Exception{
+    public User refreshSessionKeyAndSave(User user) {
         try{
             String appkey = Constants.TB_SANDBOX_APP_KEY;
             String secret = Constants.TB_SANDBOX_APP_SECRET;
@@ -94,7 +94,7 @@ public class SessionKeyService {
             return user;
         }catch (Exception e){
             LOG.error(e.getMessage());
-            throw e;
+            return null;
         }
     }
 }

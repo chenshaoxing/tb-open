@@ -2,6 +2,7 @@ package com.taobao.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created with Intellij IDEA
@@ -14,6 +15,17 @@ import java.util.Date;
 @Entity
 @Table(name = "t_user")
 public class User extends BaseDomain{
+
+    @OneToMany(mappedBy="user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<TaoBaoProduct> taoBaoProducts;
+
+    public Set<TaoBaoProduct> getTaoBaoProducts() {
+        return taoBaoProducts;
+    }
+
+    public void setTaoBaoProducts(Set<TaoBaoProduct> taoBaoProducts) {
+        this.taoBaoProducts = taoBaoProducts;
+    }
 
     //optional = false指明IDCard可为空
     //mappedBy="person"指明Person作为双向关系的维护段，负责外键的更新，起主导作用

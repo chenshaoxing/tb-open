@@ -92,16 +92,16 @@ public class AuthController {
 
 
 
-//    @RequestMapping(value = "/authTest")
+    @RequestMapping(value = "/authTest")
     public String authTest(HttpServletResponse response) throws Exception{
         try{
 
-            String sessionKey = Constants.TB_SANDBOX_SESSION_KEY;
+            String sessionKey = "6102106733ec241a914fc2e0728a93d96080ee38d502e1d2074082787";
             if(StringUtils.isEmpty(sessionKey)){
                 return "redirect:"+Constants.LOGOUT_URL;
             }
             User user = sellerService.getSellerInfo(sessionKey);
-            com.taobao.entity.User uu = userService.findByName(user.getNick());
+            com.taobao.entity.User uu = userService.findByName("sandbox_c_2");
             if(uu == null){
                 uu = new com.taobao.entity.User();
                 uu.setRefreshToken(Constants.TB_SANDBOX_SESSION_KEY);

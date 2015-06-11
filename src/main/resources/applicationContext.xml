@@ -22,6 +22,14 @@
     <bean id="scanRateTask" class="com.taobao.task.ScanAboutOverRateTask" />
     <bean id="deleteHistoryRateLogTask" class="com.taobao.task.DeleteHistoryAutoRateLogTask" />
     <bean id="scanUserOverDateTask" class="com.taobao.task.ScanUserOverDateTask"/>
+    <bean id="scanJDProductInfoTask" class="com.taobao.task.ScanJDProductInfoTask"/>
+
+    <bean id="scanJDProductInfoDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="scanJDProductInfoTask" />
+        <property name="targetMethod" value="scan" />
+        <!--将并发设置为false-->
+        <property name="concurrent" value="false" />
+    </bean>
 
     <bean id="scanUserOverDateDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="scanUserOverDateTask" />
@@ -42,6 +50,12 @@
         <property name="targetMethod" value="delete" />
         <!--将并发设置为false-->
         <property name="concurrent" value="false" />
+    </bean>
+
+    <bean id="triggerScanJDProductInfo" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="scanJDProductInfoDetail" />
+        <property name="cronExpression" value="50 * 1 * * ?" />
+        <!--<property name="cronExpression" value="30 * * * * ?" />-->
     </bean>
 
     <bean id="triggerScanUserOverDate" class="org.springframework.scheduling.quartz.CronTriggerBean">
@@ -68,6 +82,7 @@
                 <ref bean="triggerScan" />
                 <ref bean="triggerDelete" />
                 <ref bean="triggerScanUserOverDate" />
+                <ref bean="triggerScanJDProductInfo" />
             </list>
         </property>
     </bean>
@@ -97,8 +112,8 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="${mvn.jdbc_url}" />
-        <!--<property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />-->
+        <!--<property name="url" value="${mvn.jdbc_url}" />-->
+        <property name="url" value="jdbc:mysql://10.211.55.4:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
         <!--<property name="url" value="jdbc:mysql://sqld.duapp.com:4050/eBdYFaVHDRBXyIkrimel?autoReconnect=true"/>-->
         <property name="username" value="${mvn.jdbc_username}" />
         <!--<property name="username" value="KHRdaNSHIU1AvMVoIc7EEU1C" />-->

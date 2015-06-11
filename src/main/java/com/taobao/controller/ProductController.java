@@ -1,10 +1,13 @@
 package com.taobao.controller;
 
 import com.taobao.api.domain.Item;
+import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobao.common.ResultJson;
 import com.taobao.common.Utils;
+import com.taobao.dao.PageInfo;
 import com.taobao.entity.User;
 import com.taobao.service.ProductService;
+import com.taobao.service.TaoBaoProductInfoService;
 import com.taobao.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,15 @@ public class ProductController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private TaoBaoProductInfoService taoBaoProductInfoService;
+
+
+    @RequestMapping("/product")
+    public String index(){
+        return "product/list";
+    }
+
     @RequestMapping(value = "/product/info")
     @ResponseBody
     public Map<String, Object> getProductInfo(@RequestParam Long numId
@@ -48,6 +60,24 @@ public class ProductController {
 //                return ResultJson.resultSuccess(item);
 //            }
 
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    @RequestMapping("/product/list")
+    @ResponseBody
+    public  Map<String,Object> getOnSellProduct(@RequestParam Long currentPage,
+                                                @RequestParam Long pageSize,
+                                                @RequestParam(required = false) String name) throws Exception{
+        try{
+            User user = userService.findById(Utils.getUserId());
+            ItemsOnsaleGetResponse response = taoBaoProductInfoService.search(currentPage,pageSize,name,user.getSessionKey());
+            PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
+            pageInfo.setList(response.getItems());
+            return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;
