@@ -39,4 +39,9 @@ public class Constants {
     public static final String  TAOBAO_TRADERATES_GET_TID_NO_EXIST ="isv.invalid-parameter:tid";
     public static final String TAOBAO_TRADES_SOLD_GET_BUYER_NO_EXIST = "isv.invalid-parameter:buyer_nick";
     public static final String BROWSE_URL = "browse.url";
+
+    public static final String CRAWL_JD_PRODUCT_INFO_URL_PREFIX = "http://d.jd.com/fittingInfo/get?callback=jQuery306357&";
+    public static final String JD_PRODUCT_INFO_IMAGE_URL_PREFIX = "http://img11.360buyimg.com/n1/";
+    public static final String JD_PRODUCT_ITEM_PREFIX = "http://item.jd.com/";
+    public static final String JD_PRODUCT_ITEM_END_PREFIX = ".html";
 }
