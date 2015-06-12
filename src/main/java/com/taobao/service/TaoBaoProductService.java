@@ -1,6 +1,7 @@
 package com.taobao.service;
 
 
+import com.taobao.entity.JDProduct;
 import com.taobao.entity.TaoBaoProduct;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
  */
 public interface TaoBaoProductService {
     public TaoBaoProduct add(TaoBaoProduct product);
+
+    public boolean addAndRelationJd(TaoBaoProduct tb,JDProduct jd);
 
     public List<TaoBaoProduct> findAll();
 

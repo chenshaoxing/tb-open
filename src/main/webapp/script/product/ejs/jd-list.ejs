@@ -1,0 +1,27 @@
+<% for(var i=0 ; i<data.list.length;i++){ %>
+<tr>
+    <td><%=data.list[i].product.skuid%></td>
+    <td>
+        <a target="_blank" href="<%=data.list[i].product.url%>">
+        <!--<a target="_blank" href="http://item.taobao.com/item.htm?id=<%=data.list[i].numIid%>">-->
+        <img src="<%=data.list[i].product.pic%>" style="width: 100px;height: 100px;">
+        </a>
+    </td>
+
+    <td>
+
+       <!-- <a target="_blank" href="http://item.taobao.com/item.htm?id=<%=data.list[i].numIid%>"><%=data.list[i].title%></a> -->
+        <a target="_blank" href="<%=data.list[i].product.url%>"><%=data.list[i].product.name%></a>
+    </td>
+
+    <td><i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%=data.list[i].product.price%>
+    </td>
+    <td>
+        <%=common.fn.formatDateTime(data.list[i].product.updatedTime)%>
+    </td>
+    <td>
+        <span class="label label-success" style="cursor: pointer" onclick="Product.fn.updateJd(<%=data.list[i].product.skuid%>)">立即刷新</span>
+        <span class="label label-danger" style="cursor: pointer" onclick="Product.fn.deleteJd(<%=data.list[i].id%>)">取消关注</span>
+    </td>
+</tr>
+<%}%>

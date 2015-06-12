@@ -7,6 +7,7 @@ import com.taobao.dao.IBasePersistence;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.JDProduct;
 import com.taobao.service.JDProductService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,7 +25,14 @@ public class JDProductServiceImpl implements JDProductService {
 
     @Override
     public JDProduct save(Map<String,Object> productObj) {
-        return basePersistence.save(jsonObjChangeJDProduct(productObj));
+        JDProduct product = jsonObjChangeJDProduct(productObj);
+        JDProduct temp = this.findBySkuId(product.getSkuid());
+        if(temp == null){
+            return basePersistence.save(product);
+        }else{
+            product.setId(temp.getId());
+            return  basePersistence.save(product);
+        }
     }
 
     @Override
@@ -40,9 +48,30 @@ public class JDProductServiceImpl implements JDProductService {
 
     @Override
     public JDProduct findBySkuId(String skuId) {
-        return basePersistence.getEntityByField(JDProduct.class,"skuId",skuId);
+        return basePersistence.getEntityByField(JDProduct.class,"skuid",skuId);
     }
 
+    @Override
+    public JDProduct findById(Long id) {
+        JDProduct jdProduct = new JDProduct();
+        jdProduct.setId(id);
+        return basePersistence.getEntityById(JDProduct.class,jdProduct);
+    }
+
+
+    @Override
+    public PageInfo<JDProduct> getList(int currentPage, int pageSize,String name,String skuId) {
+        List<Expression> list = new ArrayList<Expression>();
+        if(StringUtils.isNotEmpty(name)){
+            Expression nameExp = new Expression("name",name, Expression.Relation.AND, Expression.Operation.AllLike);
+            list.add(nameExp);
+        }
+        if(StringUtils.isNotEmpty(skuId)){
+            Expression skuExp = new Expression("skuid",skuId, Expression.Relation.AND, Expression.Operation.Equal);
+            list.add(skuExp);
+        }
+        return basePersistence.getEntitiesByExpressions(JDProduct.class,list,"id",currentPage,pageSize);
+    }
 
     @Override
     public PageInfo<JDProduct> getList(int currentPage, int pageSize) {

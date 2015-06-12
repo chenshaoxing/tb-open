@@ -1,0 +1,42 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加京东宝贝</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addJdForm">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> 商品Id </div>
+                        <div class="profile-info-value">
+                            <textarea  placeholder="多个用逗号隔开"  class="form-control limited required" rid="" name="skuIds" id="skuIds" rows="7" cols="40" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Product.fn.addJd(<%=data.randomDialogId%>);" class="btn btn-primary">添加</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+//    $('textarea.limited').inputlimiter({
+//        remText: '还能输入 %n  个字符',
+//        limitText: '最多可输入%n 个字符'
+//    });
+</script>
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #f4f6f6;
+        border-color: #d5dbdb;
+        color: #34495e;
+        cursor: default;
+        opacity: 1;
+        filter: alpha(opacity=70);
+    }
+</style>
+

@@ -41,6 +41,7 @@ public class Constants {
     public static final String BROWSE_URL = "browse.url";
 
     public static final String CRAWL_JD_PRODUCT_INFO_URL_PREFIX = "http://d.jd.com/fittingInfo/get?callback=jQuery306357&";
+    public static final String CRAWL_JD_PRODUCT_PRICE_URL = "http://p.3.cn/prices/get?type=1&area=12&callback=cnp&";
     public static final String JD_PRODUCT_INFO_IMAGE_URL_PREFIX = "http://img11.360buyimg.com/n1/";
     public static final String JD_PRODUCT_ITEM_PREFIX = "http://item.jd.com/";
     public static final String JD_PRODUCT_ITEM_END_PREFIX = ".html";

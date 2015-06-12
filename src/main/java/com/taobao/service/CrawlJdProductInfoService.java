@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,8 +50,20 @@ public class CrawlJdProductInfoService {
                 LOG.info("Response content: " + data);
                 data = data.substring(data.indexOf("(")+1,data.lastIndexOf(")"));
                 JSONObject obj = JSON.parseObject(data);
-                obj.put("crawlUrl",urls);
                 Map<String,Object> result = (Map<String,Object>)obj.get("master");
+
+                //获取最新价格
+                HttpGet httpGetPrice = new HttpGet(Constants.CRAWL_JD_PRODUCT_PRICE_URL+"skuid=J_"+skuId);
+                response = httpClient.execute(httpGetPrice);
+                HttpEntity priceEntity = response.getEntity();
+                if(entity != null){
+                    String dataPrice = EntityUtils.toString(priceEntity);
+                    LOG.info("Response content: " +dataPrice );
+                    dataPrice = dataPrice.substring(dataPrice.indexOf("(")+1,dataPrice.lastIndexOf(")"));
+                    dataPrice = dataPrice.substring(dataPrice.indexOf("[")+1,dataPrice.indexOf("]"));
+                    JSONObject priceOjb = JSON.parseObject(dataPrice);
+                    result.put("price",priceOjb.get("p"));
+                }
                 result.put("crawlUrl",urls);
                 return result;
             }

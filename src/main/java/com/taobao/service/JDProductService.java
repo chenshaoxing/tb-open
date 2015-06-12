@@ -19,5 +19,11 @@ public interface JDProductService {
 
     public JDProduct findBySkuId(String skuId);
 
+    public JDProduct findById(Long id);
+
+
+
+    public PageInfo<JDProduct> getList(int currentPage, int pageSize,String name,String skuId);
+
     public PageInfo<JDProduct> getList(int currentPage, int pageSize);
 }

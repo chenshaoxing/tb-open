@@ -1,9 +1,13 @@
 package com.taobao.service.impl;
 
 import com.taobao.dao.IBasePersistence;
+import com.taobao.entity.JDProduct;
 import com.taobao.entity.TaoBaoProduct;
+import com.taobao.entity.TbRelationJd;
 import com.taobao.service.TaoBaoProductService;
+import com.taobao.service.TbRelationJdService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,9 +25,29 @@ public class TaoBaoProductServiceImpl implements TaoBaoProductService {
     @Resource
     private IBasePersistence basePersistence;
 
+    @Resource
+    private TbRelationJdService tbRelationJdService;
+
+
     @Override
     public TaoBaoProduct add(TaoBaoProduct product) {
         return basePersistence.save(product);
+    }
+
+    @Override
+    @Transactional
+    public boolean addAndRelationJd(TaoBaoProduct tb, JDProduct jd) {
+        tb = basePersistence.save(tb);
+        TbRelationJd tbRelationJd = tbRelationJdService.findByTbIdAndJdId(tb.getId(),jd.getId());
+        if(tbRelationJd == null){
+            tbRelationJd = new TbRelationJd();
+            tbRelationJd.setJdProduct(jd);
+            tbRelationJd.setProduct(tb);
+            basePersistence.save(tbRelationJd);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

@@ -19,7 +19,8 @@
         <%=data.list[i].num%>
     </td>
     <td>
-        操作
+        <button type="button" class="btn btn-sm btn-pink" onclick="Product.fn.showRelationJdDialog(<%=data.list[i].numIid%>,<%=data.list[i].price%>)">关联京东宝贝</button>
+        <button type="button" class="btn btn-sm  btn-purple" onclick="Product.fn.showRelationJdDialog(<%=data.list[i].numIid%>)">查看关联信息</button>
     </td>
 </tr>
 <%}%>

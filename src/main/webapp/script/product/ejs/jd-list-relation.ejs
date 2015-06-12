@@ -1,0 +1,15 @@
+<% for(var i=0 ; i<data.list.length;i++){ %>
+<tr>
+    <td class="center">
+        <label>
+            <input name="jdId" type="radio" class="ace" value="<%=data.list[i].product.id%>" />
+            <span class="lbl"></span>
+        </label>
+    </td>
+    <td><%=data.list[i].product.skuid%></td>
+    <td>
+       <%=data.list[i].product.name%>
+    </td>
+
+</tr>
+<%}%>
