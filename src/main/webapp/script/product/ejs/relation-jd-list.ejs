@@ -1,0 +1,29 @@
+
+
+<% for(var i=0 ; i<data.length;i++){ %>
+<tr>
+    <td><%=data[i].jdProduct.skuid%></td>
+    <td>
+        <a target="_blank" href="<%=data[i].jdProduct.url%>">
+        <img src="<%=data[i].jdProduct.pic%>" style="width: 100px;height: 100px;">
+        </a>
+    </td>
+
+    <td>
+        <a target="_blank" href="<%=data[i].jdProduct.url%>"><%=data[i].jdProduct.name%></a>
+    </td>
+
+    <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].jdProduct.price%>
+    </td>
+    <!--<td>-->
+        <!--<%=common.fn.formatDateTime(data[i].jdProduct.updatedTime)%>-->
+    <!--</td>-->
+    <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].product.price%>
+    </td>
+    <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].product.differenceOfPrices%>
+    </td>
+    <td>
+        <span class="label label-success" style="cursor: pointer" onclick="Product.fn.updateJd(<%=data[i].jdProduct.skuid%>)">取消关联</span>
+    </td>
+</tr>
+<%}%>

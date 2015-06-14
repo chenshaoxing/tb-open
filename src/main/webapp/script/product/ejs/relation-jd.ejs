@@ -11,8 +11,6 @@
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="col-xs-12">
-                            <input type="hidden" name="numIid" id="numIid" value="<%=data.numIid%>">
-                            <input type="hidden" name="tbPrice" id="tbPrice" value="<%=data.tbPrice%>">
                             <form class="form-horizontal" id="searchJdProductForm">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -44,52 +42,26 @@
                 <h3 class="header smaller lighter green" style="margin-top: 50px;"></h3>
                 <div class="row" style="margin-top: 10px;">
                     <div class="col-xs-12">
-                        <div class="row">
-                            <div class="col-xs-12">
+                        <form id="relationJdForm">
+                            <input type="hidden" name="numIid" id="numIid" value="<%=data.numIid%>">
+                            <input type="hidden" name="tbPrice" id="tbPrice" value="<%=data.price%>">
+                            <div class="row">
+                            <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label style="text-align: left" for="skuId" class="col-sm-2 control-label">差价: </label>
-                                    <div class="col-sm-6">
-                                        <input type="text" maxlength="20" placeholder="变更区间差价" class="form-control" id="differenceOfPrices"
-                                               name="differenceOfPrices">
-                                    </div>
+                                    <label style="text-align: left"  class="col-sm-6 control-label">淘宝价:&nbsp;&nbsp;<i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp; <%=data.price%></label>
+
                                 </div>
                             </div>
-                            <div class="col-xs-12" style="margin-top: 10px;">
-                                <div class="table-responsive">
-                                    <table id="sample-table-2" style="word-break:break-all; word-wrap:break-word;" class="table table-striped table-bordered table-hover">
-                                        <thead >
-                                        <tr style="background-color: #6fb3e0!important">
-                                            <th class="center" style="width: 5%">
-                                                <label>
-                                                    <!--<input type="checkbox" class="ace" onclick="Rate.fn.checkAll(this)" id="tradeIdsTmp" />-->
-                                                    <!--<span class="lbl"></span>-->
-                                                    选择
-                                                </label>
-                                            </th>
-                                            <th style="width: 7%">商品Id</th>
-                                            <!--<th style="width: 10%">商品图片</th>-->
-                                            <th style="width: 20%">商品名称</th>
-                                            <!--<th style="width: 9%">商品价格</th>-->
-                                            <!--<th style="width: 10%">更新时间</th>-->
-                                            <!--<th style="width: 10%">操作</th>-->
-                                        </tr>
-                                        </thead>
-                                        <tbody id="searchJdProductListBody">
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="3" id="searchJdProductListPagination"></td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-                                </div><!-- /.col -->
-                            </div><!-- /.row -->
+                                <div id="searchJdProductListBody" class="row"></div>
+
+
                         </div><!-- /.page-content -->
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="Product.fn.addJd(<%=data.randomDialogId%>);" class="btn btn-primary">添加</button>
+                <button type="button" onclick="Product.fn.relationJd(<%=data.randomDialogId%>);" class="btn btn-primary">添加</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div>

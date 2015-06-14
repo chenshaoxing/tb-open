@@ -1,15 +1,66 @@
-<% for(var i=0 ; i<data.list.length;i++){ %>
-<tr>
-    <td class="center">
-        <label>
-            <input name="jdId" type="radio" class="ace" value="<%=data.list[i].product.id%>" />
-            <span class="lbl"></span>
-        </label>
-    </td>
-    <td><%=data.list[i].product.skuid%></td>
-    <td>
-       <%=data.list[i].product.name%>
-    </td>
 
-</tr>
-<%}%>
+<div class="col-xs-6">
+    <div class="form-group">
+        <label style="text-align: left" for="" class="col-sm-3 control-label">差价: </label>
+        <div class="col-sm-6">
+            <input type="text" maxlength="20"  data-toggle="tooltip" data-placement="top" title="变更区间差价(超过差价系统自动修改淘宝宝贝价格)"  class="form-control required" id="differenceOfPrices"
+                   name="differenceOfPrices">
+        </div>
+    </div>
+</div>
+<div class="col-xs-12" style="margin-top: 10px;">
+    <div class="table-responsive" >
+<table id="sample-table-2" style="word-break:break-all; word-wrap:break-word;" class="table table-striped table-bordered table-hover">
+    <thead >
+    <tr style="background-color: #6fb3e0!important">
+        <th class="center" style="width: 5%">
+            <label>
+                <!--<input type="checkbox" class="ace" onclick="Rate.fn.checkAll(this)" id="tradeIdsTmp" />-->
+                <!--<span class="lbl"></span>-->
+                选择
+            </label>
+        </th>
+        <th style="width: 7%">商品Id</th>
+        <th style="width: 5%">商品图片</th>
+        <th style="width: 20%">商品名称</th>
+        <th style="width: 9%">商品价格</th>
+        <!--<th style="width: 10%">更新时间</th>-->
+        <!--<th style="width: 10%">操作</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i=0 ; i<data.list.length;i++){ %>
+    <tr>
+        <td class="center">
+            <label>
+                <input name="jdId" type="radio" class="ace" value="<%=data.list[i].product.id%>" />
+                <span class="lbl"></span>
+            </label>
+        </td>
+        <td><%=data.list[i].product.skuid%></td>
+        <td>
+            <a target="_blank" href="<%=data.list[i].product.url%>">
+                <!--<a target="_blank" href="http://item.taobao.com/item.htm?id=<%=data.list[i].numIid%>">-->
+                <img src="<%=data.list[i].product.pic%>" style="width: 50px;height: 50px;">
+            </a>
+        </td>
+        <td>
+            <a target="_blank" href="<%=data.list[i].product.url%>"><%=data.list[i].product.name%></a>
+        </td>
+        <td><i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%=data.list[i].product.price%>
+        </td>
+
+    </tr>
+    <%}%>
+
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="5" id="searchJdProductListPagination"></td>
+    </tr>
+    </tfoot>
+</table>
+        </div>
+    </div>
+
+

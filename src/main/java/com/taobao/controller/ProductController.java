@@ -99,6 +99,14 @@ public class ProductController {
             User user = userService.findById(Utils.getUserId());
             ItemsOnsaleGetResponse response = taoBaoProductInfoService.search(currentPage,pageSize,name,user.getSessionKey());
             PageInfo pageInfo = new PageInfo(pageSize,response.getTotalResults());
+            for(Item item:response.getItems()){
+                List<TbRelationJd> list = tbRelationJdService.findByTbNumId(item.getNumIid());
+                if(list != null && list.size() > 0){
+                    item.setIsEx(true);
+                }else{
+                    item.setIsEx(false);
+                }
+            }
             pageInfo.setList(response.getItems());
             return ResultJson.resultSuccess(pageInfo);
         }catch (Exception e){
@@ -215,6 +223,20 @@ public class ProductController {
                 return ResultJson.resultError();
             }
 
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @RequestMapping("/product/get-relation-jd")
+    @ResponseBody
+    public  Map<String,Object> getRelationJdProduct(
+                                                 @RequestParam Long numIid
+                                                ) throws Exception{
+        try{
+           List<TbRelationJd> list = tbRelationJdService.findByTbNumId(numIid);
+           return ResultJson.resultSuccess(list);
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;

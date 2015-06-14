@@ -7,14 +7,18 @@ var Product = {
         jdList:"/product/jd-list",
         addJd:"/product/add-jd",
         updateJd:"/product/update-jd",
-        deleteJd:"/product/delete-jd"
+        deleteJd:"/product/delete-jd",
+        relationJd:"/product/relation-jd",
+        getRelationJd:"/product/get-relation-jd"
     },
     ejs:{
         getList:"/script/product/ejs/list.ejs",
         getJdList:"/script/product/ejs/jd-list.ejs",
         addJd:"/script/product/ejs/showAddJd.ejs",
         getRelationJdList:"/script/product/ejs/jd-list-relation.ejs",
-        relationJd:"/script/product/ejs/relation-jd.ejs"
+        relationJd:"/script/product/ejs/relation-jd.ejs",
+        relationJdList:"/script/product/ejs/relation-jd-list.ejs",
+        showGetRelation:"/script/product/ejs/showGetRelationJd.ejs"
     },
     fn:{
         execList:function(){
@@ -74,13 +78,15 @@ var Product = {
             params = common.fn.getFromJsonData("searchJdProductForm");
             params.currentPage = currentPage;
             params.pageSize = common.globalVariable.pageSize;
-            common.fn.ajax(Product.url.jdList,params,callBack);
+            common.fn.ajaxSync(Product.url.jdList,params,callBack);
             function callBack(data){
                 if(data.success){
                     $("#searchJdProductListBody").html('');
                     if(data.data.list){
                         var dataHtml = new EJS({url:Product.ejs.getRelationJdList}).render({data:data.data});
                         $("#searchJdProductListBody").html(dataHtml);
+                    }else{
+                        $("#searchJdProductListBody").html('<div class="alert alert-success" role="alert">您暂时还没有关注京东宝贝或者关注的宝贝已经和淘宝宝贝关联了</div>');
                     }
                     if(data.data.recordTotalCount){
                         callback(data.data.recordTotalCount);
@@ -103,6 +109,7 @@ var Product = {
                         Product.fn.execJdRelationList();
                     }
                 });
+                $('[data-toggle="tooltip"]').tooltip();
             }
             var params  = {};
             params.numIid = numIid;
@@ -151,16 +158,52 @@ var Product = {
                 common.fn.ajax(Product.url.deleteJd,params,callback);
             })
         },
-        relationJd:function(dialogId){
-            var jdId = $("input[type='radio']:checked").val();
-            var numIid = $("#numIid").val();
-            var differenceOfPrices = $("#differenceOfPrices").val();
-            var tbPrice = $("#tbPrice").val();
+        relationJd:function(dialogId){  //relationJdForm
+            function callback(data){
+                if(data.success){
+                    common.fn.showInfoMessages("提示","关联成功")   ;
+                }
+            }
+            var paramsP = new Object();
+            var relationJdForm = $("#relationJdForm").validate({});
+            if(relationJdForm.form()){
+                paramsP = common.fn.getFromJsonData("relationJdForm");
+                var params = {};
+                var jdId = $("input[type='radio']:checked").val();
+                if(!jdId){
+                    common.fn.showInfoMessages("提示","必须选择一个京东宝贝!") ;
+                    return;
+                }
+                var numIid = $("#numIid").val();
+                var differenceOfPrices = $("#differenceOfPrices").val();
+                var tbPrice = $("#tbPrice").val();
+                params.jdId = jdId;
+                params.numIid = numIid;
+                params.tbPrice = tbPrice;
+                params.differenceOfPrices = differenceOfPrices;
+                $("#"+dialogId).modal("hide");
+                common.fn.ajax(Product.url.relationJd,params,callback);
+            }
+        },
+        getRelationJdListByNumIid:function(){
+            function callback(data){
+                if(data.success){
+                    $("#relationJdListBody").html('');
+                    if(data.data){
+                        var dataHtml = new EJS({url:Product.ejs.relationJdList}).render({data:data.data});
+                        $("#relationJdListBody").html(dataHtml);
+                    }
+
+                }
+            }
             var params = {};
-            params.jdId = jdId;
+            params.numIid = $("#numIid").val();
+            common.fn.ajax(Product.url.getRelationJd,params,callback);
+        },
+        showGetRelationJdListDialog:function(numIid){
+            var params = {};
             params.numIid = numIid;
-            params.tbPrice = tbPrice;
-            params.differenceOfPrices = differenceOfPrices;
+            common.fn.showDialog(Product.ejs.showGetRelation,params,null,Product.fn.getRelationJdListByNumIid,null);
         }
     }
 }

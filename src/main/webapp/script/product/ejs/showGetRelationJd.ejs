@@ -1,0 +1,51 @@
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title" id="myModalLabel">关联的京东宝贝</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="numIid" value="<%=data.numIid%>" id="numIid">
+                <div class="table-responsive">
+                    <table id="sample-table-2" style="word-break:break-all; word-wrap:break-word;" class="table table-striped table-bordered table-hover">
+                        <thead >
+                        <tr style="background-color: #6fb3e0!important">
+                            <th style="width: 15%">商品Id</th>
+                            <th style="width: 10%">商品图片</th>
+                            <th style="width: 20%">商品名称</th>
+                            <th style="width: 15%">商品价格</th>
+                            <th style="width: 15%">淘宝价格</th>
+                            <th style="width: 15%">差价</th>
+                            <th style="width: 10%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="relationJdListBody">
+                        </tbody>
+                    </table>
+                </div><!-- /.col -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+//    $('textarea.limited').inputlimiter({
+//        remText: '还能输入 %n  个字符',
+//        limitText: '最多可输入%n 个字符'
+//    });
+</script>
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #f4f6f6;
+        border-color: #d5dbdb;
+        color: #34495e;
+        cursor: default;
+        opacity: 1;
+        filter: alpha(opacity=70);
+    }
+</style>
+

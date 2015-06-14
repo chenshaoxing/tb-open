@@ -3,6 +3,7 @@ package com.taobao.task;
 import com.taobao.dao.PageInfo;
 import com.taobao.entity.JDProduct;
 import com.taobao.entity.TaoBaoProduct;
+import com.taobao.entity.TbRelationJd;
 import com.taobao.entity.User;
 import com.taobao.service.*;
 import org.slf4j.Logger;
@@ -37,6 +38,8 @@ public class ScanJDProductInfoTask {
     private UserService userService;
     @Resource
     private SessionKeyService sessionKeyService;
+    @Resource
+    private TbRelationJdService tbRelationJdService;
 
 
     private void refreshSession(){
@@ -50,7 +53,6 @@ public class ScanJDProductInfoTask {
     public void scan(){
         try{
             refreshSession();
-
             int currentPage = 1;
             PageInfo pageInfo = jdProductService.getList(currentPage, 10);
             int pageNum = Integer.valueOf(pageInfo.getPageTotalNum()+"");
@@ -68,13 +70,28 @@ public class ScanJDProductInfoTask {
                             jd.setDiscount(Float.valueOf(result.get("discount").toString()));
                             jd.setName(result.get("name").toString());
                             jdProductService.save(jd);
+                            List<TbRelationJd> listTb = tbRelationJdService.findByJdSkuId(jd.getSkuid());
+                            for(TbRelationJd tj:listTb){
+                                TaoBaoProduct tp = tj.getProduct();
+                                BigDecimal tbPrice = new BigDecimal(tp.getPrice());
+                                BigDecimal abs = latestPrice.subtract(tbPrice).abs();
+                                BigDecimal diffPrice = new BigDecimal(tp.getDifferenceOfPrices());
+                                if(abs.compareTo(diffPrice) != 0){
+                                    BigDecimal tbLatestPrice = latestPrice.subtract(diffPrice);
+                                    tbLatestPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
+                                    tp.setPrice(tbLatestPrice.floatValue());
+                                    boolean flag = taoBaoProductInfoService.updateProductPrice(tp,tp.getUser().getSessionKey());
+//                                    boolean flag = taoBaoProductInfoService.updateProductPrice(tp,tp.getUser().getSessionKey());
+                                    if(flag){
+                                        taoBaoProductService.add(tp);
+                                    }
+                                }
+
+                            }
 //                            Set<TaoBaoProduct> taoBaoProducts =  jd.getTaoBaoProducts();
 //                            for(TaoBaoProduct tb:taoBaoProducts){
 //                               tb.setPrice(price+tb.getDifferenceOfPrices());
-//                               boolean flag = taoBaoProductInfoService.updateProductPrice(tb,tb.getUser().getSessionKey());
-//                               if(flag){
-//                                   taoBaoProductService.add(tb);
-//                               }
+
 //                            }
                         }
                     }

@@ -40,4 +40,14 @@ public class TbRelationJdServiceImpl implements TbRelationJdService {
             return null;
         }
     }
+
+    @Override
+    public List<TbRelationJd> findByTbNumId(Long numIid) {
+        return  basePersistence.getEntitiesByField(TbRelationJd.class, "product.numIid",numIid);
+    }
+
+    @Override
+    public List<TbRelationJd> findByJdSkuId(String skuId) {
+        return  basePersistence.getEntitiesByField(TbRelationJd.class, "jdProduct.skuid",skuId);
+    }
 }

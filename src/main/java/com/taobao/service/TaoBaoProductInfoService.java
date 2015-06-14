@@ -1,5 +1,6 @@
 package com.taobao.service;
 
+import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.request.ItemPriceUpdateRequest;
 import com.taobao.api.request.ItemsOnsaleGetRequest;
@@ -7,11 +8,13 @@ import com.taobao.api.response.ItemPriceUpdateResponse;
 import com.taobao.api.response.ItemsOnsaleGetResponse;
 import com.taobao.common.Constants;
 import com.taobao.entity.TaoBaoProduct;
+import com.taobao.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created with Intellij IDEA
@@ -27,6 +30,13 @@ public class TaoBaoProductInfoService {
 
     @Resource(name = "taoBaoClient")
     private TaobaoClient taobaoClient ;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private SessionKeyService sessionKeyService;
+
 
     public ItemsOnsaleGetResponse search(Long currentPage,Long pageSize,String nameSearch,String sessionKey) throws Exception{
         try{
@@ -58,11 +68,13 @@ public class TaoBaoProductInfoService {
         }
     }
 
-
-    public static void main(String[] args) {
-
-//        search();
+    public static void main(String[] args) throws Exception{
+        String session = "610022893ddde5113fecb02215203d41b3441968020fb802074082787";
+        TaobaoClient taobaoClient = new DefaultTaobaoClient(Constants.TB_SANDBOX_API_URL,Constants.TB_SANDBOX_APP_KEY,Constants.TB_SANDBOX_APP_SECRET);
+        ItemPriceUpdateRequest req=new ItemPriceUpdateRequest();
+        req.setNumIid(2100665954782L);
+        req.setPrice("219");
+        ItemPriceUpdateResponse response = taobaoClient.execute(req , session);
+        System.out.println(response.isSuccess());;
     }
-
-
 }

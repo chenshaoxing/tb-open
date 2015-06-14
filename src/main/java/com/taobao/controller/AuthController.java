@@ -185,7 +185,7 @@ public class AuthController {
 
 
      private  static void test() throws IOException {
-         String url="https://oauth.taobao.com/token";
+         String url="http://container.api.tbsandbox.com/";
          Map<String, String> param = new HashMap<String, String>();
          param.put("grant_type", "refresh_token");
          param.put("refresh_token", Constants.TB_SANDBOX_SESSION_KEY);
