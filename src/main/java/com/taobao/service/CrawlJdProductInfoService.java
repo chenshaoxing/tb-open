@@ -47,7 +47,7 @@ public class CrawlJdProductInfoService {
             System.out.println(response.getStatusLine());
             if(entity != null){
                 String data = EntityUtils.toString(entity);
-                LOG.info("Response content: " + data);
+//                LOG.info("Response content: " + data);
                 data = data.substring(data.indexOf("(")+1,data.lastIndexOf(")"));
                 JSONObject obj = JSON.parseObject(data);
                 Map<String,Object> result = (Map<String,Object>)obj.get("master");

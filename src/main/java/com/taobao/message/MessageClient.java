@@ -60,6 +60,16 @@ public class MessageClient {
                 Map<String,Object> result = message.getRaw();
                 String topic = result.get("topic").toString();
                 LOG.info(message.getContent());
+
+                switch (topic) {
+                    case Constants.TAOBAO_TRADE_TRADESELLERSHIP:
+                        System.out.println(1);
+                        break;
+                    case Constants.TAOBAO_TRADE_TRADESUCCESS:
+                        System.out.println(2);
+                        break;
+                }
+
                 JSONObject object = JSON.parseObject(message.getContent());
 
                 String buyerNick = object.getString("buyer_nick");

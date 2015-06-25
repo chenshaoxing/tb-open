@@ -7,37 +7,31 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel">关联京东宝贝</h4>
             </div>
-            <div class="modal-body">
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <form class="form-horizontal" id="searchJdProductForm">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label style="text-align: left" for="skuId" class="col-sm-2 control-label">商品ID: </label>
+            <div class="modal-body" >
+                        <form class="form-horizontal" id="searchJdProductForm">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label style="text-align: left" for="skuId" class="col-sm-2 control-label">商品ID: </label>
 
-                                            <div class="col-sm-9">
-                                                <input type="text" maxlength="20" placeholder="回车进行搜索" class="form-control" id="skuId"
-                                                       name="skuId">
-                                            </div>
+                                        <div class="col-sm-9">
+                                            <input type="text" maxlength="20" placeholder="回车进行搜索" class="form-control" id="skuId"
+                                                   name="skuId">
                                         </div>
                                     </div>
-                                    <!--<div class="col-xs-6">-->
-                                        <!--<div class="form-group">-->
-                                            <!--<button class="btn btn-info btn-sm" type="button" onclick="Product.fn.execJdList();">-->
-                                                <!--<i class="icon-search bigger-110"></i>-->
-                                                <!--搜索-->
-                                            <!--</button>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
                                 </div>
+                                <!--<div class="col-xs-6">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<button class="btn btn-info btn-sm" type="button" onclick="Product.fn.execJdList();">-->
+                                            <!--<i class="icon-search bigger-110"></i>-->
+                                            <!--搜索-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
 
-                                <div class="space-4"></div>
-                            </form>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.col -->
+                            <div class="space-4"></div>
+                        </form>
                 <!-- /.page-header -->
                 <h3 class="header smaller lighter green" style="margin-top: 50px;"></h3>
                 <div class="row" style="margin-top: 10px;">
@@ -46,16 +40,25 @@
                             <input type="hidden" name="numIid" id="numIid" value="<%=data.numIid%>">
                             <input type="hidden" name="tbPrice" id="tbPrice" value="<%=data.price%>">
                             <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label style="text-align: left"  class="col-sm-6 control-label">淘宝价:&nbsp;&nbsp;<i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp; <%=data.price%></label>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label style="text-align: left"  class="col-sm-6 control-label">淘宝价:&nbsp;&nbsp;<i class="fa fa-jpy light-orange fa-1x"></i>&nbsp;&nbsp; <%=data.price%></label>
 
+                                    </div>
                                 </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label style="text-align: left"  class="col-sm-3 control-label">差价: </label>
+                                        <div class="col-sm-6">
+                                            <input type="text" maxlength="20"  data-toggle="tooltip" data-placement="top" title="变更区间差价(超过差价系统自动修改淘宝宝贝价格)"  class="form-control required" id="differenceOfPrices"
+                                                   name="differenceOfPrices">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.page-content -->
+                            <div class="row" id="searchJdProductListBody" >
+
                             </div>
-                                <div id="searchJdProductListBody" class="row"></div>
-
-
-                        </div><!-- /.page-content -->
                         </form>
                     </div>
                 </div>

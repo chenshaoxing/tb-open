@@ -9,7 +9,8 @@ var Product = {
         updateJd:"/product/update-jd",
         deleteJd:"/product/delete-jd",
         relationJd:"/product/relation-jd",
-        getRelationJd:"/product/get-relation-jd"
+        getRelationJd:"/product/get-relation-jd" ,
+        cancelJdRelation:"/product/cancel-jd-relation"
     },
     ejs:{
         getList:"/script/product/ejs/list.ejs",
@@ -162,6 +163,7 @@ var Product = {
             function callback(data){
                 if(data.success){
                     common.fn.showInfoMessages("提示","关联成功")   ;
+                    Product.fn.execList();
                 }
             }
             var paramsP = new Object();
@@ -204,6 +206,17 @@ var Product = {
             var params = {};
             params.numIid = numIid;
             common.fn.showDialog(Product.ejs.showGetRelation,params,null,Product.fn.getRelationJdListByNumIid,null);
+        },
+        cancelRelation:function(numIid,jdId){
+            function callback(data){
+                if(data.success){
+                    Product.fn.execList();
+                }
+            }
+            var params = {};
+            params.numIid = numIid;
+            params.jdId = jdId;
+            common.fn.ajax(Product.url.cancelJdRelation,params,callback);
         }
     }
 }

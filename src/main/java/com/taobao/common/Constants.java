@@ -21,6 +21,8 @@ public class Constants {
     /*评价变更消息*/
     public static final String TAOBAO_TRADE_TRADERATED = "taobao_trade_TradeRated";
 
+    public static final String TAOBAO_TRADE_TRADESELLERSHIP = "taobao_trade_TradeSellerShip";
+
     public static final String BEFORE_OVERTIME_EXEC_RATE_DATE = "before.overtime.exec.rate.date";
     public static final String GLOBAL_ADMIN_EMAIL="global.admin.email";
     public static final String USER_OVER_TIME_REMIND_DAY="user.over.time.remind.day";
@@ -45,4 +47,6 @@ public class Constants {
     public static final String JD_PRODUCT_INFO_IMAGE_URL_PREFIX = "http://img11.360buyimg.com/n1/";
     public static final String JD_PRODUCT_ITEM_PREFIX = "http://item.jd.com/";
     public static final String JD_PRODUCT_ITEM_END_PREFIX = ".html";
+
+    public static final String TAO_BAO_ITEM_URL_PREFIX = "http://item.taobao.com/item.htm?id=";
 }

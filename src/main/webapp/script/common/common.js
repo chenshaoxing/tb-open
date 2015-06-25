@@ -1,6 +1,6 @@
 var common ={
     globalVariable:{
-        pageSize:10,
+        pageSize:20,
         userType:"",
         username:"",
         userId:0

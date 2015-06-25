@@ -44,7 +44,7 @@ public class UserPermitService {
     public boolean userPermit(String sessionKey) throws Exception {
         try{
             TmcUserPermitRequest req=new TmcUserPermitRequest();
-            req.setTopics("taobao_trade_TradeRated,taobao_trade_TradeSuccess");
+            req.setTopics("taobao_trade_TradeRated,taobao_trade_TradeSuccess,taobao_trade_TradeSellerShip");
 //        req.setTopics("taobao_trade_TradeSuccess,taobao_trade_TradeCreate,taobao_trade_TradeBuyerPay,taobao_trade_TradeRated");
             TmcUserPermitResponse response = taobaoClient.execute(req ,sessionKey);
             return response.isSuccess();

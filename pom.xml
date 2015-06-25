@@ -396,7 +396,7 @@
                 <mvn.jdbc_driver>com.mysql.jdbc.Driver</mvn.jdbc_driver>
                 <mvn.jdbc_url><![CDATA[jdbc:mysql://localhost:3306/test?autoreconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8]]></mvn.jdbc_url>
                 <mvn.jdbc_username>root</mvn.jdbc_username>
-                <mvn.jdbc_password>root</mvn.jdbc_password>
+                <mvn.jdbc_password></mvn.jdbc_password>
                 <mvn.app.key>23175152</mvn.app.key>
                 <mvn.app.secret>fe3900d9e3c1e8c65b37da4d0237a953</mvn.app.secret>
                 <mvn.app.url>http://gw.api.taobao.com/router/rest</mvn.app.url>

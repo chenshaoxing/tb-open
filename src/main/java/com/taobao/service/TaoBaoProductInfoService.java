@@ -47,7 +47,7 @@ public class TaoBaoProductInfoService {
             req.setOrderBy("list_time:desc");
             req.setIsTaobao(true);
             req.setPageSize(pageSize);
-            ItemsOnsaleGetResponse response = taobaoClient.execute(req , Constants.TB_SANDBOX_SESSION_KEY);
+            ItemsOnsaleGetResponse response = taobaoClient.execute(req , sessionKey);
             return response;
         }catch (Exception e){
             LOG.error(e.getMessage());

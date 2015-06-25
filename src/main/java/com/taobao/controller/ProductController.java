@@ -202,6 +202,21 @@ public class ProductController {
         }
     }
 
+
+    @RequestMapping("/product/cancel-jd-relation")
+    @ResponseBody
+    public  Map<String,Object> deleteJdProduct(@RequestParam Long numIid,
+                                               @RequestParam Long jdId) throws Exception{
+        try{
+            TbRelationJd tbRelationJd = tbRelationJdService.findByTbIdAndJdId(numIid, jdId);
+            tbRelationJdService.remove(tbRelationJd);
+            return ResultJson.resultSuccess();
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
     @RequestMapping("/product/relation-jd")
     @ResponseBody
     public  Map<String,Object> relationJdProduct(@RequestParam Long jdId,

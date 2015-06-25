@@ -1,29 +1,33 @@
+ <% if(data && data.length > 0) {%>
 
+    <% for(var i=0 ; i<data.length;i++){ %>
+    <tr>
+        <td><%=data[i].jdProduct.skuid%></td>
+        <td>
+            <a target="_blank" href="<%=data[i].jdProduct.url%>">
+            <img src="<%=data[i].jdProduct.pic%>" style="width: 100px;height: 100px;">
+            </a>
+        </td>
 
-<% for(var i=0 ; i<data.length;i++){ %>
-<tr>
-    <td><%=data[i].jdProduct.skuid%></td>
-    <td>
-        <a target="_blank" href="<%=data[i].jdProduct.url%>">
-        <img src="<%=data[i].jdProduct.pic%>" style="width: 100px;height: 100px;">
-        </a>
-    </td>
+        <td>
+            <a target="_blank" href="<%=data[i].jdProduct.url%>"><%=data[i].jdProduct.name%></a>
+        </td>
 
-    <td>
-        <a target="_blank" href="<%=data[i].jdProduct.url%>"><%=data[i].jdProduct.name%></a>
-    </td>
+        <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].jdProduct.price%>
+        </td>
+        <!--<td>-->
+            <!--<%=common.fn.formatDateTime(data[i].jdProduct.updatedTime)%>-->
+        <!--</td>-->
+        <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].product.price%>
+        </td>
+        <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].product.differenceOfPrices%>
+        </td>
+        <td>
+            <span class="label label-success" style="cursor: pointer" onclick="Product.fn.cancelRelation(<%=data[i].product.id%>,<%=data[i].jdProduct.id%>)">取消关联</span>
+        </td>
+    </tr>
+    <%}%>
 
-    <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].jdProduct.price%>
-    </td>
-    <!--<td>-->
-        <!--<%=common.fn.formatDateTime(data[i].jdProduct.updatedTime)%>-->
-    <!--</td>-->
-    <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].product.price%>
-    </td>
-    <td><i class="fa fa-jpy light-orange fa-1x"></i><%=data[i].product.differenceOfPrices%>
-    </td>
-    <td>
-        <span class="label label-success" style="cursor: pointer" onclick="Product.fn.updateJd(<%=data[i].jdProduct.skuid%>)">取消关联</span>
-    </td>
-</tr>
-<%}%>
+ <%}else {%>
+    <div class="alert alert-success" role="alert">该淘宝宝贝暂时还没关联京东宝贝哦!</div>
+ <%}%>

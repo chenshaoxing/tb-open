@@ -29,9 +29,9 @@ public class TbRelationJdServiceImpl implements TbRelationJdService {
     }
 
     @Override
-    public TbRelationJd findByTbIdAndJdId(Long tbId, Long jdId) {
+    public TbRelationJd findByTbIdAndJdId(Long numIid, Long jdId) {
         Map<String,Object> params = new HashMap();
-        params.put("product.id",tbId);
+        params.put("product.id",numIid);
         params.put("jdProduct.id",jdId);
         List<TbRelationJd> list = basePersistence.getEntitiesByFieldList(TbRelationJd.class,params);
         if(list != null && list.size()> 0){
@@ -49,5 +49,10 @@ public class TbRelationJdServiceImpl implements TbRelationJdService {
     @Override
     public List<TbRelationJd> findByJdSkuId(String skuId) {
         return  basePersistence.getEntitiesByField(TbRelationJd.class, "jdProduct.skuid",skuId);
+    }
+
+    @Override
+    public void remove(TbRelationJd tj) {
+        basePersistence.removeDetachedEntity(tj);
     }
 }

@@ -10,9 +10,11 @@ import java.util.List;
 public interface TbRelationJdService {
     public TbRelationJd save(TbRelationJd tbRelationJd);
 
-    public TbRelationJd findByTbIdAndJdId(Long tbId,Long jdId);
+    public TbRelationJd findByTbIdAndJdId(Long numIid,Long jdId);
 
     public List<TbRelationJd> findByTbNumId(Long numIid);
 
     public List<TbRelationJd> findByJdSkuId(String skuId);
+
+    public void remove(TbRelationJd tj);
 }
