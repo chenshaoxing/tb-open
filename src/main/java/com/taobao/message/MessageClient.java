@@ -2,6 +2,7 @@ package com.taobao.message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.taobao.api.domain.Shipping;
 import com.taobao.api.domain.TradeRate;
 import com.taobao.api.internal.tmc.Message;
 import com.taobao.api.internal.tmc.MessageHandler;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -34,14 +36,20 @@ public class MessageClient {
     private RateContentService rateContentService= null;
     private UserService userService= null;
     private NoRateOrdersService noRateOrdersService= null;
+    private TradeService tradeService = null;
+    private SendSmsService sendSmsService = null;
+    private OnlineEmailService emailService = null;
     public MessageClient(ApplicationContext act) {
         rateService = (RateService)act.getBean("rateService");
+        tradeService = (TradeService)act.getBean("tradeService");
         autoRateSettingService = (AutoRateSettingService)act.getBean("autoRateSettingServiceImpl");
         autoRateLogService = (AutoRateLogService)act.getBean("autoRateLogServiceImpl");
         blackListService = (BlackListService) act.getBean("blackListServiceImpl");
         rateContentService = (RateContentService)act.getBean("rateContentServiceImpl");
         userService = (UserService)act.getBean("userServiceImpl");
         noRateOrdersService = (NoRateOrdersService)act.getBean("noRateOrdersServiceImpl");
+        sendSmsService = (SendSmsService)act.getBean("sendSmsService");
+        emailService = (OnlineEmailService)act.getBean("onlineEmailService");
     }
 
 
@@ -60,79 +68,89 @@ public class MessageClient {
                 Map<String,Object> result = message.getRaw();
                 String topic = result.get("topic").toString();
                 LOG.info(message.getContent());
-
-                switch (topic) {
-                    case Constants.TAOBAO_TRADE_TRADESELLERSHIP:
-                        System.out.println(1);
-                        break;
-                    case Constants.TAOBAO_TRADE_TRADESUCCESS:
-                        System.out.println(2);
-                        break;
-                }
-
                 JSONObject object = JSON.parseObject(message.getContent());
-
                 String buyerNick = object.getString("buyer_nick");
-                BlackList blackList = blackListService.findByName(buyerNick);
-                if(blackList != null){
-                    LOG.info("find blacklist buyer nick is:"+buyerNick);
-                    return;
-                }
                 String sellerNick = object.getString("seller_nick");
-
                 Long tid = Long.valueOf(object.get("tid").toString());
                 Long oid = Long.valueOf(object.get("oid").toString());
+                BlackList blackList = blackListService.findByName(buyerNick);
                 if(StringUtils.isNotEmpty(sellerNick)){
                     User user = userService.findByName(object.getString("seller_nick"));
                     if(user == null)
                         return;
-                    AutoRateSetting autoRateSetting = autoRateSettingService.findByUser(user);
-                    List<RateContent> content = rateContentService.findBySettingId(autoRateSetting.getId());
                     int index = random();
-                    RateContent rateContent = content.get(index);
-                    object.put("rateEnum",autoRateSetting.getRateType());
-                    object.put("rateContent",rateContent);
-                    if(autoRateSetting.isAutoRateStatus()){
-                        if(topic.equals(Constants.TAOBAO_TRADE_TRADESUCCESS)){
-                            NoRateOrders noRate = addNoRateOrders(object,user);
-                            if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
-                                boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
-                                if(isRate){
-                                    noRate.setRate(true);
-                                    LOG.info("add rate success");
-                                    noRateOrdersService.add(noRate);
-//                                    badOrNeutralSendEmail(tid,user);
-                                    addAutoRateLog(object,user);
-                                }
+                    List<RateContent> content = null;
+                    AutoRateSetting autoRateSetting = null;
+                    RateContent rateContent = null;
+
+                    switch (topic) {
+                        case Constants.TAOBAO_TRADE_TRADESELLERSHIP:
+                            Shipping shipping = tradeService.getExpressInfo(tid, user.getSessionKey());
+                            if(shipping != null){
+                                boolean flag = sendSmsService.sendSms(shipping,user.getEmail());
+                                LOG.info("send sms:"+shipping.getReceiverMobile()+"  "+flag);
                             }
-                        }else if(topic.equals(Constants.TAOBAO_TRADE_TRADERATED)){
-                            String rater = object.getString("rater");
-                            if(rater.equals("buyer")){
-                                if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
-                                    boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent(),user.getSessionKey());
+                            break;
+                        case Constants.TAOBAO_TRADE_TRADESUCCESS:
+                            if(blackList != null){
+                                LOG.info("find blacklist buyer nick is:"+buyerNick);
+                                return;
+                            }
+                            autoRateSetting = autoRateSettingService.findByUser(user);
+                            content = rateContentService.findBySettingId(autoRateSetting.getId());
+                            rateContent = content.get(index);
+                            object.put("rateEnum",autoRateSetting.getRateType());
+                            object.put("rateContent",rateContent);
+                            if(autoRateSetting.isAutoRateStatus()){
+                                NoRateOrders noRate = addNoRateOrders(object,user);
+                                if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
+                                    boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
                                     if(isRate){
+                                        noRate.setRate(true);
                                         LOG.info("add rate success");
+                                        noRateOrdersService.add(noRate);
+//                                    badOrNeutralSendEmail(tid,user);
                                         addAutoRateLog(object,user);
-//                                        badOrNeutralSendEmail(tid,user);
-                                        NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);
-                                        if(noRate != null){
-                                            noRate.setRate(true);
-                                            noRateOrdersService.add(noRate);
-                                        }
                                     }
                                 }
+                            }
+                            break;
+                        case Constants.TAOBAO_TRADE_TRADERATED:
+                            if(blackList != null){
+                                LOG.info("find blacklist buyer nick is:"+buyerNick);
+                                return;
+                            }
+                            autoRateSetting = autoRateSettingService.findByUser(user);
+                            content = rateContentService.findBySettingId(autoRateSetting.getId());
+                            rateContent = content.get(index);
+                            object.put("rateEnum",autoRateSetting.getRateType());
+                            object.put("rateContent",rateContent);
+                            if(autoRateSetting.isAutoRateStatus()){
+                                String rater = object.getString("rater");
+                                if(rater.equals("buyer")){
+                                    if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
+                                        boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent(),user.getSessionKey());
+                                        if(isRate){
+                                            LOG.info("add rate success");
+                                            addAutoRateLog(object,user);
+//                                        badOrNeutralSendEmail(tid,user);
+                                            NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);
+                                            if(noRate != null){
+                                                noRate.setRate(true);
+                                                noRateOrdersService.add(noRate);
+                                            }
+                                        }
+                                    }
 //                            else  if(autoRateSetting.getTriggerMode() == AutoRateSetting.TriggerMode.BUYER_RATE_NOT_RATE){
 
 //                            }
 
+                                }
                             }
 
-                        }
                     }
+
                 }
-//                for(String key:message.getRaw().keySet()){
-//                    System.out.println("key:"+key+" value:"+message.getRaw().get(key));
-//                }
             }
         });
         client.connect();

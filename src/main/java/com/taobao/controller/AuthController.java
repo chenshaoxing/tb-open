@@ -41,6 +41,8 @@ public class AuthController {
     private AutoRateSettingService autoRateSettingService;
     @Resource
     private RateContentService rateContentService;
+    @Resource
+    private UserPermitService userPermitService;
 
     @RequestMapping(value = "/auth")
     public String auth(@RequestParam String code,@RequestParam String state,HttpServletResponse response) throws Exception{
@@ -63,6 +65,7 @@ public class AuthController {
                 uu.setOverDate(new Date(overDate));
                 uu.setSessionKey(sessionKey);
                 uu = userService.add(uu);
+                userPermitService.userPermit(sessionKey);
                 AutoRateSetting setting = new AutoRateSetting();
                 setting.setAutoGrabRate(false);
                 setting.setAutoRateStatus(false);

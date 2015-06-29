@@ -1,0 +1,127 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>您在程序员(猿)杂货铺的订单物流信息</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="icon" type="image/png" href="/amaze/assets/i/favicon.png">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="/amaze/assets/i/app-icon72x72@2x.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="/amaze/assets/i/app-icon72x72@2x.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/amaze/assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="/amaze/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/amaze/assets/css/app.css">
+
+
+</head>
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+    <div class="am-header-left am-header-nav">
+        <!--<img src="assets/chun.gif" style="width: 40px;height: 40px">-->
+        <a href="http://fuckbug.taobao.com" class="">
+            <img src="/amaze/assets/popo.png" style="width: 50px;height: 55px">
+        </a>
+        <!--<a href="#left-link" class="">-->
+            <!--<i class="am-header-icon am-icon-home"></i>-->
+        <!--</a>-->
+    </div>
+    <h1 class="am-header-title">
+        <a href="http://fuckbug.taobao.com" class="">程序员(猿)的杂货铺</a>
+    </h1>
+    <div class="am-header-right am-header-nav">
+        <a href="http://fuckbug.taobao.com" class="">
+           进入店铺
+        </a>
+    </div>
+</header>
+
+<div class="am-g">
+    <div class="am-u-sm-12">
+        <div class="row" style="text-align: center" id="load"></div>
+        <table class="am-table">
+            <caption id="load-title" style="font-weight: bold"></caption>
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>网站名称</th>-->
+                <!--<th>网址</th>-->
+                <!--<th>创建时间</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <tbody id="dataBody">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }">
+    <div class="am-footer-miscs ">
+        <p>由
+            <a href="http://fuckbug.taobao.com" title="程序员(猿)的杂货铺" target="_blank" class="">程序员GG</a>提供技术支持</p>
+        <p>CopyRight©2014 Star Inc.</p>
+    </div>
+</footer>
+
+<!--在这里编写你的代码-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="/amaze/assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<!--<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>-->
+<script src="/amaze/assets/utils.js"></script>
+<script src="/amaze/assets/ejs/ejs.js"></script>
+<![endif]-->
+<script>
+    $(document).ready(function(){
+        var type = $_GET["type"];
+        var postid = $_GET["postid"];
+        var url = "/express";
+        var ejsUrl = "/amaze/assets/content.ejs";
+        function callback(data){
+            if(data.success && data.data && data.data.message == "ok"){
+                var dataHtml = new EJS({url:ejsUrl}).render({data:data.data.data});
+                $("#dataBody").html("");
+                $("#dataBody").html(dataHtml);
+            }else{
+                if(data.data.status == "201"){
+                    $("#dataBody").html("");
+                    $("#dataBody").html('<div class="am-alert am-alert-warning" data-am-alert>物流信息还没有更新,请晚些再进行查询哟!</div>');
+                }else{
+                    alert("亲,系统错误暂时不能查询,如果急需信息请联系旺旺!");
+                }
+            }
+        }
+        var params = {};
+        params.type = type;
+        params.postId = postid;
+        AJAX.ajax(url,params,callback);
+    })
+
+</script>
+</body>
+</html>

@@ -2,13 +2,10 @@ package com.taobao.service;
 
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.domain.Shipping;
 import com.taobao.api.domain.Trade;
-import com.taobao.api.request.TradeFullinfoGetRequest;
-import com.taobao.api.request.TradeSnapshotGetRequest;
-import com.taobao.api.request.TradesSoldGetRequest;
-import com.taobao.api.response.TradeFullinfoGetResponse;
-import com.taobao.api.response.TradeSnapshotGetResponse;
-import com.taobao.api.response.TradesSoldGetResponse;
+import com.taobao.api.request.*;
+import com.taobao.api.response.*;
 import com.taobao.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +28,21 @@ public class TradeService {
     private TaobaoClient taobaoClient;
 
     private static final Logger LOG = LoggerFactory.getLogger(TradeService.class);
+
+    public Trade getTradeInfo(Long numIid,String sessionKey) throws Exception{
+        try{
+            TradeGetRequest req=new TradeGetRequest();
+            req.setFields("tid,type,numIid,status,payment,orders");
+            req.setTid(numIid);
+            TradeGetResponse response = taobaoClient.execute(req , sessionKey);
+            return response.getTrade();
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+
+    }
+
 
     /**
      * 查询卖家已卖出的交易数据（根据创建时间）
@@ -91,6 +103,24 @@ public class TradeService {
             req.setTid(tradeId);
             TradeFullinfoGetResponse response = taobaoClient.execute(req , sessionKey);
             return response.getTrade();
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    public Shipping getExpressInfo(Long tid,String sessionKey) throws Exception{
+        try{
+            LogisticsOrdersDetailGetRequest req=new LogisticsOrdersDetailGetRequest();
+            req.setTid(tid);
+            req.setPageNo(1L);
+            req.setPageSize(10L);
+            req.setFields("tid,seller_nick,buyer_nick,out_sid,receiver_name,receiver_mobile,receiver_phone,receiver_location,company_name,item_title");
+            LogisticsOrdersDetailGetResponse response = taobaoClient.execute(req , sessionKey);
+            if(response.getShippings()  != null){
+                return response.getShippings().get(0);
+            }
+            return null;
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;

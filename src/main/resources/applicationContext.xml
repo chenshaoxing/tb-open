@@ -87,6 +87,12 @@
         </property>
     </bean>
 
+
+    <bean id="javaSmsApi" class="com.taobao.common.JavaSmsApi">
+        <property name="smsUrl" value="${mvn.sms.url}"></property>
+        <property name="appKey" value="${mvn.sms.app.key}"></property>
+    </bean>
+
     <bean id="taoBaoClient"  class="com.taobao.api.DefaultTaobaoClient">
         <constructor-arg name="serverUrl" value="${mvn.app.url}"></constructor-arg>
         <constructor-arg name="appKey" value="${mvn.app.key}"></constructor-arg>
