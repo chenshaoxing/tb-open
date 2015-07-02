@@ -21,15 +21,15 @@
 
     <script src="/plug/jquery-1.8.3.min.js"></script>
     <script src="/plug/datepiker/WdatePicker.js"></script>
+    <script src="/plug/ace/assets/js/bootstrap.min.js"></script>
+    <script src="/plug/ace/assets/js/ace.min.js"></script>
     <script src="/plug/ace/assets/js/ace-extra.min.js"></script>
-    <script src="/plug/ace/assets/js/html5shiv.js"></script>
-    <script src="/plug/ace/assets/js/respond.min.js"></script>
-
+    <script src="/plug/ace/assets/js/ace-elements.min.js"></script>
 
     <script type="text/javascript">
         if("ontouchend" in document) document.write("<script src='/plug/ace/assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
     </script>
-    <script src="/plug/ace/assets/js/bootstrap.min.js"></script>
+
     <script src="/plug/ace/assets/js/typeahead-bs2.min.js"></script>
 
     <script src="/plug/ace/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -44,8 +44,7 @@
 
     <!-- ace scripts -->
 
-    <script src="/plug/ace/assets/js/ace-elements.min.js"></script>
-    <script src="/plug/ace/assets/js/ace.min.js"></script>
+
 
 
     <!--[if lt IE 9]>
