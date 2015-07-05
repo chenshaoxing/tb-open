@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
     <title>您在程序员(猿)杂货铺的订单物流信息</title>
 
     <!-- Set render engine for 360 browser -->
@@ -59,20 +59,26 @@
 
 <div class="am-g">
     <div class="am-u-sm-12">
-        <div class="row" style="text-align: center" id="load"></div>
-        <table class="am-table">
-            <caption id="load-title" style="font-weight: bold"></caption>
-            <!--<thead>-->
-            <!--<tr>-->
+        <div id="tanmuContent" class="row">
+
+        </div>
+        <div class="row" id="tableContent" style="display: none;">
+            <div class="row" style="text-align: center" id="load"></div>
+            <table class="am-table">
+                <caption id="load-title" style="font-weight: bold"></caption>
+                <!--<thead>-->
+                <!--<tr>-->
                 <!--<th>网站名称</th>-->
                 <!--<th>网址</th>-->
                 <!--<th>创建时间</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <tbody id="dataBody">
+                <!--</tr>-->
+                <!--</thead>-->
+                <tbody id="dataBody">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 
@@ -90,6 +96,7 @@
 
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/amaze/assets/js/jquery.min.js"></script>
+<script src="/amaze/assets/js/jquery.danmu.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
 <!--<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>-->
@@ -97,13 +104,77 @@
 <script src="/amaze/assets/ejs/ejs.js"></script>
 <![endif]-->
 <script>
+
+
+    var getRandomColor = function(){
+
+        return  '#' +
+                (function(color){
+                    return (color +=  '0123456789abcdef'[Math.floor(Math.random()*16)])
+                    && (color.length == 6) ?  color : arguments.callee(color);
+                })('');
+    }
+
     $(document).ready(function(){
+        var data = {
+            1:[ { "text":"🌹" ,"size":"0","position":"0","time":1},
+                { "text":"🌹"  ,"size":"0","position":"0","time":2} ],
+
+            2:[ { "text":"😁 " ,"size":"0","position":"0","time":3},
+                { "text":"😁 ", "size":"0","position":"0","time":4} ],
+            3:[ { "text":"🌹" ,"size":"0","position":"0","time":5},
+                { "text":"🌹"  ,"size":"0","position":"0","time":6} ],
+            4:[ { "text":"😁 "  ,"size":"0","position":"0","time":7},
+                { "text":"🌹"  ,"size":"0","position":"0","time":8} ]
+
+
+        }
+
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        $("#tanmuContent").danmu({
+            left: 0,    //区域的起始位置x坐标
+            top: 0 ,  //区域的起始位置y坐标
+            height: height, //区域的高度
+            width: width, //区域的宽度
+            zindex :100, //div的css样式zindex
+            speed:25000, //弹幕速度，飞过区域的毫秒数
+            sumtime:160000 , //弹幕运行总时间
+            danmuss:data, //danmuss对象，运行时的弹幕内容
+            default_font_color:"#FFFFFF", //弹幕默认字体颜色
+            font_size_small:16, //小号弹幕的字体大小,注意此属性值只能是整数
+            font_size_big:24, //大号弹幕的字体大小
+            opacity:"0.8", //弹幕默认透明度
+            top_botton_danmu_time:6000 //顶端底端弹幕持续时间
+        } );
+
+//         alert(width);
+//         alert(height);
+        $('#tanmuContent').danmu('danmu_start');
+        window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+            $('#tanmuContent').html("");
+            if (window.orientation === 180 || window.orientation === 0) {
+                location.reload();
+            }
+            if (window.orientation === 90 || window.orientation === -90 ){
+                location.reload();
+            }
+        }, false);
+
         var type = $_GET["type"];
         var postid = $_GET["postid"];
         var url = "/express";
         var ejsUrl = "/amaze/assets/content.ejs";
         function callback(data){
             if(data.success && data.data && data.data.message == "ok"){
+                var content = data.data.data;
+                for(var i = 0;i<content.length;i++){
+                    var color = getRandomColor();
+                    var str = "<div style='border-radius: 15px;background-color:"+color+";color: #ffffff'>"+content[i].ftime+" <br> "+content[i].context.replace("京东","")+"</div>";
+                    $('#tanmuContent').danmu("add_danmu",{ "text":str ,"size":"0","position":"0","time":(i+2)*10});
+                }
+
+                $("#tableContent").css("display","block");
                 var dataHtml = new EJS({url:ejsUrl}).render({data:data.data.data});
                 $("#dataBody").html("");
                 $("#dataBody").html(dataHtml);
