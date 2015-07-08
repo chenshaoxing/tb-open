@@ -68,7 +68,7 @@ public class ScanJDProductInfoTask {
                     Map<String,Object> result = crawlJdProductInfoService.crawl(jd.getSkuid());
                     if(result != null){
                         Float price = Float.valueOf(result.get("price").toString());
-                        BigDecimal latestPrice = new BigDecimal(price);
+                        BigDecimal latestPrice = new BigDecimal(price.toString());
                         BigDecimal afterPrice = new BigDecimal(jd.getPrice());
 //                        if(latestPrice.compareTo(afterPrice) != 0){
                             jd.setPrice(price);
@@ -78,11 +78,10 @@ public class ScanJDProductInfoTask {
                             List<TbRelationJd> listTb = tbRelationJdService.findByJdSkuId(jd.getSkuid());
                             for(TbRelationJd tj:listTb){
                                 TaoBaoProduct tp = tj.getProduct();
-                                BigDecimal tbPrice = new BigDecimal(tp.getPrice());
-                                BigDecimal abs = latestPrice.subtract(tbPrice).abs();
-                                BigDecimal diffPrice = new BigDecimal(tp.getDifferenceOfPrices());
-                                if(abs.compareTo(diffPrice) != 0){
-
+                                BigDecimal tbPrice = new BigDecimal(tp.getPrice().toString());
+                                BigDecimal latestDifPrice = tbPrice.subtract(latestPrice);
+                                BigDecimal diffPrice = new BigDecimal(tp.getDifferenceOfPrices().toString());
+                                if(latestDifPrice.compareTo(diffPrice) != 0){
                                     BigDecimal tbLatestPrice = latestPrice.add(diffPrice);
                                     tbLatestPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
                                     tp.setPrice(tbLatestPrice.floatValue());
