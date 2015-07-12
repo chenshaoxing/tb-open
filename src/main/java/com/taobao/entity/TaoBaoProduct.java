@@ -43,6 +43,17 @@ public class TaoBaoProduct extends BaseDomain {
     @Column
     private Float differenceOfPrices;  //差价
 
+    @Column                  //消耗周期 Day为单位
+    private Integer cyclical;
+
+    public Integer getCyclical() {
+        return cyclical;
+    }
+
+    public void setCyclical(Integer cyclical) {
+        this.cyclical = cyclical;
+    }
+
     public Long getNumIid() {
         return numIid;
     }

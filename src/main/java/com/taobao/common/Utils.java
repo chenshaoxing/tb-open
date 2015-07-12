@@ -9,9 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by star on 15/5/20.
@@ -113,5 +111,19 @@ public class Utils {
         SimpleDateFormat format = new SimpleDateFormat(formatStr);
         String dateStr = format.format(date);
         return dateStr;
+    }
+
+    //晚上10点至早上9点
+    public static boolean currentDateIsNight(){
+//        Integer [] night = new Integer[]{22,23,1,2,3,4,5,6,7,17};
+        Integer [] night = new Integer[]{22,23,0,1,2,3,4,5,6,7,8};
+        Calendar calendar =  Calendar.getInstance();
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        List<Integer> nightList = Arrays.asList(night);
+        return nightList.contains(hours);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(currentDateIsNight());
     }
 }

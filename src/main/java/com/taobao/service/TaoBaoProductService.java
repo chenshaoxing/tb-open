@@ -15,6 +15,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface TaoBaoProductService {
+    public void update(TaoBaoProduct product);
+
     public TaoBaoProduct add(TaoBaoProduct product);
 
     public boolean addAndRelationJd(TaoBaoProduct tb,JDProduct jd);
@@ -23,5 +25,5 @@ public interface TaoBaoProductService {
 
     public TaoBaoProduct findById(Long id);
 
-    public TaoBaoProduct findByNumIid(Long numIid);
+    public List<TaoBaoProduct> findByNumIid(Long numIid);
 }

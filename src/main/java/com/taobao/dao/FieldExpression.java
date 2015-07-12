@@ -2,13 +2,7 @@ package com.taobao.dao;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joey
- * Date: 13-9-27
- * Time: 上午9:45
- * To change this template use File | Settings | File Templates.
- */
+
 public class FieldExpression extends QueryExpression {
     private Object value;
 

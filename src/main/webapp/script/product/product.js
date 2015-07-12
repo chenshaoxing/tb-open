@@ -1,6 +1,9 @@
 var Product = {
     globalVariable:{
-        ajaxSuccess:"success"
+        ajaxSuccess:"success",
+        currentPage:1,
+        currentPageTow:1,
+        currentPageThree:1
     },
     url:{
         list:"/product/list",
@@ -23,12 +26,13 @@ var Product = {
     },
     fn:{
         execList:function(){
-            common.fn.pagination(1,'Product.fn.getList','searchProductListPagination');
+            common.fn.pagination(Product.globalVariable.currentPage,'Product.fn.getList','searchProductListPagination');
         },
         getList:function(currentPage,callback){
            var params = new Object();
             params = common.fn.getFromJsonData("searchProductForm");
-            params.currentPage = currentPage;
+            Product.globalVariable.currentPage = currentPage;
+            params.currentPage = Product.globalVariable.currentPage;
             params.pageSize = common.globalVariable.pageSize;
             common.fn.ajax(Product.url.list,params,callBack);
            function callBack(data){
@@ -48,12 +52,13 @@ var Product = {
 
        },
         execJdList:function(){
-            common.fn.pagination(1,'Product.fn.getJdList','searchJdProductListPagination');
+            common.fn.pagination(Product.globalVariable.currentPageTow,'Product.fn.getJdList','searchJdProductListPagination');
         },
         getJdList:function(currentPage,callback){
             var params = new Object();
             params = common.fn.getFromJsonData("searchJdProductForm");
-            params.currentPage = currentPage;
+            Product.globalVariable.currentPageTow = currentPage;
+            params.currentPage = Product.globalVariable.currentPageTow;
             params.pageSize = common.globalVariable.pageSize;
             common.fn.ajax(Product.url.jdList,params,callBack);
             function callBack(data){
@@ -72,12 +77,13 @@ var Product = {
             }
         },
         execJdRelationList:function(){
-            common.fn.pagination(1,'Product.fn.getRelationJdList','searchJdProductListPagination');
+            common.fn.pagination(Product.globalVariable.currentPageThree,'Product.fn.getRelationJdList','searchJdProductListPagination');
         },
         getRelationJdList:function(currentPage,callback){
             var params = new Object();
             params = common.fn.getFromJsonData("searchJdProductForm");
-            params.currentPage = currentPage;
+            Product.globalVariable.currentPageThree = currentPage;
+            params.currentPage = Product.globalVariable.currentPageThree;
             params.pageSize = common.globalVariable.pageSize;
             common.fn.ajaxSync(Product.url.jdList,params,callBack);
             function callBack(data){
@@ -210,6 +216,8 @@ var Product = {
         cancelRelation:function(numIid,jdId){
             function callback(data){
                 if(data.success){
+                    var dialogId = $("#dialogId").val();
+                    $("#"+dialogId).modal("hide");
                     Product.fn.execList();
                 }
             }

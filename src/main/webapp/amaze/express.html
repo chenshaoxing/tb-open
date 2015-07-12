@@ -62,7 +62,7 @@
         <div id="tanmuContent" class="row">
 
         </div>
-        <div class="row" id="tableContent" style="display: none;">
+        <div class="row" id="tableContent">
             <div class="row" style="text-align: center" id="load"></div>
             <table class="am-table">
                 <caption id="load-title" style="font-weight: bold"></caption>
@@ -138,7 +138,7 @@
             height: height, //区域的高度
             width: width, //区域的宽度
             zindex :100, //div的css样式zindex
-            speed:25000, //弹幕速度，飞过区域的毫秒数
+            speed:45000, //弹幕速度，飞过区域的毫秒数
             sumtime:160000 , //弹幕运行总时间
             danmuss:data, //danmuss对象，运行时的弹幕内容
             default_font_color:"#FFFFFF", //弹幕默认字体颜色
@@ -174,7 +174,6 @@
                     $('#tanmuContent').danmu("add_danmu",{ "text":str ,"size":"0","position":"0","time":(i+2)*10});
                 }
 
-                $("#tableContent").css("display","block");
                 var dataHtml = new EJS({url:ejsUrl}).render({data:data.data.data});
                 $("#dataBody").html("");
                 $("#dataBody").html(dataHtml);

@@ -18,7 +18,7 @@ import java.util.Map;
  * function:
  * To change this template use File | Settings | File Templates.
  */
-@Service
+@Service(value = "tbRelationJdServiceImpl")
 public class TbRelationJdServiceImpl implements TbRelationJdService {
     @Resource
     private IBasePersistence basePersistence;

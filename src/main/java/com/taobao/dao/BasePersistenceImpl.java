@@ -10,11 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-/**
- * User: tili
- * Date: 7/17/13
- * Time: 5:50 PM
- */
 @Transactional
 @Service(value = "baseDao")
 public class BasePersistenceImpl implements IBasePersistence {
@@ -37,6 +32,16 @@ public class BasePersistenceImpl implements IBasePersistence {
         t.setUpdatedTime(new Date());
         return (T)getEntityManager().merge(t);
     }
+
+    @Override
+    public <T extends BaseDomain> void update(T t) {
+        if(t.getCreatedTime() == null){
+            t.setCreatedTime(new Date());
+        }
+        t.setUpdatedTime(new Date());
+        getEntityManager().update(t);
+    }
+
 
     @Override
     public <T extends BaseDomain> void saveNew(T t) {

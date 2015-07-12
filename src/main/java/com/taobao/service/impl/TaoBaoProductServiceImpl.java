@@ -30,6 +30,11 @@ public class TaoBaoProductServiceImpl implements TaoBaoProductService {
 
 
     @Override
+    public void update(TaoBaoProduct product) {
+        basePersistence.update(product);
+    }
+
+    @Override
     public TaoBaoProduct add(TaoBaoProduct product) {
         return basePersistence.save(product);
     }
@@ -63,7 +68,7 @@ public class TaoBaoProductServiceImpl implements TaoBaoProductService {
     }
 
     @Override
-    public TaoBaoProduct findByNumIid(Long numIid) {
-        return basePersistence.getEntityByField(TaoBaoProduct.class,"numIid",numIid);
+    public List<TaoBaoProduct> findByNumIid(Long numIid) {
+        return basePersistence.getEntitiesByField(TaoBaoProduct.class, "numIid", numIid, "id", Integer.MAX_VALUE);
     }
 }

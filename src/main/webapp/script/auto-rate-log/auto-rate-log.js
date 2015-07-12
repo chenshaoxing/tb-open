@@ -1,6 +1,7 @@
 var AutoLog = {
     globalVariable:{
-        ajaxSuccess:"success"
+        ajaxSuccess:"success",
+        currentPage:1
     },
     url:{
         getList:"/auto-rate-log/getList",
@@ -11,14 +12,15 @@ var AutoLog = {
     },
     fn:{
         execList:function(){
-            common.fn.pagination(1,'AutoLog.fn.getList','autoRateLogListPagination');
+            common.fn.pagination(AutoLog.globalVariable.currentPage,'AutoLog.fn.getList','autoRateLogListPagination');
         },
         getList:function(currentPage,callback){
            var params = new Object();
             var blackForm = $("#autoRateLogForm").validate({});
             if(blackForm.form()){
                 params = common.fn.getFromJsonData("autoRateLogForm");
-                params.currentPage = currentPage;
+                AutoLog.globalVariable.currentPage = currentPage;
+                params.currentPage = AutoLog.globalVariable.currentPage;
                 params.pageSize = common.globalVariable.pageSize;
                 common.fn.ajax(AutoLog.url.getList,params,callBack);
             }

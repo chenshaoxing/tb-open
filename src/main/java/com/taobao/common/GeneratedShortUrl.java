@@ -53,16 +53,21 @@ public class GeneratedShortUrl {
         params.put("access_type","web");
         params.put("url",url);
         String data = post(params);
-        JSONObject jsonObject = JSON.parseObject(data);
-        if(jsonObject.get("err_msg").equals("")){
-            return jsonObject.get("tinyurl").toString();
-        }else {
+        try{
+            JSONObject jsonObject = JSON.parseObject(data);
+            if(jsonObject.get("err_msg").equals("")){
+                return jsonObject.get("tinyurl").toString();
+            }else {
+                return null;
+            }
+        }catch (Exception e){
+            LOG.error(e.getMessage());
             return null;
         }
-
     }
 
     public static void main(String[] args) {
+        System.out.println(getShortUrl("京东快递", "9722698957"));
         System.out.println(generated("http://www.taobao.com"));
     }
 

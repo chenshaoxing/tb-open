@@ -1,11 +1,5 @@
 package com.taobao.dao;
 
-/**
- * 用于jpa表达式条件封装
- * User: Sneaker
- * Date: 12-12-12
- * Time: 下午1:38
- */
 public class Expression {
 
     public enum Operation {

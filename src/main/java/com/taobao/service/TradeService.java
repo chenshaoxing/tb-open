@@ -29,11 +29,11 @@ public class TradeService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TradeService.class);
 
-    public Trade getTradeInfo(Long numIid,String sessionKey) throws Exception{
+    public Trade getTradeInfo(Long tid,String sessionKey) throws Exception{
         try{
             TradeGetRequest req=new TradeGetRequest();
-            req.setFields("tid,type,numIid,status,payment,orders");
-            req.setTid(numIid);
+            req.setFields("tid,type,num_iid,status,payment,orders,num");
+            req.setTid(tid);
             TradeGetResponse response = taobaoClient.execute(req , sessionKey);
             return response.getTrade();
         }catch (Exception e){

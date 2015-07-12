@@ -4,13 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joey
- * Date: 13-9-27
- * Time: 上午9:45
- * To change this template use File | Settings | File Templates.
- */
+
 public class NestedExpression extends QueryExpression {
     private List<QueryExpression> queryExpressionList;
 

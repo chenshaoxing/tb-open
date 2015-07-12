@@ -2,11 +2,15 @@ package com.taobao.test;
 
 import com.taobao.api.domain.Shipping;
 import com.taobao.api.domain.Trade;
-import com.taobao.service.SendSmsService;
-import com.taobao.service.TradeService;
+import com.taobao.entity.TaoBaoProduct;
+import com.taobao.entity.TbRelationJd;
+import com.taobao.entity.User;
+import com.taobao.service.*;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by star on 15/6/1.
@@ -16,16 +20,31 @@ public class TradeTest {
     public void send() throws Exception {
         ApplicationContext act = new ClassPathXmlApplicationContext("applicationContext.xml");
         TradeService service = (TradeService)act.getBean("tradeService");
-//        Trade trade = service.getTradeBuyerContactInfo(1102632674594145L, "6200022bd7037de36c22c8dabe94d4ZZaa1949272619d2b178766584");
-//        Shipping shipping = service.getExpressInfo(1102632674594145L, "6200022bd7037de36c22c8dabe94d4ZZaa1949272619d2b178766584");
+        BuyerBuyInfoService buyerBuyInfoService = (BuyerBuyInfoService)act.getBean("buyerBuyInfoService");
         SendSmsService sendSmsService = (SendSmsService)act.getBean("sendSmsService");
-        Shipping shipping = new Shipping();
-        shipping.setReceiverMobile("18680188225");
-        shipping.setOutSid("100403151835");
-        shipping.setCompanyName("圆通快递");
-        shipping.setItemTitle("促销 澳洲原装进口 德运脱脂纯牛奶1L*10 瓶 原装进口 同城即日达");
-        sendSmsService.sendSms(shipping,"45388540@qq.com");
-        System.out.println(1);
+        UserService userService = (UserService)act.getBean("userServiceImpl");
+//        TbRelationJdService tbRelationJdService = (TbRelationJdService)act.getBean("tbRelationJdServiceImpl");
+//        TaoBaoProductService taoBaoProductService = (TaoBaoProductService)act.getBean("taoBaoProductServiceImpl");
+//        TbRelationJd tbRelationJd = tbRelationJdService.findByTbIdAndJdId(3L, 1L);
+//        TaoBaoProduct tb = tbRelationJd.getProduct();
+//        tb.setPrice(45f);
+//        taoBaoProductService.update(tb);
+//        CountDownLatch countDownLatch = new CountDownLatch(1);
+//        countDownLatch.await();
+        User user = userService.findById(1L);
+
+        Shipping sp = service.getExpressInfo(1097265024676677L, user.getSessionKey());
+
+
+//        User user = new User();
+//        user.setEmail("45388540@qq.com");
+//        user = userService.findById(1L);
+
+        sendSmsService.sendSms(sp,user.getEmail());
+        buyerBuyInfoService.add(sp,user);
+
+
+//
 
     }
 }

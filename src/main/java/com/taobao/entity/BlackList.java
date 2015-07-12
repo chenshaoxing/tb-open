@@ -1,7 +1,5 @@
 package com.taobao.entity;
 
-import com.hr.system.manage.repository.domain.Employee;
-
 import javax.persistence.*;
 
 /**

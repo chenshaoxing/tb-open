@@ -23,6 +23,14 @@
     <bean id="deleteHistoryRateLogTask" class="com.taobao.task.DeleteHistoryAutoRateLogTask" />
     <bean id="scanUserOverDateTask" class="com.taobao.task.ScanUserOverDateTask"/>
     <bean id="scanJDProductInfoTask" class="com.taobao.task.ScanJDProductInfoTask"/>
+    <bean id="delaySendShipperSmsTask" class="com.taobao.task.DelaySendShipperSmsTask"/>
+
+    <bean id="delaySendShipperSmsTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="delaySendShipperSmsTask" />
+        <property name="targetMethod" value="run" />
+        <!--将并发设置为false-->
+        <property name="concurrent" value="false" />
+    </bean>
 
     <bean id="scanJDProductInfoDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="scanJDProductInfoTask" />
@@ -50,6 +58,12 @@
         <property name="targetMethod" value="delete" />
         <!--将并发设置为false-->
         <property name="concurrent" value="false" />
+    </bean>
+
+    <bean id="triggerDelaySendShipperSmsTask" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="delaySendShipperSmsTaskDetail" />
+        <property name="cronExpression" value="0 0 9 * * ?" />
+        <!--<property name="cronExpression" value="30 * * * * ?" />-->
     </bean>
 
     <bean id="triggerScanJDProductInfo" class="org.springframework.scheduling.quartz.CronTriggerBean">
@@ -83,6 +97,7 @@
                 <ref bean="triggerDelete" />
                 <ref bean="triggerScanUserOverDate" />
                 <ref bean="triggerScanJDProductInfo" />
+                <ref bean="triggerDelaySendShipperSmsTask" />
             </list>
         </property>
     </bean>

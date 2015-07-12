@@ -226,18 +226,25 @@ public class ProductController {
         try{
             User user = userService.findById(Utils.getUserId());
             JDProduct jdProduct = jdProductService.findById(jdId);
-            TaoBaoProduct taoBaoProduct = new TaoBaoProduct();
-            taoBaoProduct.setUser(user);
-            taoBaoProduct.setPrice(tbPrice);
-            taoBaoProduct.setDifferenceOfPrices(differenceOfPrices);
-            taoBaoProduct.setNumIid(numIid);
+            List<TaoBaoProduct> taoBaoProducts = taoBaoProductService.findByNumIid(numIid);
+            TaoBaoProduct taoBaoProduct = null;
+            if(taoBaoProducts != null && taoBaoProducts.size() > 0){
+                taoBaoProduct = taoBaoProducts.get(0);
+                taoBaoProduct.setDifferenceOfPrices(differenceOfPrices);
+                taoBaoProduct = taoBaoProductService.add(taoBaoProduct);
+            }else{
+                taoBaoProduct = new TaoBaoProduct();
+                taoBaoProduct.setUser(user);
+                taoBaoProduct.setPrice(tbPrice);
+                taoBaoProduct.setDifferenceOfPrices(differenceOfPrices);
+                taoBaoProduct.setNumIid(numIid);
+            }
             boolean flag = taoBaoProductService.addAndRelationJd(taoBaoProduct,jdProduct);
             if(flag){
                 return ResultJson.resultSuccess();
             }else{
                 return ResultJson.resultError();
             }
-
         }catch (Exception e){
             LOG.error(e.getMessage());
             throw e;

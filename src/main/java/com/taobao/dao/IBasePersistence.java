@@ -13,6 +13,8 @@ public interface IBasePersistence {
 
     public <T extends BaseDomain> T save(T t);
 
+    public <T extends BaseDomain> void update(T t);
+
     public <T extends BaseDomain> void saveNew(T t);
 
 
