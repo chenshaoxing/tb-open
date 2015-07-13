@@ -8,6 +8,6 @@ import com.taobao.entity.User;
  * Created by star on 15/7/8.
  */
 public interface BuyerBuyInfoService {
-    public BuyerBuyInfo add(Shipping shipping,User user)  throws Exception;
+    public void add(Shipping shipping,User user)  throws Exception;
     public BuyerBuyInfo add(BuyerBuyInfo buyerBuyInfo);
 }

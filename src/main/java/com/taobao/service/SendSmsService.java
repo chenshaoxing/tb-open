@@ -74,11 +74,11 @@ public class SendSmsService {
                 boolean flag = javaSmsApi.sendSms(sp.getSmsContent(),sp.getMobile());
                 String title = "";
                 if(flag){
-                    title = "发货提醒成功";
+                    title = "延时发货提醒成功";
                     sp.setSuccess(true);
                     shipperNotifyDelayService.save(sp);
                 }else{
-                    title = "发货提醒失败";
+                    title = "延时发货提醒失败";
                 }
                 emailService.sendEmail(sp.getSellerEmail(),title,sp.getSellerEmailContent());
             }catch (Exception e1){

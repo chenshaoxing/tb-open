@@ -15,10 +15,36 @@ public class BuyerBuyInfo extends BaseDomain{
     private String receiverMobile;
     @Column
     private String receiverName;
+    @Column
+    private Long numIid;
+    @Column
+    private Long tid;
+    @Column
+    private Long oid;
 
-    @ManyToOne(cascade= CascadeType.REFRESH, optional=false)
-    @JoinColumn(name = "product_id")
-    private TaoBaoProduct product;
+    public Long getTid() {
+        return tid;
+    }
+
+    public void setTid(Long tid) {
+        this.tid = tid;
+    }
+
+    public Long getOid() {
+        return oid;
+    }
+
+    public void setOid(Long oid) {
+        this.oid = oid;
+    }
+
+    public Long getNumIid() {
+        return numIid;
+    }
+
+    public void setNumIid(Long numIid) {
+        this.numIid = numIid;
+    }
 
     public Long getNum() {
         return num;
@@ -53,14 +79,6 @@ public class BuyerBuyInfo extends BaseDomain{
 
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
-    }
-
-    public TaoBaoProduct getProduct() {
-        return product;
-    }
-
-    public void setProduct(TaoBaoProduct product) {
-        this.product = product;
     }
 
     public String getItemTitle() {

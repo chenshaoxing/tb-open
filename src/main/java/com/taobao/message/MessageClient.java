@@ -111,7 +111,7 @@ public class MessageClient {
                                 if(autoRateSetting.isAutoRateStatus()){
                                     NoRateOrders noRate = addNoRateOrders(object,user);
                                     if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
-                                        boolean isRate = rateService.add(tid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
+                                        boolean isRate = rateService.add(tid,oid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
                                         if(isRate){
                                             noRate.setRate(true);
                                             LOG.info("add rate success");

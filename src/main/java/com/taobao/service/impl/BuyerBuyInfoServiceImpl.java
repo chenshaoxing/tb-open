@@ -1,6 +1,7 @@
 package com.taobao.service.impl;
 
 import com.taobao.api.domain.Location;
+import com.taobao.api.domain.Order;
 import com.taobao.api.domain.Shipping;
 import com.taobao.api.domain.Trade;
 import com.taobao.dao.IBasePersistence;
@@ -29,20 +30,23 @@ public class BuyerBuyInfoServiceImpl implements BuyerBuyInfoService {
 
 
     @Override
-    public BuyerBuyInfo add(Shipping shipping,User user) throws Exception{
+    public void add(Shipping shipping,User user) throws Exception{
         Location location = shipping.getLocation();
-        BuyerBuyInfo buyerBuyInfo = new BuyerBuyInfo();
-        buyerBuyInfo.setItemTitle(shipping.getItemTitle());
-        buyerBuyInfo.setReceiverMobile(shipping.getReceiverMobile());
-        buyerBuyInfo.setReceiverName(shipping.getReceiverName());
-        buyerBuyInfo.setBuyerNick(shipping.getBuyerNick());
-        buyerBuyInfo.setAddress(location.getState()+" "+location.getCity()+" "+ location.getDistrict()+" "+location.getAddress());
         Trade trade = tradeService.getTradeInfo(shipping.getTid(), user.getSessionKey());
-        List<TaoBaoProduct> products = taoBaoProductService.findByNumIid(trade.getNumIid());
-        buyerBuyInfo.setProduct(products.get(0));
-        buyerBuyInfo.setNum(trade.getNum());
-        buyerBuyInfo = basePersistence.save(buyerBuyInfo);
-        return buyerBuyInfo;
+        List<Order> orders = trade.getOrders();
+        for(Order order:orders){
+            BuyerBuyInfo buyerBuyInfo = new BuyerBuyInfo();
+            buyerBuyInfo.setItemTitle(order.getTitle());
+            buyerBuyInfo.setReceiverMobile(shipping.getReceiverMobile());
+            buyerBuyInfo.setReceiverName(shipping.getReceiverName());
+            buyerBuyInfo.setBuyerNick(shipping.getBuyerNick());
+            buyerBuyInfo.setAddress(location.getState()+" "+location.getCity()+" "+ location.getDistrict()+" "+location.getAddress());
+            buyerBuyInfo.setNumIid(order.getNumIid());
+            buyerBuyInfo.setNum(order.getNum());
+            buyerBuyInfo.setOid(order.getOid());
+            buyerBuyInfo.setTid(shipping.getTid());
+            basePersistence.save(buyerBuyInfo);
+        }
     }
 
     @Override

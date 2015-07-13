@@ -33,14 +33,14 @@ public class TradeTest {
 //        countDownLatch.await();
         User user = userService.findById(1L);
 
-        Shipping sp = service.getExpressInfo(1097265024676677L, user.getSessionKey());
-
+        Shipping sp = service.getExpressInfo(1096331902306490L, user.getSessionKey());
+//        Trade trade = service.getTradeInfo(sp.getTid(),user.getSessionKey());
 
 //        User user = new User();
 //        user.setEmail("45388540@qq.com");
 //        user = userService.findById(1L);
 
-        sendSmsService.sendSms(sp,user.getEmail());
+//        sendSmsService.sendSms(sp,user.getEmail());
         buyerBuyInfoService.add(sp,user);
 
 
