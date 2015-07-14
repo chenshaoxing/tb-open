@@ -2,7 +2,9 @@ package com.taobao.message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.taobao.api.domain.Order;
 import com.taobao.api.domain.Shipping;
+import com.taobao.api.domain.Trade;
 import com.taobao.api.domain.TradeRate;
 import com.taobao.api.internal.tmc.Message;
 import com.taobao.api.internal.tmc.MessageHandler;
@@ -73,7 +75,6 @@ public class MessageClient {
                 String buyerNick = object.getString("buyer_nick");
                 String sellerNick = object.getString("seller_nick");
                 Long tid = Long.valueOf(object.get("tid").toString());
-                Long oid = Long.valueOf(object.get("oid").toString());
                 BlackList blackList = blackListService.findByName(buyerNick);
                 if(StringUtils.isNotEmpty(sellerNick)){
                     User user = userService.findByName(object.getString("seller_nick"));
@@ -111,13 +112,17 @@ public class MessageClient {
                                 if(autoRateSetting.isAutoRateStatus()){
                                     NoRateOrders noRate = addNoRateOrders(object,user);
                                     if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_CONFIRM_RIGHT_AWAY_RATE.name())){
-                                        boolean isRate = rateService.add(tid,oid,autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
-                                        if(isRate){
-                                            noRate.setRate(true);
-                                            LOG.info("add rate success");
-                                            noRateOrdersService.add(noRate);
+                                        Trade trade = tradeService.getTradeInfo(tid, user.getSessionKey());
+                                        List<Order> orders = trade.getOrders();
+                                        for(Order o:orders){
+                                            boolean isRate = rateService.add(tid,o.getOid(),autoRateSetting.getRateType().toString(),rateContent.getContent(),user.getSessionKey());
+                                            if(isRate){
+                                                noRate.setRate(true);
+                                                LOG.info("add rate success");
+                                                noRateOrdersService.add(noRate);
 //                                    badOrNeutralSendEmail(tid,user);
-                                            addAutoRateLog(object,user);
+                                                addAutoRateLog(object,user);
+                                            }
                                         }
                                     }
                                 }
@@ -140,17 +145,22 @@ public class MessageClient {
                                     String rater = object.getString("rater");
                                     if(rater.equals("buyer")){
                                         if(autoRateSetting.getTriggerMode().name().equals(AutoRateSetting.TriggerMode.BUYER_RATE_RIGHT_AWAY_RATE.name())){
-                                            boolean isRate = rateService.add(tid, oid, autoRateSetting.getRateType().toString(), rateContent.getContent(),user.getSessionKey());
-                                            if(isRate){
-                                                LOG.info("add rate success");
-                                                addAutoRateLog(object,user);
+                                            Trade trade = tradeService.getTradeInfo(tid, user.getSessionKey());
+                                            List<Order> orders = trade.getOrders();
+                                            for(Order o:orders){
+                                                boolean isRate = rateService.add(tid, o.getOid(), autoRateSetting.getRateType().toString(), rateContent.getContent(),user.getSessionKey());
+                                                if(isRate){
+                                                    LOG.info("add rate success");
+                                                    addAutoRateLog(object,user);
 //                                        badOrNeutralSendEmail(tid,user);
-                                                NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);
-                                                if(noRate != null){
-                                                    noRate.setRate(true);
-                                                    noRateOrdersService.add(noRate);
+                                                    NoRateOrders noRate = noRateOrdersService.findByTradeId(tid);
+                                                    if(noRate != null){
+                                                        noRate.setRate(true);
+                                                        noRateOrdersService.add(noRate);
+                                                    }
                                                 }
                                             }
+
                                         }
 //                            else  if(autoRateSetting.getTriggerMode() == AutoRateSetting.TriggerMode.BUYER_RATE_NOT_RATE){
 
