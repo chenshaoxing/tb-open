@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created with Intellij IDEA
@@ -109,16 +110,17 @@ public class TradeService {
         }
     }
 
-    public Shipping getExpressInfo(Long tid,String sessionKey) throws Exception{
+    public List<Shipping> getExpressInfo(Long tid,String sessionKey) throws Exception{
         try{
+            LOG.info("hahahahahhahah");
             LogisticsOrdersDetailGetRequest req=new LogisticsOrdersDetailGetRequest();
             req.setTid(tid);
             req.setPageNo(1L);
             req.setPageSize(10L);
-            req.setFields("tid,seller_nick,buyer_nick,out_sid,receiver_name,receiver_mobile,receiver_phone,receiver_location,company_name,item_title");
+            req.setFields("tid,seller_nick,buyer_nick,out_sid,receiver_name,receiver_mobile,receiver_phone,receiver_location,company_name,item_title,sub_tids");
             LogisticsOrdersDetailGetResponse response = taobaoClient.execute(req , sessionKey);
             if(response.getShippings()  != null){
-                return response.getShippings().get(0);
+                return response.getShippings();
             }
             return null;
         }catch (Exception e){

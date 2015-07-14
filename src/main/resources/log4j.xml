@@ -16,9 +16,8 @@
 </appender>
 
 <appender name="PROJECT" class="com.taobao.common.AdvancedDailyRollingFileAppender">
-    <!--<param name="file" value="${log.home}/squirrel/squirrel-adapter" />-->
     <param name="file" value="${log.home}/rate-log" />
-    <param name="append" value="false" />
+    <param name="append" value="true" />
     <param name="encoding" value="UTF-8" />
     <param name="threshold" value="INFO" />
     <param name="maxBackupIndex" value="5"/>
@@ -33,7 +32,7 @@
     <!--  操作日志配置   -->
     <appender name="BROWSE_IP" class="com.taobao.common.AdvancedDailyRollingFileAppender">
         <param name="file" value="${log.home}/browse-log" />
-        <param name="append" value="false" />
+        <param name="append" value="true" />
         <param name="Encoding" value="UTF-8" />
         <param name="threshold" value="INFO" />
         <param name="maxBackupIndex" value="5"/>
