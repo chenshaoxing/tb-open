@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -31,17 +32,19 @@ public class TradeTest {
 //        taoBaoProductService.update(tb);
 //        CountDownLatch countDownLatch = new CountDownLatch(1);
 //        countDownLatch.await();
-        User user = userService.findById(1L);
+//        User user = userService.findById(1L);
 
-        Shipping sp = service.getExpressInfo(1096331902306490L, user.getSessionKey());
-//        Trade trade = service.getTradeInfo(sp.getTid(),user.getSessionKey());
+//        List<Shipping> sp = service.getExpressInfo(1151042596946333L,"6202122303d4c3148bb5d3a0ae2198ZZff9a92283a98377178766584");
+         List<Shipping> sp = service.getExpressInfo(1151908324181015L,"6202122303d4c3148bb5d3a0ae2198ZZff9a92283a98377178766584");
+        Trade trade = service.getTradeInfo(1151908324181015L,"6202122303d4c3148bb5d3a0ae2198ZZff9a92283a98377178766584");
+        System.out.println(1);
 
 //        User user = new User();
 //        user.setEmail("45388540@qq.com");
 //        user = userService.findById(1L);
 
 //        sendSmsService.sendSms(sp,user.getEmail());
-        buyerBuyInfoService.add(sp,user);
+//        buyerBuyInfoService.add(sp,user);
 
 
 //
