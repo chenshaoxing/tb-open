@@ -88,25 +88,11 @@ public class MessageClient {
                     switch (topic) {
                         case Constants.TAOBAO_TRADE_TRADESELLERSHIP:
                             try{
-                                Long tcOrderId = object.getLong("tc_order_id");
-                                List<Shipping> shippingList = tradeService.getExpressInfo(tid, user.getSessionKey());
-                                if(shippingList != null && shippingList.size() > 0){
-                                    if(tid.compareTo(tcOrderId) == 0){
-                                        Shipping sp  = shippingList.get(0);
-                                        boolean flag = sendSmsService.sendSms(sp,user.getEmail());
-                                        LOG.info("send sms:"+sp.getReceiverMobile()+"  "+flag);
-                                        buyerBuyInfoService.add(sp,user);
-                                    }else{
-                                        for(Shipping sp:shippingList){
-                                            List<Long> subTIds = sp.getSubTids();
-                                            if(subTIds.contains(tcOrderId)){
-                                                boolean flag = sendSmsService.sendSms(sp,user.getEmail());
-                                                LOG.info("send sms:"+sp.getReceiverMobile()+"  "+flag);
-                                                buyerBuyInfoService.add(sp,user);
-                                                break;
-                                            }
-                                        }
-                                    }
+                                Shipping shipping = tradeService.getExpressInfo(tid, user.getSessionKey());
+                                if(shipping != null){
+                                    boolean flag = sendSmsService.sendSms(shipping,user.getEmail());
+                                    LOG.info("send sms:"+shipping.getReceiverMobile()+"  "+flag);
+                                    buyerBuyInfoService.add(shipping,user);
                                 }
                             }catch (Exception e){
                                 LOG.error(Constants.TAOBAO_TRADE_TRADESELLERSHIP+" "+e.getMessage());

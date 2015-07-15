@@ -110,9 +110,8 @@ public class TradeService {
         }
     }
 
-    public List<Shipping> getExpressInfo(Long tid,String sessionKey) throws Exception{
+    public Shipping getExpressInfo(Long tid,String sessionKey) throws Exception{
         try{
-            LOG.info("hahahahahhahah");
             LogisticsOrdersDetailGetRequest req=new LogisticsOrdersDetailGetRequest();
             req.setTid(tid);
             req.setPageNo(1L);
@@ -120,7 +119,7 @@ public class TradeService {
             req.setFields("tid,seller_nick,buyer_nick,out_sid,receiver_name,receiver_mobile,receiver_phone,receiver_location,company_name,item_title,sub_tids");
             LogisticsOrdersDetailGetResponse response = taobaoClient.execute(req , sessionKey);
             if(response.getShippings()  != null){
-                return response.getShippings();
+                return response.getShippings().get(0);
             }
             return null;
         }catch (Exception e){
