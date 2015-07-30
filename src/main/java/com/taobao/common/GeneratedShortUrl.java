@@ -33,7 +33,7 @@ public class GeneratedShortUrl {
         EXPRESS.put("中通快递","zhongtong");
         EXPRESS.put("圆通速递","yuantong") ;
         EXPRESS.put("申通快递","shentong") ;
-        EXPRESS.put("京东快递","jd") ;
+        EXPRESS.put("京东物流","jd") ;
         EXPRESS.put("顺丰速运","shunfeng") ;
         EXPRESS.put("万象物流","wanxiangwuliu") ;
         EXPRESS.put("EMS","ems") ;

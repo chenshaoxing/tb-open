@@ -83,9 +83,13 @@ public class CrawlJdProductInfoService {
 
     public static void main(String[] args) throws Exception{
         CrawlJdProductInfoService service = new CrawlJdProductInfoService();
-        String skUid = "1359359";
+        String skUid = "596266";
         Map<String,Object> obj = service.crawl(skUid);
+        float f = -2f;
+        if(f<0){
+
         System.out.println(obj);
+        }
     }
 
 }

@@ -37,7 +37,7 @@
     <li class="active">
         <a href="#" class="dropdown-toggle">
             <i class="icon-list"></i>
-            <span class="menu-text"> 评价管理 </span>
+            <span class="menu-text"> 智能配置 </span>
             <b class="arrow icon-angle-down"></b>
             <ul class="submenu">
                 <li>
@@ -77,10 +77,47 @@
                         评价统计报表
                     </a>
                 </li>
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        出售中的宝贝
+                    </a>
+                </li>
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        关联爬虫信息
+                    </a>
+                </li>
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        智能发货提醒
+                    </a>
+                </li>
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        智能推算配置
+                    </a>
+                </li>
 
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        智能跟踪配置
+                    </a>
+                </li>
+                <li>
+                    <a href="/auto-rate-log/report">
+                        <i class="icon-double-angle-right"></i>
+                        短信邮件配置
+                    </a>
+                </li>
             </ul>
         </a>
     </li>
+
 ##    <li>
 ##        <a href="#" class="dropdown-toggle">
 ##            <i class="icon-desktop"></i>

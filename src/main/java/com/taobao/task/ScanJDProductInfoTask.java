@@ -67,10 +67,13 @@ public class ScanJDProductInfoTask {
                 for(JDProduct jd:jdProductList){
                     Map<String,Object> result = crawlJdProductInfoService.crawl(jd.getSkuid());
                     if(result != null){
-                        Float price = Float.valueOf(result.get("price").toString());
-                        BigDecimal latestPrice = new BigDecimal(price.toString());
+                        float price = Float.valueOf(result.get("price").toString());
+                        BigDecimal latestPrice = new BigDecimal(price);
                         BigDecimal afterPrice = new BigDecimal(jd.getPrice());
 //                        if(latestPrice.compareTo(afterPrice) != 0){
+                            if(price < 1f){
+                                continue;
+                            }
                             jd.setPrice(price);
                             jd.setDiscount(Float.valueOf(result.get("discount").toString()));
                             jd.setName(result.get("name").toString());
