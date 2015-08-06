@@ -88,12 +88,17 @@ public class MessageClient {
                     switch (topic) {
                         case Constants.TAOBAO_TRADE_TRADESELLERSHIP:
                             try{
-                                Shipping shipping = tradeService.getExpressInfo(tid, user.getSessionKey());
-                                if(shipping != null){
-                                    boolean flag = sendSmsService.sendSms(shipping,user.getEmail());
-                                    LOG.info("send sms:"+shipping.getReceiverMobile()+"  "+flag);
-                                    buyerBuyInfoService.add(shipping,user);
+                                List<Shipping> sps = tradeService.getExpressInfo(tid, user.getSessionKey());
+                                for(Shipping shipping:sps){
+                                    try {
+                                        boolean flag = sendSmsService.sendSms(shipping,user.getEmail());
+                                        LOG.info("send sms:"+shipping.getReceiverMobile()+"  "+flag);
+                                    } catch (Exception e) {
+                                        LOG.error(e.getMessage());
+                                        continue;
+                                    }
                                 }
+                                buyerBuyInfoService.add(sps.get(0),user);
                             }catch (Exception e){
                                 LOG.error(Constants.TAOBAO_TRADE_TRADESELLERSHIP+" "+e.getMessage());
                             }
