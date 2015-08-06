@@ -68,43 +68,35 @@ public class ScanJDProductInfoTask {
                     Map<String,Object> result = crawlJdProductInfoService.crawl(jd.getSkuid());
                     if(result != null){
                         float price = Float.valueOf(result.get("price").toString());
-                        BigDecimal latestPrice = new BigDecimal(price);
+                        BigDecimal latestPrice = new BigDecimal(price+"");
                         BigDecimal afterPrice = new BigDecimal(jd.getPrice());
-//                        if(latestPrice.compareTo(afterPrice) != 0){
-                            if(price < 1f){
-                                continue;
-                            }
-                            jd.setPrice(price);
-                            jd.setDiscount(Float.valueOf(result.get("discount").toString()));
-                            jd.setName(result.get("name").toString());
-                            jdProductService.save(jd);
-                            List<TbRelationJd> listTb = tbRelationJdService.findByJdSkuId(jd.getSkuid());
-                            for(TbRelationJd tj:listTb){
-                                TaoBaoProduct tp = tj.getProduct();
-                                BigDecimal tbPrice = new BigDecimal(tp.getPrice().toString());
-                                BigDecimal latestDifPrice = tbPrice.subtract(latestPrice);
-                                BigDecimal diffPrice = new BigDecimal(tp.getDifferenceOfPrices().toString());
-                                if(latestDifPrice.compareTo(diffPrice) != 0){
-                                    BigDecimal tbLatestPrice = latestPrice.add(diffPrice);
-                                    tbLatestPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
-                                    tp.setPrice(tbLatestPrice.floatValue());
-                                    boolean flag = taoBaoProductInfoService.updateProductPrice(tp,tp.getUser().getSessionKey());
+                        if(price < 1f){
+                            continue;
+                        }
+                        jd.setPrice(price);
+                        jd.setDiscount(Float.valueOf(result.get("discount").toString()));
+                        jd.setName(result.get("name").toString());
+                        jdProductService.save(jd);
+                        List<TbRelationJd> listTb = tbRelationJdService.findByJdSkuId(jd.getSkuid());
+                        for(TbRelationJd tj:listTb){
+                            TaoBaoProduct tp = tj.getProduct();
+                            BigDecimal tbPrice = new BigDecimal(tp.getPrice().toString());
+                            BigDecimal latestDifPrice = tbPrice.subtract(latestPrice);
+                            BigDecimal diffPrice = new BigDecimal(tp.getDifferenceOfPrices().toString());
+                            if(latestDifPrice.compareTo(diffPrice) != 0){
+                                BigDecimal tbLatestPrice = latestPrice.add(diffPrice);
+                                tbLatestPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
+                                tp.setPrice(tbLatestPrice.floatValue());
+                                boolean flag = taoBaoProductInfoService.updateProductPrice(tp,tp.getUser().getSessionKey());
 //                                    boolean flag = taoBaoProductInfoService.updateProductPrice(tp,tp.getUser().getSessionKey());
-                                    if(flag){
+                                if(flag){
 
-                                        content.append("商品:"+jd.getName()+" 最新价格:"+jd.getPrice()+" 已经超过您设置的淘宝差价," +
-                                                "您对应的淘宝商品价格已经修改为:"+tbLatestPrice.floatValue()+" 点击此链接进行查看:"+ Constants.TAO_BAO_ITEM_URL_PREFIX+tp.getNumIid());
-                                        content.append("<br/><br/>");
-                                        taoBaoProductService.add(tp);
-                                    }
+                                    content.append("商品:"+jd.getName()+" 最新价格:"+jd.getPrice()+" 已经超过您设置的淘宝差价," +
+                                            "您对应的淘宝商品价格已经修改为:"+tbLatestPrice.floatValue()+" 点击此链接进行查看:"+ Constants.TAO_BAO_ITEM_URL_PREFIX+tp.getNumIid());
+                                    content.append("<br/><br/>");
+                                    taoBaoProductService.add(tp);
                                 }
-
-//                            }
-//                            Set<TaoBaoProduct> taoBaoProducts =  jd.getTaoBaoProducts();
-//                            for(TaoBaoProduct tb:taoBaoProducts){
-//                               tb.setPrice(price+tb.getDifferenceOfPrices());
-
-//                            }
+                            }
                         }
                     }
                 }
